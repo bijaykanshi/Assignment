@@ -1,0 +1,26 @@
+{
+  "route": [
+    {
+      "state": "courseDetail",
+      "url": "/courseDetail",
+      "views": [
+        {
+          "view": "@",
+          "templateUrl": "template/viewIndex.html"
+        },
+        {
+          "view": "header@courseDetail",
+          "templateUrl": "template/header.html"
+        },
+        {
+          "view": "sideBar@courseDetail",
+          "templateUrl": "template/sideBar.html"
+        },
+        {
+          "view": "body@courseDetail",
+          "templateUrl": "template/courseDetail.html"
+        }
+      ]
+    }
+  ]
+}

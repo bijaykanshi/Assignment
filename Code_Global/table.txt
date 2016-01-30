@@ -1,0 +1,143 @@
+create table users(id BIGINT primary key AUTO_INCREMENT,name varchar(30), email varchar(50),
+	password varchar(30),ucat varchar(30), online BOOL, doj DATE, lattitude varchar(60), longitude varchar(60),
+	contact_No varchar(30), localAddress varchar(3000), Pin_Code varchar(30), country varchar(300), state varchar(300), district varchar(300), Profession varchar(1000), msg varchar(6000));
+
+ALTER TABLE users
+ADD Address varchar(1000);
+ALTER TABLE users ADD org varchar(100);
+ALTER TABLE users ADD sex BOOL;
+ALTER TABLE users ADD access_token varchar(30);
+delete n1 FROM users n1, users n2 WHERE n1.id > n2.id AND n1.email = n2.e
+mail;
+ALTER IGNORE  TABLE users ADD UNIQUE (email)
+create table contactUs(id BIGINT,subject varchar(3000), msg varchar(50000), FOREIGN KEY (id) REFERENCES users(id));
+
+create table chat(id BIGINT, msg varchar(40000), senderId BIGINT, offlineMsgCount INT);
+create table skillProfession(id BIGINT, skillProfession varchar(2600), isSkill bool, FOREIGN KEY (id) REFERENCES users(id));
+ALTER TABLE chat add COLUMN DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
+create index your_index_name on your_table_name(your_column_name) using HASH;
+
+ mysqldump  -uroot -proot  mydb | gzip > C:\bijay.sql.gz
+
+
+
+ git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/bijaykanshi/myPro.git
+git push -u origin master
+
+
+
+
+mongod.exe --dbpath "../../fproject4_git/client/coach/data"
+mongo.exe
+
+db.mainPage.save({
+  "id":"1",
+  "content": [{
+	  "link": "home",
+	  "structure": "header_nextHeader_content_readMore",
+	  "image": "./coach/firstPage/images/banner1.jpg",
+	  "innerItem": [
+			  {
+				"header": "Resource Library",
+				"address": "Indian Institute of Technology Roorkee, Roorkee, Uttarakhand India - 247667 , Contact No. +91-1332-285311 ,Email Id: regis@iitr.ernet.in",
+				"nextHeader": "Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt.",
+				"content": "Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet conse ctetur adipisicing elit.",
+				"readMore": "hiiii i am bijay kanshi what will you do"
+			  },
+			  {
+				"header": "Resource Library",
+				"nextHeader": "Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt.",
+				"content": "Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet conse ctetur adipisicing elit.",
+				"readMore": "hiiii i am bijay kanshi what will you do"
+			  }
+		]
+	}
+  ],
+  "footer": {
+		"welcomeToOurCentre": {
+			"header": "Welcome to our Centre!",
+			"nextHeader": "Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt.",
+			"content": "160 years is a long time by human standards. But that is how long IIT Roorkee has been a centre of excellence. We are the oldest technical institution in India, and our roots lie in the Thomason College of Engineering, established 1847. The  institution  was awarded the status of the first technical university of free India. The University of Roorkee quickly  gained an international reputation as a centre of excellence and was renowned for churning out, year after year, some of the best engineers in the world. In the year 2001, the University was declared an insitute of national importance and accorded the status of an . From the Thomason College of Engineering to an IIT, the institute has come full circle. And we are proud to be a part of this place, proud to share its glorious traditions and be able to add to them in our own little way, proud to be, in equal part Thomsonians and IITians.",
+			"readMore": "Now spend some time getting to know the institute, start by browsing the website. You will want to look at the freshers F.A.Q. section, which has a wealth of information on everything you will want to ask about the Institute. Look at all the facilities made available to you, get glimpses into your soon-to-be-lives, and find out all you wanted to know about IIT Roorkee"
+		},
+		"teachingSupport": {
+			"header": "Teaching Support",
+			"structure": "link_disp",
+			"innerItem": [
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				},
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				},
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				},
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				},
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				},
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				},
+				{
+					"link": "Real Time Digital Simulator for Small Hydropower Plants",
+					"content": "Alternate Hydro Energy Center (AHEC), Indian Institute of Technology (IIT), Roorkee is in the process of establishing an international-level hydro turbine laboratory with the intention to setup design and validation facility in addition to conducting research in hydro turbines and other hydro mechanical equipments conforming to national and international standards. AHEC is already into on-site performance testing of small hydropower stations as per IEC 60041 and IEC 6116 and other international/ national standards."
+				}
+			]
+		},
+		"latestNews": {
+			"header": "Latest News",
+			"structure": "newsHeader_newsContent_date",
+			"innerItem": [{
+				"imgSrc": "./coach/firstPage/imgOwn/news.png",
+				"date": "Jan 21.01.2013",
+				"newsHeader": "Indian Institute of Technology Roorkee (IIT Roorkee) is a leading institution of higher technical education with an excellent track record of its performance over the last 166 years....",
+				"newsContent": "Students admitted to the graduate programs of study at IIT Roorkee go through a process of selection prior to their admissions. The process of selection is administered at the national (All India) level or at the Institute depending on the program of study. For detailed information of the Institute and different programs, download the information brochure given below. GATE (Graduate Aptitude Test in Engineering), The Graduate Aptitude Test in Engineering is an All - India Examination conducted by the seven IITs and IISc Bangalore, on behalf of the National Coordinating Board - GATE, Department of Education, Ministry of Human Resources Development (MHRD), Government of India. For more info follow link GATE JAM (Joint Admission Test to M.Sc) for admission to M.Sc programmes at the IITs. From year 2005 admissions to MCA programme at IIT Roorkee are also made through JAM which were previously through AIMCET. More info at JAM website JMET (Joint Management Entrance Test) The Joint Management Entrance Test is an Examination conducted by the seven IITs and IISc Bangalore for admission to the Postgraduate Degree Programmes in Management in the respective Institutes. More info at JMET website This Institute offer courses leading to two-year Master of Science degrees in a number of disciplines. In addition, post-graduate programmes leading to M.Tech., M.Sc. and Ph.D. degrees are also offered."
+				},
+				{
+				"imgSrc": "./coach/firstPage/imgOwn/news.png",
+				"date": "Jan 21.01.2013",
+				"newsHeader": "Indian Institute of Technology Roorkee (IIT Roorkee) is a leading institution of higher technical education with an excellent track record of its performance over the last 166 years....",
+				"newsContent": "Students admitted to the graduate programs of study at IIT Roorkee go through a process of selection prior to their admissions. The process of selection is administered at the national (All India) level or at the Institute depending on the program of study. For detailed information of the Institute and different programs, download the information brochure given below. GATE (Graduate Aptitude Test in Engineering), The Graduate Aptitude Test in Engineering is an All - India Examination conducted by the seven IITs and IISc Bangalore, on behalf of the National Coordinating Board - GATE, Department of Education, Ministry of Human Resources Development (MHRD), Government of India. For more info follow link GATE JAM (Joint Admission Test to M.Sc) for admission to M.Sc programmes at the IITs. From year 2005 admissions to MCA programme at IIT Roorkee are also made through JAM which were previously through AIMCET. More info at JAM website JMET (Joint Management Entrance Test) The Joint Management Entrance Test is an Examination conducted by the seven IITs and IISc Bangalore for admission to the Postgraduate Degree Programmes in Management in the respective Institutes. More info at JMET website This Institute offer courses leading to two-year Master of Science degrees in a number of disciplines. In addition, post-graduate programmes leading to M.Tech., M.Sc. and Ph.D. degrees are also offered."
+				},
+				{
+				"imgSrc": "./coach/firstPage/imgOwn/news.png",
+				"date": "Jan 21.01.2013",
+				"newsHeader": "Indian Institute of Technology Roorkee (IIT Roorkee) is a leading institution of higher technical education with an excellent track record of its performance over the last 166 years....",
+				"newsContent": "Students admitted to the graduate programs of study at IIT Roorkee go through a process of selection prior to their admissions. The process of selection is administered at the national (All India) level or at the Institute depending on the program of study. For detailed information of the Institute and different programs, download the information brochure given below. GATE (Graduate Aptitude Test in Engineering), The Graduate Aptitude Test in Engineering is an All - India Examination conducted by the seven IITs and IISc Bangalore, on behalf of the National Coordinating Board - GATE, Department of Education, Ministry of Human Resources Development (MHRD), Government of India. For more info follow link GATE JAM (Joint Admission Test to M.Sc) for admission to M.Sc programmes at the IITs. From year 2005 admissions to MCA programme at IIT Roorkee are also made through JAM which were previously through AIMCET. More info at JAM website JMET (Joint Management Entrance Test) The Joint Management Entrance Test is an Examination conducted by the seven IITs and IISc Bangalore for admission to the Postgraduate Degree Programmes in Management in the respective Institutes. More info at JMET website This Institute offer courses leading to two-year Master of Science degrees in a number of disciplines. In addition, post-graduate programmes leading to M.Tech., M.Sc. and Ph.D. degrees are also offered."
+				},
+				{
+				"imgSrc": "./coach/firstPage/imgOwn/news.png",
+				"date": "Jan 21.01.2013",
+				"newsHeader": "Indian Institute of Technology Roorkee (IIT Roorkee) is a leading institution of higher technical education with an excellent track record of its performance over the last 166 years....",
+				"newsContent": "Students admitted to the graduate programs of study at IIT Roorkee go through a process of selection prior to their admissions. The process of selection is administered at the national (All India) level or at the Institute depending on the program of study. For detailed information of the Institute and different programs, download the information brochure given below. GATE (Graduate Aptitude Test in Engineering), The Graduate Aptitude Test in Engineering is an All - India Examination conducted by the seven IITs and IISc Bangalore, on behalf of the National Coordinating Board - GATE, Department of Education, Ministry of Human Resources Development (MHRD), Government of India. For more info follow link GATE JAM (Joint Admission Test to M.Sc) for admission to M.Sc programmes at the IITs. From year 2005 admissions to MCA programme at IIT Roorkee are also made through JAM which were previously through AIMCET. More info at JAM website JMET (Joint Management Entrance Test) The Joint Management Entrance Test is an Examination conducted by the seven IITs and IISc Bangalore for admission to the Postgraduate Degree Programmes in Management in the respective Institutes. More info at JMET website This Institute offer courses leading to two-year Master of Science degrees in a number of disciplines. In addition, post-graduate programmes leading to M.Tech., M.Sc. and Ph.D. degrees are also offered."
+				},
+				{
+				"imgSrc": "./coach/firstPage/imgOwn/news.png",
+				"date": "Jan 21.01.2013",
+				"newsHeader": "Indian Institute of Technology Roorkee (IIT Roorkee) is a leading institution of higher technical education with an excellent track record of its performance over the last 166 years....",
+				"newsContent": "Students admitted to the graduate programs of study at IIT Roorkee go through a process of selection prior to their admissions. The process of selection is administered at the national (All India) level or at the Institute depending on the program of study. For detailed information of the Institute and different programs, download the information brochure given below. GATE (Graduate Aptitude Test in Engineering), The Graduate Aptitude Test in Engineering is an All - India Examination conducted by the seven IITs and IISc Bangalore, on behalf of the National Coordinating Board - GATE, Department of Education, Ministry of Human Resources Development (MHRD), Government of India. For more info follow link GATE JAM (Joint Admission Test to M.Sc) for admission to M.Sc programmes at the IITs. From year 2005 admissions to MCA programme at IIT Roorkee are also made through JAM which were previously through AIMCET. More info at JAM website JMET (Joint Management Entrance Test) The Joint Management Entrance Test is an Examination conducted by the seven IITs and IISc Bangalore for admission to the Postgraduate Degree Programmes in Management in the respective Institutes. More info at JMET website This Institute offer courses leading to two-year Master of Science degrees in a number of disciplines. In addition, post-graduate programmes leading to M.Tech., M.Sc. and Ph.D. degrees are also offered."
+				},
+				{
+				"imgSrc": "./coach/firstPage/imgOwn/news.png",
+				"date": "Jan 21.01.2013",
+				"newsHeader": "Indian Institute of Technology Roorkee (IIT Roorkee) is a leading institution of higher technical education with an excellent track record of its performance over the last 166 years....",
+				"newsContent": "Students admitted to the graduate programs of study at IIT Roorkee go through a process of selection prior to their admissions. The process of selection is administered at the national (All India) level or at the Institute depending on the program of study. For detailed information of the Institute and different programs, download the information brochure given below. GATE (Graduate Aptitude Test in Engineering), The Graduate Aptitude Test in Engineering is an All - India Examination conducted by the seven IITs and IISc Bangalore, on behalf of the National Coordinating Board - GATE, Department of Education, Ministry of Human Resources Development (MHRD), Government of India. For more info follow link GATE JAM (Joint Admission Test to M.Sc) for admission to M.Sc programmes at the IITs. From year 2005 admissions to MCA programme at IIT Roorkee are also made through JAM which were previously through AIMCET. More info at JAM website JMET (Joint Management Entrance Test) The Joint Management Entrance Test is an Examination conducted by the seven IITs and IISc Bangalore for admission to the Postgraduate Degree Programmes in Management in the respective Institutes. More info at JMET website This Institute offer courses leading to two-year Master of Science degrees in a number of disciplines. In addition, post-graduate programmes leading to M.Tech., M.Sc. and Ph.D. degrees are also offered."
+				}
+			]
+			
+		}
+  }
+});

@@ -1,0 +1,33 @@
+<div class="col-sm-9 padding-right" style="background-color: white;">
+		<div class="features_items"><!--features_items-->
+			<h2 class="title text-center ">Code Global Assignment</h2>
+			<table class="table table-striped">
+			    <tbody>
+			      <tr ng-repeat = "item in global.detailItem | filter: global.search | orderBy : global.sort : reverse | limitTo: global.showLimit">
+			        <td>
+			        	<img data-ng-src="{{item.image}}" class="imgResize" /><br/><br/><br/>
+			        		<div class="star-rating"> 
+							  <span  ng-repeat="n in global.getStar(item.rating, true) track by $index"><i class="fa fa-star"></i></span>
+							  <span ng-repeat="n in global.getStar(item.rating) track by $index"><i class="fa fa-star-o"></i></span>
+							 
+							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							  <a href="{{item.url}}" target="_blank">extLink</a>
+				        	</div>
+			        	
+			        </td>
+			        <td>{{item.title}}<br/>{{item.description}}</td>
+			        <td>
+			        	<button class="btn btn-default">{{item.type}}</button><br/><br/><br/><br/><br/><br/><br/>
+			        	{{item.price}}
+			        </td>
+			      </tr>
+			    </tbody>
+			  </table>
+			  <div ng-show = "global.detailItem.length">
+			  		<button ng-disabled = "global.detailItem.length <= 4 || global.showLimit >= global.detailItem.length" class="btn btn-success" ng-click = "global.showLimit = global.showLimit < global.detailItem.length ? global.showLimit + 4 : global.detailItem.length">Load More</button>&nbsp;&nbsp;&nbsp;
+			  		<button ng-disabled = "global.showLimit <= 4" class="btn btn-danger" ng-click = "global.showLimit = global.showLimit > 4 ? global.showLimit - 4 < 4 ? 4 : global.showLimit - 4 : 4">Hide</button>	
+			  </div>
+			  
+			<div ng-show = "!global.detailItem.length">There is no item to show .... Please checked at least one check box in left side bar</div>
+		</div><!--features_items-->
+	</div>

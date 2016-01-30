@@ -1,0 +1,49 @@
+
+				<div class="col-sm-3" style="background-color: white; ">
+					<div class="left-sidebar">
+						<h2>Category</h2>
+						<div class="panel-group category-products" id="accordian" ng-init = "global.filterItem()">
+							
+							<div class="panel panel-default">
+								<div class="checkbox">
+								  	<label><input type="checkbox" ng-model = "global.category.ios" ng-change = "global.filterItem()" value="ios">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOS</label>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="checkbox">
+								  	<label><input type="checkbox" ng-model = "global.category.android" ng-change = "global.filterItem()" value="android">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Android</label>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="checkbox">
+								  	<label><input type="checkbox" ng-model = "global.category.web_development" ng-change = "global.filterItem()" value="web_development">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Web Development</label>
+								</div>
+							</div>
+							<div class="panel panel-default">
+								<div class="checkbox">
+								  	<label><input type="checkbox" ng-change = "global.filterItem()" ng-model = "global.category.soft_eng" value="soft_eng">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Software Engineering</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="brands_products">
+							<h2>Sort By</h2>
+							<div class="brands-name">
+								<label class="radio-inline"><input type="radio" value = "-rating"  ng-model = "global.sort" name="sort">Rating</label>
+								<label class="radio-inline"><input type="radio" value="-price" ng-model = "global.sort"  name="sort">Price</label>
+							</div>
+						</div>
+						<div class="brands_products">
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+									<li><a href="javascript:void(0)"> <span class="pull-right">{{global.detailItem.length}}</span>Remaining Course After filtering</a></li>
+									<li><a href="javascript:void(0)"> <span class="pull-right">{{global.courseLength}}</span>Total Course Length</a></li>
+								</ul>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+			
