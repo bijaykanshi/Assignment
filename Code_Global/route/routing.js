@@ -4,13 +4,13 @@ module.exports = function(ref) {
     var routingData = [
         {
             'url': '/',
-            'method': 'get',
+            'method': 'get'
             'callbackFun':  function(req, res) {
                 res.render('index');
             }
         },
         {
-            'url': '/getCourseDetail',
+            'url': '/getCourseDetail'
             'method': 'get',
             'callbackFun':  function(req, res) {
                 query = 'select * from learnhub';
