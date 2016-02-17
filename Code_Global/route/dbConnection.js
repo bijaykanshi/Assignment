@@ -1,5 +1,5 @@
 
-module.exports = function(ref) {
+module.exports = function() {
     var dbconnection = new function () {
         this.pool =  ref.mysql.createPool({
             host : 'localhost',
