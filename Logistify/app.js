@@ -13,9 +13,9 @@ var ref = new function() {
 	this.startApp = function() {};
 }
 
-require('./config')(ref);
-ref.route = require('./route/routing')(ref);
-ref.dbconnection = require('./route/dbconnection')(ref);
+require('./config')();
+ref.route = require('./route/routing')();
+ref.dbconnection = require('./route/dbconnection')();
 ref.app.use('/', ref.route);
 ref.app.listen(ref.port);
 console.log('Your application is running on http://localhost:' + ref.port);
