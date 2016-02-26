@@ -1,0 +1,33 @@
+{
+  "route": [
+    {
+      "state": "home",
+      "url": "/home",
+      "views": [
+        {
+          "view": "@",
+          "templateUrl": '"emplate/app.html"
+        },
+        {
+          "view": "header@home",
+          "templateUrl": "template/head.html"
+        },
+        {
+          "view": "sideBar@home",
+          "templateUrl": "template/sideBar.html"
+        },
+        {
+          "view": "body@home",
+          "templateUrl": "template/body.html"
+          "controller": "initialBody"
+        }
+      ],
+       "onEnter": {
+            "controller": "loginSignUp",
+            "templateUrl": "template/modals/popu.html",
+            "windowClass": "extraLarge-Modal",
+            "parameter": ""
+        }
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+<div class="col-sm-9 padding-right" style="background-color: white;">
+		<div class="features_items"><!--features_items-->
+			<h2 class="title text-center ">My Application</h2>
+			<div ng-show = "!global.lawyerPage">
+				<button class="btn btn-danger" ng-click = "saveBookingOrDelete(tempBookedLawyer, 'applyMultipleBooking', 'multiple')" ng-disabled="!count">Click For Multiple Booking</button>
+				<button class="btn btn-danger pull-right" ng-click = "showBooked = !showBooked">{{showBooked ? 'Hide' : 'Show'}} All Booked Lawyer</button><br/><br/>
+				<div ng-show = "showBooked">
+				<br/><br/><br/>
+				<input type="text" placeholder="Search in Booked Lawyer"  ng-model = "searchInBooked" class="form-control"><br/><br/>
+				<span>Your Booking Status is here</span>
+				<table class="table table-striped">
+					<thead>
+				      <tr>
+				        <th>Remove</th>
+				        <th>Name of Lawyer</th>
+				        <th>Email</th>
+				        <th>Rating</th>
+				        <th>Price</th>
+				        <th>Profession</th>
+				        <th>Booking Status</th>
+				      </tr>
+				    </thead>
+				    <tbody>
+				      <tr ng-repeat = "item in bookedLawyer | filter: searchInBooked">
+				        <td>
+				        	<img  name = "delete" class="crossImg" src="./webdata/imgOwn/cross.png" alt="" ng-click="confirmClick() &&  saveBookingOrDelete([item], 'removeBooked', 'delete')" msg = "Are You sure you want to delete this booking" confirm-click>
+							
+				        	
+				        </td>
+				        <td>{{item.name}}</td>
+				        <td> {{item.email}}        	
+				        </td>
+				        <td>{{item.rating}}
+				        	<div class="star-rating"> 
+							  <span  ng-repeat="n in global.getStar(item.rating, true) track by $index"><i class="fa fa-star"></i></span>
+							  <span ng-repeat="n in global.getStar(item.rating) track by $index"><i class="fa fa-star-o"></i></span>
+							 
+							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				        	</div>
+				        </td>
+				        <td>{{item.price}}</td>
+				        <td>{{item.ucat}}</td>
+				        <td>{{item.status ? item.status : 'Pending'}}</td>
+				      </tr>
+				    </tbody>
+				  </table>
+				</div><br/><br/>
+				<span>Select Your favourite lawyer</span><br/><br/>
+				<table class="table table-striped">
+				<thead>
+			      <tr>
+			        <th>Select</th>
+			        <th>Name  of Lawyer</th>
+			        <th>Email</th>
+			        <th>Rating</th>
+			        <th>Price</th>
+			        <th>Profession</th>
+			        <th>Boodking</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat = "item in global.dataToDisplay | filter: global.search | orderBy : global.sort : reverse">
+			        <td>
+			        	<div class="checkbox">
+						  	<label><input type="checkbox" ng-model = "select" ng-click = "selectItem(select, item, $index)"></label>
+						</div>
+			        	
+			        </td>
+			        <td>{{item.name}}</td>
+			        <td> {{item.email}}        	
+			        </td>
+			        <td>{{item.rating}}
+			        	<div class="star-rating"> 
+						  <span  ng-repeat="n in global.getStar(item.rating, true) track by $index"><i class="fa fa-star"></i></span>
+						  <span ng-repeat="n in global.getStar(item.rating) track by $index"><i class="fa fa-star-o"></i></span>
+						 
+						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			        	</div>
+			        </td>
+			        <td>{{item.price}}</td>
+			        <td>{{item.ucat}}</td>
+			        <td><button class="btn btn-primary" ng-click = "saveBookingOrDelete([item], 'sengleBooking', 'single')">Book</button></td>
+			      </tr>
+			    </tbody>
+			  </table>
+			</div>
+			
+			<div ng-show = "global.lawyerPage">
+				
+				<h3>Following Site User has been requested for making document</h3>
+				<table class="table table-striped">
+				<thead>
+			      <tr>
+			        <th>Name  of Site User</th>
+			        <th>Email</th>
+			        <th>Contact No</th>
+			        <th>City</th>
+			        <th>Profession</th>
+			        <th>Request</th>
+			        <th>Take Action</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat = "item in global.dataForLawyer | filter: global.search " ng-if = "item.status == 'request pending'">
+			        <td>
+			        	{{item.name}}
+			        	
+			        </td>
+			        <td>{{item.email}}</td>
+			        <td> {{item.contact_No}}        	
+			        </td>
+			        <td>{{item.city}}
+			        	
+			        </td>
+			        <td>{{item.ucat}}</td>
+			        <td>{{item.status}}</td>
+			        <td>
+			        	<button class="btn btn-danger" ng-click = "saveBookingOrDelete([item], 'actionTaken', 'action_by_lawyer', 'accepted')">Accept</button>
+			        	<button class="btn btn-danger" ng-click = "confirmClick() && saveBookingOrDelete([item], 'actionTaken', 'action_by_lawyer', 'deny')" msg = "Are You sure you want to delete this Request" confirm-click>Delete/Deny</button>
+			        	<button class="btn btn-danger" ng-click = "saveBookingOrDelete([item], 'actionTaken', 'action_by_lawyer', 'not_available')">Not Available</button>
+			        	<!-- <input type="text" placeholder="Please fill the Reason for Deny" ng-show=""  ng-model = "reason" class="form-control"> -->
+			        </td>
+			      </tr>
+			    </tbody>
+			  </table>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>myApp</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/myOwn.css" rel="stylesheet">  
+</head>
+
+<body id = "body">
+
+    <div ui-view></div>
+    <div ng-show="global.isLoading" id='loader' style="width: 100% !important;position:fixed !important;height: 100% !important;opacity: 0.3 !important;background-color: #333 !important;z-index:1000 !important; top: 0">
+        <img src="./webdata/loader.gif" style="position: fixed;left:0;right:0;margin: 0 auto;top: 50%;">
+    </div>
+
+ 	<script src="js/lib/jquery.js"></script>
+    <script src="js/lib/bootstrap.min.js"></script><
+    <script src="js/lib/angular.minw.js"></script>
+    <script src="js/lib/angular-ui-router.min.js"></script>
+    <script src="js/lib/ui-bootstrap-tplsj-0.14.2.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller/constant.js"></script>
+    <script src="js/controller/mainCtrl.js"></script>
+    <script src="js/controller/directiveService.js"></script>
+   
+
+</body>
+
+</html>
