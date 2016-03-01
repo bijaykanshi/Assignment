@@ -5,6 +5,7 @@
 			<h4 class="title text-center ">Welcome {{global.myInfo.email}}</h4>
 			<div ng-show = "!global.adminUser">
 				<button class="btn btn-danger" ng-click = "beforeSaveAction(global.dataToDisplay, 'saveAction', 'saveAction')" ng-disabled="count">Save Your Action in Data Base</button>
+				<input type="text" ng-model = "global.search" placeholder="Enter Text To Search" class="pull-right"></input>
 				<table class="table table-responsive">
 				<thead>
 			      <tr>
@@ -14,7 +15,7 @@
 			      </tr>
 			    </thead>
 			    <tbody>
-			      <tr ng-repeat = "item in global.dataToDisplay | filter: global.search | orderBy : global.sort : reverse" ng-show = "item.news_title && item.action != 'deleted'" ng-class="{'danger': item.action =='delete', 'warning': item.action =='read'}">
+			      <tr ng-repeat = "item in global.dataToDisplay | filter: global.search " ng-show = "item.news_title && item.action != 'deleted'" ng-class="{'danger': item.action =='delete', 'warning': item.action =='read'}">
 			      	<td>
 			      		<a href="{{item.hacker_news_url}}" target="_blank">{{item.news_title}}</a>
 			      		<a href="{{item.url}}" target="_blank">{{'(' +  item.url.substring(item.url.indexOf('.') + 1, item.url.indexOf('.com') + 4) + ')'}}</a>
