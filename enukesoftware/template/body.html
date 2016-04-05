@@ -1,0 +1,57 @@
+<div class="col-sm-9 padding-right" style="background-color: white;">
+		<div class="features_items">
+			<h2 class="title text-center ">Assignment</h2>
+			<button class="btn btn-danger pull-right" ng-click = "showSignUp = !showSignUp"><span>{{showSignUp ? 'Hide  Form' : 'Show Form'}}</span></button>
+			<div class="col-sm-12 padding-right" style="background-color: white;" ng-show = "showSignUp">
+	            <div class="features_items">
+	                 
+	                <div class="form-group" ng-form name="myForm" >
+	                   <table class="table">
+		                      <tbody>
+		                         <tr  ng-repeat = "log in constant.signUpForm" ng-switch on="log.key">
+		                            <td><h4>{{log.label}}</h4></td>
+		                            <td>
+		                                <div ng-switch-default  ng-class="{'has-error': myForm[log.key].$invalid, 'has-success': myForm[log.key].$valid && myForm[log.key].$dirty}">
+		                                    <input  class="form-control" type="{{log.type ? log.type : 'text'}}"  required name = "{{log.key}}"  ng-model = "formData[log.key]" placeholder=  "{{log.placeholder}}" ng-maxlength="50">
+		                                </div>
+		                                
+		                                <span class="error help-block help-block-error custom-date-error" ng-show="myForm[log.key].$error.maxlength">{{constant.msg.error_length_greater_50}}</span>
+		                                <span ng-show="myForm[log.key].$error.required" class = "help-block help-block-error custom-date-error">{{constant.msg.error_required}}</span>
+		                            </td>
+		                        </tr>
+		                  
+		                      </tbody>
+	               
+	            		</table>
+	            	</div>
+	            	<input class="btn btn-sub" ng-disabled = "myForm.$invalid"  type="submit" name="submitForm" ng-click = "submitForm()" value="Submit Form">
+	            </div>
+
+        	</div>
+			<table class="table table-striped">
+				<thead>
+				  <tr>
+				     <th>Id</th>
+				     <th>userId</th>
+				     <th>Title</th>
+				     <th>Body</th>
+				  </tr>
+				 </thead>
+			    <tbody>
+			      <tr ng-repeat = "item in global.detailItem">
+			        <td>
+			        	{{item.id}}
+			        	
+			        </td>
+			        <td>{{item.userId}}</td>
+			        <td> {{item.title}}</td>
+			        <td> {{item.body}}</td>
+			        <td> 
+			        <button class="btn btn-danger" ng-click = "confirmClick() && global.detailItem.splice($index, 1)" msg = "Are You sure you want to delete this Request" confirm-click>Delete</button>
+			        </td>
+			      </tr>
+			    </tbody>
+			  </table>
+			  
+		</div><!--features_items-->
+	</div>
