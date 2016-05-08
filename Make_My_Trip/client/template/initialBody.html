@@ -1,0 +1,47 @@
+<div class="col-sm-9 padding-right" style="background-color: white;">
+		<div class="features_items"><!--features_items-->
+			<h2 class="title text-center ">Make My Trip Assignment</h2>
+			
+			<table class="table table-striped">
+				<span>
+					Results Found: {{(global.detailItem.length - 1) * global.itemsPerPage + global.detailItem[global.detailItem.length - 1].length}}
+				</span>
+			    <tbody>
+			      <tr ng-repeat = "item in global.detailItem[global.currentPage]">
+			        <td>
+			        	<img ng-src="./webdata/image/{{global.countries[item.country] + '.png'}}" class="imgResize" />
+			        		
+			        	
+			        </td>
+			        <td>{{item.name}}<br/><br/>
+			        	<div class="star-rating"> 
+							  <span  ng-repeat="n in global.getStar(item.rating, true) track by $index"><i class="fa fa-star"></i></span>
+							  <span ng-repeat="n in global.getStar(item.rating) track by $index"><i class="fa fa-star-o"></i></span>
+							 
+							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							  <img ng-src="./webdata/imgOwn/d.png" class="smallImg" /><a href="https://in.linkedin.com/in/bijay-kanshi-2a8147b5" target="_blank">Know More</a>
+			        	</div>
+			        </td>
+			        <td>
+			        	<img ng-src="./webdata/imgOwn/a.png" class="smallImg" />{{item.city}},{{item.country}}<br/>
+			        	<img ng-src="./webdata/imgOwn/b.png" class="smallImg" />Elevation:  {{item.elev}}<br/>
+			        	<img ng-src="./webdata/imgOwn/c.png" class="smallImg" />Direct Flight:   {{item.direct_flights}}
+			        </td>
+			      </tr>
+			    </tbody>
+			  </table>
+			  <ul class="pagination page">
+				<li  ng-class="{'disabled': global.currentPage == 0}">
+                    <!-- <a href="javascript:void(0);" ng-show="global.currentPage == 0">« Prev</a> -->
+                    <a href="javascript:void(0);" ng-hide="global.currentPage == 0" ng-click="global.currentPage=global.currentPage-1;setArr('pre')">« Prev</a>
+                </li>
+				 <li id="paging" ng-repeat="n in global.iterateOverPageArr" ng-class="{active: n == global.currentPage}" ng-click="global.currentPage = n;setArr()">
+                    <a href="javascript:void(0);" ng-bind="n + 1">1</a>
+                </li>
+                 <li  ng-class="{'disabled': global.currentPage == global.detailItem.length - 1}">
+                   <!--  <a href="javascript:void(0);" ng-show="global.currentPage == global.peopleList.length - 1">Next »</a> -->
+                    <a href="javascript:void(0);" ng-hide="global.currentPage == global.detailItem.length - 1" ng-click="global.currentPage=global.currentPage+1;setArr()">Next »</a>
+                </li>
+			</ul>
+		</div><!--features_items-->
+	</div>

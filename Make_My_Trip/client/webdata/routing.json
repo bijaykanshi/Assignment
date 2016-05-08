@@ -1,0 +1,27 @@
+{
+  "route": [
+    {
+      "state": "home",
+      "url": "/home",
+      "views": [
+        {
+          "view": "@",
+          "templateUrl": "template/viewIndex.html"
+        },
+        {
+          "view": "header@home",
+          "templateUrl": "template/header.html"
+        },
+        {
+          "view": "sideBar@home",
+          "templateUrl": "template/sideBar.html"
+        },
+        {
+          "view": "body@home",
+          "templateUrl": "template/initialBody.html",
+          "controller": "initialBody"
+        }
+      ]
+    }
+  ]
+}

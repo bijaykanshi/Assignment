@@ -1,0 +1,35 @@
+
+				<div class="col-sm-3" style="background-color: white; ">
+					<div class="left-sidebar">
+						<h2>Type</h2>
+						<div class="panel-group category-products" id="accordian">
+							
+							<div class="panel panel-default" ng-repeat="item in global.airportsType">
+								<div class="checkbox">
+								  	<label><input type="checkbox" ng-model = "global.checkModal[$index]" ng-change = "global.filterItem()" value="{{$index}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item}}</label>
+								</div>
+							</div>
+						</div>
+
+						<div class="brands_products">
+							<h2>Sort By</h2>
+							<div class="brands-name">
+								<label class="radio-inline"><input type="radio" value="elev" ng-model = "global.sort"  name="sort" ng-click="global.sortBy()">Elevation</label>
+								<label class="radio-inline"><input type="radio" value="direct_flights" ng-model = "global.sort" ng-click="global.sortBy()"  name="sort">Direct Flight</label>
+								<label class="radio-inline"><input type="radio" value = "rating"  ng-model = "global.sort" ng-click="global.sortBy()" name="sort">Rating</label>
+
+							</div>
+						</div>
+						<div class="brands_products">
+							<div class="brands-name">
+								<ul class="nav nav-pills nav-stacked">
+									<li><a href="javascript:void(0)"> <span class="pull-right">{{global.detailItemBackUp.length}}</span>Total Airports</a></li>
+								</ul>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+			
