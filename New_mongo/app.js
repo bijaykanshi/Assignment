@@ -15,6 +15,7 @@ var ref = new function() {
 }
 
 require('./config')(ref);
+//debugger;
 ref.route = require('./route/routing')(ref);
 ref.dbconnection = require('./route/dbConnection.js')(ref);
 ref.app.use('/', ref.route);

@@ -1,0 +1,84 @@
+<div class="col-sm-9 padding-right" style="background-color: white;" ng-show = "global.showInitial">
+		<div class="features_items"><!--features_items-->
+			<h2 class="title text-center ">Assignment</h2>
+			<br/>
+			<h4 class="title text-center ">Welcome {{global.myInfo.email}}</h4>
+			<div ng-show = "!global.adminUser">
+				<button class="btn btn-danger" ng-click = "beforeSaveAction(global.dataToDisplay, 'saveAction', 'saveAction')" ng-disabled="count">Save Your Action in Data Base</button>
+				<input type="text" ng-model = "global.search" placeholder="Enter Text To Search" class="pull-right"></input>
+				<table class="table table-responsive">
+				<thead>
+			      <tr>
+
+			        <th>News</th>
+			        <th>Read/Delete)</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr ng-repeat = "item in global.dataToDisplay | filter: global.search " ng-show = "item.news_title && item.action != 'deleted'" ng-class="{'danger': item.action =='delete', 'warning': item.action =='read'}">
+			      	<td>
+			      		<a href="{{item.hacker_news_url}}" target="_blank">{{item.news_title}}</a>
+			      		<a href="{{item.url}}" target="_blank">{{'(' +  item.url.substring(item.url.indexOf('.') + 1, item.url.indexOf('.com') + 4) + ')'}}</a>
+			      		<br>
+			      		<span ng-click="showComment[item.news_id] = !showComment[item.news_id]"> <b style="cursor:pointer">Comment {{'(' +item.commentArr.length+ ')'}}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
+			      		<span> <b style="cursor:pointer" ng-click="rootFunForSendingRequest(item, 'incUpvotes', 'upvotes')">Upvotes {{'(' +item.upvotes+ ')'}}</b></span>
+			      		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			      		<span ng-init = "getInterval(item.news_id, 'news', item.posted_on)"> <b> {{timeToShow[item.news_id + 'news']}} ago</b></span>
+			      		<div ng-show = "showComment[item.news_id]">
+			      			<div class="form-group">
+							  	<label for="comment">Write your comment here</label>
+							  	<textarea class="form-control" rows="3" ng-model = "commentedData[item.news_id]" ng-keypress="($event.which === 13) ? doComment(item) : 0"></textarea><br>
+							  	<table class="table table-striped">
+				                  <tbody>
+				                       <tr ng-repeat="com in item.commentArr">
+				                          	<td>{{com.comment}}<br>
+							  						<b>Commented By:  {{com.comment_by}} </b>
+							  						<span class="pull-right" ng-init = "getInterval(item.news_id, 'comment', com.datetime, $index, $parent.$index)"> <b> {{timeToShow[com.news_id + 'comment' + $index + '_' + $parent.$index]}} ago</b></span>
+							  				</td>
+				                         
+				                      </tr>
+				                  </tbody>
+				              	</table>
+							  	
+							</div>
+			      		</div>
+					</td>
+			        <td>
+			        	<form role="form">
+						    <label class="radio-inline"><input type="radio" ng-value="item.action == 'read'" name="{{'radio_' + $index}}" ng-click = "setAction(item, 'read')">Read</label>
+						    <label class="radio-inline"><input type="radio" name="{{'radio_' + $index}}" ng-value="item.action == 'delete'" ng-click = "setAction(item, 'delete')">Delete</label>
+						    <label class="radio-inline"><input type="radio" name="{{'radio_' + $index}}" ng-value="!item.action" ng-click = "setAction(item)">Unmark</label>
+						 </form>
+			        </td>
+			      </tr>
+			    </tbody>
+			  </table>
+			</div>
+			
+			<div ng-show = "global.adminUser" ng-form name="newsFeedForm">
+				<br/>
+				<h2 class="title text-center ">News Submit</h2>
+				<br/>
+				<table class="table">
+                  <tbody>
+                       <tr ng-repeat = "log in constant.newsFeed" ng-switch on="log.key">
+                          <td>{{log.label}}</td>
+                          <td>
+                            <div ng-switch-when="news_desc">
+                                <div class="form-group">
+								  <textarea class="form-control" ng-model = "newsFeedObj[log.key]" rows="5"></textarea>
+								</div>
+                            </div>
+                            <div ng-switch-default ng-class="{'has-error': newsFeedForm[log.key].$invalid, 'has-success': newsFeedForm[log.key].$valid && newsFeedForm[log.key].$dirty}">
+                                <input  class="form-control" type="{{log.type}}" required name = "{{log.key}}"  ng-model = "newsFeedObj[log.key]" placeholder=  "{{log.placeholder}}">
+                            </div>
+                            <span ng-show="newsFeedForm[log.key].$error.required" class = "help-block help-block-error custom-date-error">{{constant.msg.error_required}}</span>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+              <input class="btn btn-sub" type="submit" ng-disabled = "newsFeedForm.$invalid"   ng-click = "rootFunForSendingRequest([newsFeedObj], 'newsSubmit', 'newsSubmit')" value="Submit News">
+			</div>
+			</div>
+		</div>
+	</div>
