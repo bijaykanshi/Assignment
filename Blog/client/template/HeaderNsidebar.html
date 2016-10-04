@@ -8,7 +8,7 @@
                </button>
                <a class="navbar-brand" href="index.html">Admin Panel</a>
             </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="collapse navbar-collapse navbar-ex1-collapse" ng-init = "selectedObj = {}">
                <ul id="active" class="nav navbar-nav side-nav" style="overflow-y:hidden;">
                   <!-- <li class="selected"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard</a></li>
                   <li class="dropdown user-dropdown">
@@ -31,14 +31,14 @@
                   <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
                   <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li> -->
                   
-                  <li class="dropdown user-dropdown" ng-repeat = "item in sidebarLink">
+                  <li class="dropdown user-dropdown" ng-repeat = "item in sidebarLink" ng-class = "{'selected': selectedObj[$index]}" ng-click = "selectedObj[$index] = true">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{item.linkName}} <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png"></a>
-                     <ul class="dropdown-menu" ng-if = "item.dropDown">
-                        <li ng-repeat = "innerItem in item.dropDown"><a href="#"><i class="fa fa-user"></i> {{innerItem.linkName}}</a></li>
+                     <ul class="dropdown-menu" autoClose="nonInput" ng-if = "item.dropDown">
+                        <li ng-repeat = "innerItem in item.dropDown"  ng-click="$event.stopPropagation();"><a href="#"><i class="fa fa-user"></i> {{innerItem.linkName}}</a></li>
                      </ul>
                   </li>
                </ul>
-               <!-- <ul class="nav navbar-nav navbar-right navbar-user">
+               <ul class="nav navbar-nav navbar-right navbar-user">
                   <li class="dropdown messages-dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Messages <span class="badge">2</span> <b class="caret"></b></a>
                      <ul class="dropdown-menu">
@@ -75,6 +75,6 @@
                         <input type="text" placeholder="Search" class="form-control">
                      </form>
                   </li>
-               </ul> -->
+               </ul>
             </div>
          </nav>
