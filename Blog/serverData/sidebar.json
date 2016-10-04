@@ -1,0 +1,30 @@
+[
+	{
+		"linkName": "Interview's Questions",
+		"dropDown": [
+			{
+				"linkName": "Javascript",
+				"data": [
+					{
+						"question": "what is your name",
+						"answer": "Bijay Kanshi"
+					}
+				]
+			}
+		]
+	},
+	{
+		"linkName": "Blogs",
+		"dropDown": [
+			{
+				"linkName": "Javascript",
+				"data": [
+					{
+						"question": "this is my first blog",
+						"answer": "acha"
+					}
+				]
+			}
+		]
+	}
+]

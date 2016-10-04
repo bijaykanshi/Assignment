@@ -16,6 +16,11 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
         var num = flag ? rating : 10 - rating;
         return new Array(num);
     }
+    global.defaultErrFun = function (data, status, headers, config) {
+        global.isLoading = false;
+        console.log("Error on http request :- " + JSON.stringify(data));
+        alert( "failure message: " + JSON.stringify({data: data}));
+    }
     global.sendRequest = function(url, dataObj, method, successFn, failureFn, header) {
     	global.isLoading = true;
         var res = $http({
@@ -30,13 +35,7 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
 				successFn(data, status, headers, config);
 			}
 		});
-		res.error(function(data, status, headers, config) {
-			global.isLoading = false;
-			if (failureFn) {
-				failureFn(data, status, headers, config);
-			}
-			alert( "failure message: " + JSON.stringify({data: data}));
-		});	
+		res.error(failureFn || global.defaultErrFun);	
     };
     
     global.getTimestampDiff = function(preDate) {
