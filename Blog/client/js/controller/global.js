@@ -1,20 +1,8 @@
 app.factory('global', function($http, $modal, $state, $location, $rootScope) {
     var global = {};
-    global.myInfo = {
-        country: 'India',
-        pin_code: 201301,
-        state: 'Uttar Pradesh',
-        contact_No: 9910430419,
-        city: 'Noida'
-    };
     var protocol = {
         json: {'Content-type': 'application/json'},
         urlencoded: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }
-    global.getStar = function(rating, flag) {
-        var rating = parseInt(rating);
-        var num = flag ? rating : 10 - rating;
-        return new Array(num);
     }
     global.defaultErrFun = function (data, status, headers, config) {
         global.isLoading = false;
@@ -38,44 +26,6 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
 		res.error(failureFn || global.defaultErrFun);	
     };
     
-    global.getTimestampDiff = function(preDate) {
-        var time = {
-            sec: {
-                divide: 60
-            },
-            min: {
-                divide: 60
-            },
-            hour: {
-                divide: 24
-            },
-            day: {
-                divide: 30
-            },
-            month: {
-                divide: 12
-            },
-            year: {
-                divide: 1000
-            }
-        }
-        var currentDate = new Date();
-        var data = Math.floor((currentDate - preDate)/1000);
-        Object.keys(time).forEach(function(key) {
-            time[key].val = data % time[key].divide;
-            data = Math.floor(data/time[key].divide)
-        });
-        var got;
-        var keys = ['year', 'month', 'day', 'hour', 'min', 'sec'];
-        var str = '';
-        keys.forEach(function(key) {
-            if (time[key].val || got) {
-                got = true;
-                str += time[key].val + ' ' + key + '  ';
-            }
-        });
-        return str;
-    }
     
     console.log('ksldfljjlsdfjl..jlsjdflkjsdlfk');
     global.openModal = function(templateUrl, controllerName, parameter, windowClass, extra, back) {
@@ -112,6 +62,17 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
           console.log('error');
     });*/
     return global;
+});
+app.service('dataSharing', function() {
+  var sideLinkData;
+
+  this.setData = function(newObj) {
+      sideLinkData = newObj;
+  };
+
+  this.getProducts = function(){
+      return sideLinkData;
+  };
 });
 app.run(function($rootScope, $state, global) {
     $rootScope.global = global;
