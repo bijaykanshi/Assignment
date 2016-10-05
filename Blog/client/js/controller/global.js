@@ -63,17 +63,6 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
     });*/
     return global;
 });
-app.service('dataSharing', function() {
-  var sideLinkData;
-
-  this.setData = function(newObj) {
-      sideLinkData = newObj;
-  };
-
-  this.getProducts = function(){
-      return sideLinkData;
-  };
-});
 app.run(function($rootScope, $state, global) {
     $rootScope.global = global;
 	global.sendRequest('./webdata/routing.json',
