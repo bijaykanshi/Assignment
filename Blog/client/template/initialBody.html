@@ -1,4 +1,4 @@
-<div id="page-wrapper">
+<div id="page-wrapper" ng-init = "obj = {}">
             <!-- <div class="row">
                <div class="col-lg-12">
                   <h1>Dashboard <small>Statistics and more</small></h1>
@@ -15,8 +15,8 @@
                <div class="col-sm-8">
                     <div class="row" ng-repeat="item in global.dispData.data">
                         <div class="col-xs-12">
-                            <h2 ng-click = "clickQ = $index">{{item.question}}</h2>
-                            <p ng-show = "clickQ === $index">
+                            <h4 ng-click = "obj.index = $index">{{("Question - " + ($index + 1) + "  =>  ") + item.question}}</h4>
+                            <p ng-show = "obj.index == $index">
                                 {{item.answer}}
                             </p>
                             <!-- <div class="text-center">
