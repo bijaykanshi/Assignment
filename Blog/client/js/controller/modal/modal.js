@@ -84,3 +84,36 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
         $modalInstance.dismiss('cancel');
     };
 });
+app.controller('addQuetionAns', function ($scope, $modalInstance, parameter, global, constant) {
+    $scope.header = parameter.header || 'Alert Message';
+    $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
+    $scope.rdObj = {val: 'quest'};
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
+    $scope.QArr = [];
+    $scope.add = function () {
+      if ($scope.questAns.quest == 'Add Question' || $scope.questAns.ans == 'Add Answer' || 
+          !($scope.pass && $scope.uname)) {
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddBothQD});
+        return;
+      }
+      $scope.QArr.push($scope.questAns);
+      $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
+      global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddedSucessfully});
+    };
+    $scope.submit = function () {
+      if (!($scope.pass && $scope.uname)) {
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustPresent});
+        return;
+      }
+      //angular.extend(global.currentItem.data, $scope.QArr);
+      [].push.apply(global.currentItem.data, $scope.QArr);
+      global.sendRequest('submitQA', global.sidebarLink, 'post', function(data, status, headers, config) {$scope.close();
+        $scope.close();
+        [].push.apply(global.dispData[global.dispData.length - 1], $scope.QArr);
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
+
+      });
+    };
+});

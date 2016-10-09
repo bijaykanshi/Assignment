@@ -1,3 +1,9 @@
 .dropIcon {
 	width: 20px
 }
+.handSign {
+	cursor: pointer;
+}
+.extraLarge-Modal .modal-dialog {
+   width: 75%;
+}

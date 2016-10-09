@@ -1,13 +1,19 @@
 app.factory('constant', function($http, $modal, $state, $location, $rootScope){
      
     var constant = {};
-    $rootScope.constant = constant;
+    
     constant.msg = {
         error_required: 'This field is required',
         alert_user_not_registered: 'Invalid Username and password',
         alert_siginUp_success: 'You have successfully registered ..please continue with login',
         error_length_greater_50: 'Length can not be greater than 50',
-        error_server: 'there is some internal server error'
+        error_server: 'there is some internal server error',
+        addQue: 'Add Question and Answer here',
+        AddedSucessfully: 'Whatever you have written added successfully',
+        AddBothQD: 'please Add both Question and Answer',
+        NotAdded: 'You havent added any Question and Answer yet',
+        allAdded: 'All Question and Answer has been added successfully',
+        mustPresent: 'Username and password must be present'
     };
     constant.loginForm = [
         {

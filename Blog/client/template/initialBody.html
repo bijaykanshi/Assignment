@@ -1,142 +1,151 @@
 <div id="page-wrapper" ng-init = "obj = {}">
-            <!-- <div class="row">
-               <div class="col-lg-12">
-                  <h1>Dashboard <small>Statistics and more</small></h1>
-                  <div class="alert alert-dismissable alert-warning">
-                     <button data-dismiss="alert" class="close" type="button">&times;</button>
-                     Welcome to the admin dashboard! Feel free to review all pages and modify the layout to your needs. 
-                     <br />
-                     This theme uses the <a href="https://www.shieldui.com">ShieldUI</a> JavaScript library for the 
-                     additional data visualization and presentation functionality illustrated here.
-                  </div>
-               </div>
+   <!-- <div class="row">
+      <div class="col-lg-12">
+         <h1>Dashboard <small>Statistics and more</small></h1>
+         <div class="alert alert-dismissable alert-warning">
+            <button data-dismiss="alert" class="close" type="button">&times;</button>
+            Welcome to the admin dashboard! Feel free to review all pages and modify the layout to your needs. 
+            <br />
+            This theme uses the <a href="https://www.shieldui.com">ShieldUI</a> JavaScript library for the 
+            additional data visualization and presentation functionality illustrated here.
+         </div>
+      </div>
+      </div>
+      -->            
+   <div class="row">
+      <div class="col-sm-8">
+         <div class="row" ng-repeat="item in global.dispData[global.currentPage]">
+            <div class="col-xs-12">
+               <h4 ng-click = "obj.index = $index" class="handSign">{{("Question - " + ($index + 1) + "  =>  ") + item.quest}}</h4>
+               <p ng-show = "obj.index == $index">
+                  {{item.ans}}
+               </p>
+               <!-- <div class="text-center">
+                  <a href="#"><i class="fa fa-plus"></i>Full Story</a>
+                  <a href="#"><i class="fa fa-comment"></i>12 Comments</a>
+                  <a href="#"><i class="fa fa-share"></i>11 Shares</a>
+                  </div> -->
             </div>
- -->            <div class="row">
-               <div class="col-sm-8">
-                    <div class="row" ng-repeat="item in global.dispData.data">
-                        <div class="col-xs-12">
-                            <h4 ng-click = "obj.index = $index">{{("Question - " + ($index + 1) + "  =>  ") + item.question}}</h4>
-                            <p ng-show = "obj.index == $index">
-                                {{item.answer}}
-                            </p>
-                            <!-- <div class="text-center">
-                                <a href="#"><i class="fa fa-plus"></i>Full Story</a>
-                                <a href="#"><i class="fa fa-comment"></i>12 Comments</a>
-                                <a href="#"><i class="fa fa-share"></i>11 Shares</a>
-                            </div> -->
-                        </div>
-
-                        <hr/>
-                    </div>
-
-                    <!-- the comment box -->
-                    <div class="well">
-                        <h4>Leave a Comment:</h4>
-                        <form role="form">
-                            <div class="form-group">
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-
-                </div>
-               <div class="col-md-4">
-                  <div class="panel panel-primary">
-                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-rss"></i> Feed</h3>
+            <hr/>
+         </div>
+         <ul ng-show="global.dispData && global.dispData.length" class="pagination page">
+            <li  ng-class="{'disabled': global.currentPage == 0}">
+               <a href="javascript:void(0);" ng-hide="global.currentPage == 0" ng-click="global.currentPage=global.currentPage-1;">« Prev</a>
+            </li>
+            <li id="paging" ng-repeat="n in [] | range:(global.dispData.length)" ng-class="{active: n == global.currentPage}" ng-click="global.currentPage = n;">
+               <a href="javascript:void(0);" ng-bind="n + 1">1</a>
+            </li>
+            <li  ng-class="{'disabled': global.currentPage == global.dispData.length - 1}">
+               <a href="javascript:void(0);" ng-hide="global.currentPage == global.dispData.length - 1" ng-click="global.currentPage=global.currentPage+1;">Next »</a>
+            </li>
+         </ul>
+         <!-- the comment box -->
+         <!-- <div class="well">
+            <h4>Leave a Comment:</h4>
+            <form role="form">
+               <div class="form-group">
+                  <textarea class="form-control" rows="3"></textarea>
+               </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+         </div> -->
+      </div>
+      <!-- <div class="col-md-4">
+         <div class="panel panel-primary">
+            <div class="panel-heading">
+               <h3 class="panel-title"><i class="fa fa-rss"></i> Feed</h3>
+            </div>
+            <div class="panel-body feed">
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-comment"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        <a href="#">John Doe</a> commented on <a href="#">What Makes Good Code Good</a>.
                      </div>
-                     <div class="panel-body feed">
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-comment"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 <a href="#">John Doe</a> commented on <a href="#">What Makes Good Code Good</a>.
-                              </div>
-                              <div class="time pull-left">
-                                 3 h
-                              </div>
-                           </div>
-                        </section>
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-check"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 <a href="#">Merge request #42</a> has been approved by <a href="#">Jessica Lori</a>.
-                              </div>
-                              <div class="time pull-left">
-                                 10 h
-                              </div>
-                           </div>
-                        </section>
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-plus-square-o"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 New user <a href="#">Greg Wilson</a> registered.
-                              </div>
-                              <div class="time pull-left">
-                                 Today
-                              </div>
-                           </div>
-                        </section>
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-bolt"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 Server fail level raises above normal. <a href="#">See logs</a> for details.
-                              </div>
-                              <div class="time pull-left">
-                                 Yesterday
-                              </div>
-                           </div>
-                        </section>
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-archive"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 <a href="#">Database usage report</a> is ready.
-                              </div>
-                              <div class="time pull-left">
-                                 Yesterday
-                              </div>
-                           </div>
-                        </section>
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-shopping-cart"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 <a href="#">Order #233985</a> needs additional processing.
-                              </div>
-                              <div class="time pull-left">
-                                 Wednesday
-                              </div>
-                           </div>
-                        </section>
-                        <section class="feed-item">
-                           <div class="icon pull-left">
-                              <i class="fa fa-arrow-down"></i>
-                           </div>
-                           <div class="feed-item-body">
-                              <div class="text">
-                                 <a href="#">Load more...</a>
-                              </div>
-                           </div>
-                        </section>
+                     <div class="time pull-left">
+                        3 h
                      </div>
                   </div>
-               </div>
+               </section>
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-check"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        <a href="#">Merge request #42</a> has been approved by <a href="#">Jessica Lori</a>.
+                     </div>
+                     <div class="time pull-left">
+                        10 h
+                     </div>
+                  </div>
+               </section>
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-plus-square-o"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        New user <a href="#">Greg Wilson</a> registered.
+                     </div>
+                     <div class="time pull-left">
+                        Today
+                     </div>
+                  </div>
+               </section>
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-bolt"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        Server fail level raises above normal. <a href="#">See logs</a> for details.
+                     </div>
+                     <div class="time pull-left">
+                        Yesterday
+                     </div>
+                  </div>
+               </section>
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-archive"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        <a href="#">Database usage report</a> is ready.
+                     </div>
+                     <div class="time pull-left">
+                        Yesterday
+                     </div>
+                  </div>
+               </section>
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-shopping-cart"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        <a href="#">Order #233985</a> needs additional processing.
+                     </div>
+                     <div class="time pull-left">
+                        Wednesday
+                     </div>
+                  </div>
+               </section>
+               <section class="feed-item">
+                  <div class="icon pull-left">
+                     <i class="fa fa-arrow-down"></i>
+                  </div>
+                  <div class="feed-item-body">
+                     <div class="text">
+                        <a href="#">Load more...</a>
+                     </div>
+                  </div>
+               </section>
             </div>
          </div>
+      </div> -->
+   </div>
+</div>

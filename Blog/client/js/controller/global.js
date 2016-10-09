@@ -1,13 +1,27 @@
 app.factory('global', function($http, $modal, $state, $location, $rootScope) {
     var global = {};
+    global.currentPage = 0;
+    global.itemsPerPage = 10;
+    global.getPaination = function(filteredItems) {
+        global.currentPage = 0;
+        global.currentItem = filteredItems;
+        filteredItems = filteredItems.data;
+        var itemsPerPage = global.itemsPerPage,
+            pagination = [],
+            j = 0;
+        for (var i = itemsPerPage; i < filteredItems.length; i += itemsPerPage) {
+            pagination[j++] = filteredItems.slice(i - itemsPerPage, i);
+        }
+        pagination[j++] = filteredItems.slice(i - itemsPerPage, i);
+        return pagination;
+    };
     var protocol = {
         json: {'Content-type': 'application/json'},
         urlencoded: {'Content-Type': 'application/x-www-form-urlencoded'}
     }
     global.defaultErrFun = function (data, status, headers, config) {
         global.isLoading = false;
-        console.log("Error on http request :- " + JSON.stringify(data));
-        alert( "failure message: " + JSON.stringify({data: data}));
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: JSON.stringify(data)});
     }
     global.sendRequest = function(url, dataObj, method, successFn, failureFn, header) {
     	global.isLoading = true;
@@ -25,9 +39,6 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
 		});
 		res.error(failureFn || global.defaultErrFun);	
     };
-    
-    
-    console.log('ksldfljjlsdfjl..jlsjdflkjsdlfk');
     global.openModal = function(templateUrl, controllerName, parameter, windowClass, extra, back) {
       //global.isLoading = true;
       var obj = {
@@ -63,8 +74,9 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
     });*/
     return global;
 });
-app.run(function($rootScope, $state, global) {
+app.run(function($rootScope, $state, global, constant) {
     $rootScope.global = global;
+    $rootScope.constant = constant;
 	global.sendRequest('./webdata/routing.json',
         undefined,
         'GET',
