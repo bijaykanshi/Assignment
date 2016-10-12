@@ -1,0 +1,10 @@
+.dropIcon {
+	width: 20px
+}
+.handSign {
+	cursor: pointer;
+}
+.extraLarge-Modal .modal-dialog {
+   width: 75%;
+}
+/*input[type='radio'] { transform: scale(2); }*/

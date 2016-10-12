@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <!-- <button type="button"  ng-click="close()" name="close" class="close" data-dismiss="modal">&times;</button> -->
+    
+</div>      
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-12" style="background-color: white; ">
+            <h2>Login</h2>
+            <div class="form-group" ng-form name="loginForm" > 
+                <table class="table">
+                  <tbody>
+                       <tr ng-repeat = "log in constant.loginForm" ng-switch on="log.key">
+                          <td>{{log.label}}</td>
+                          <td>
+                            <div ng-switch-when="ucat" ng-init = "global.myInfo[log.key] = 'site_user'">
+                                <select class="form-control" ng-model = "loginData[log.key]" required>
+                                    <option value="site_user">Site User</option>
+                                    <option value="management">Management</option>
+                                </select>
+                            </div>
+                            <div ng-switch-default ng-class="{'has-error': loginForm[log.key].$invalid, 'has-success': loginForm[log.key].$valid && loginForm[log.key].$dirty}">
+                                <input  class="form-control" type="{{log.type}}" required name = "{{log.key}}"  ng-model = "loginData[log.key]" placeholder=  "{{log.placeholder}}">
+                            </div>
+                            <span ng-show="loginForm[log.key].$error.required" class = "help-block help-block-error custom-date-error">{{constant.msg.error_required}}</span>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+            
+             <input class="btn btn-sub" type="submit" ng-disabled = "loginForm.$invalid"  name="login" ng-click = "loginFun('login')" value="Login">
+       
+    </div>
+   </div>
+   <div class="row"> 
+    <div>
+        
+        <button class="btn btn-danger pull-right" ng-click = "showSignUp = !showSignUp"><span>{{showSignUp ? 'Hide Sign Up Form' : 'Show Sign Up Form'}}</span></button>
+        <div class="col-sm-12 padding-right" style="background-color: white;" ng-show = "showSignUp">
+            <div class="features_items">
+                 
+                   <div class="form-group" ng-form name="myForm" >
+                   <table class="table">
+                      <tbody>
+                         <tr  ng-repeat = "log in constant.signUpForm" ng-switch on="log.key">
+                            <td><h4>{{log.label}}</h4></td>
+                            <td>
+                                <div ng-switch-when="ucat" ng-init = "global.myInfo[log.key] = 'site_user'">
+                                    <select class="form-control" ng-model="global.myInfo[log.key]" required>
+                                        <option value="site_user">Site User</option>
+                                        <option value="management">Management</option>
+                                    </select>
+                                </div>
+                                <div ng-switch-default  ng-class="{'has-error': myForm[log.key].$invalid, 'has-success': myForm[log.key].$valid && myForm[log.key].$dirty}">
+                                    <input  class="form-control" type="{{log.type ? log.type : 'text'}}"  required name = "{{log.key}}"  ng-model = "global.myInfo[log.key]" placeholder=  "{{log.placeholder}}" ng-maxlength="50">
+                                </div>
+                                
+                                <span class="error help-block help-block-error custom-date-error" ng-show="myForm[log.key].$error.maxlength">{{constant.msg.error_length_greater_50}}</span>
+                                <span ng-show="myForm[log.key].$error.required" class = "help-block help-block-error custom-date-error">{{constant.msg.error_required}}</span>
+                            </td>
+                        </tr>
+                  
+                      </tbody>
+               
+            </table>
+            </div>
+            <input class="btn btn-sub" ng-disabled = "myForm.$invalid"  type="submit" name="signup" ng-click = "loginFun('signUp')" value="Sign Up">
+            </div>
+
+        </div>
+    </div>
+     
+</div>
+<div class="footerClose">
+    <!-- <button type="button" ng-hide = "selectOrg" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button> -->
+</div>
