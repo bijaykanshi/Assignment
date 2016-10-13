@@ -6,11 +6,11 @@
    <div class="modal-body">
       <div class="row">
          <div class="form-group col-xs-5">
-            <label for="pwd">Link Name:</label>
-            <input type="text" ng-model = "uname" class="form-control" id="pwd">            
+            <label >Link Name:</label>
+            <input type="text" ng-model = "uname" class="form-control">            
          </div>
          <div class="form-group col-xs-6">
-            <label for="pwd">Select Place to insert : </label><br/>
+            <label ">Select Place to insert : </label><br/>
             <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" class="handSign" name="optradio" value="leftSideBar">Left SideBar</label>
             <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" class="handSign" value="topBar" name="optradio">Top Bar</label>
             <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" value="bodyBox" class="handSign" name="optradio">Body Box</label>           
@@ -21,39 +21,24 @@
       <hr/>
       <div class="row">
          <div class="form-group col-xs-6">
-            <label for="pwd">Do You want Nested Link : </label><br/>
+            <label>Do You want Nested Link : </label><br/>
             <label class="radio-inline"><input type="radio" ng-model = "rdObj.nestedLink" class="handSign" name="nestedLink" value="yes">Yes</label>
             <label class="radio-inline"><input type="radio" ng-model = "rdObj.nestedLink" class="handSign" value="no" name="nestedLink">No</label>            
          </div>
          <div class="form-group col-xs-6">
-            <button type="button" ng-show="rdObj.nestedLink=='no'" class="btn btn-success">Select Template</button>         
+            <button type="button" class="btn btn-success" ng-click = "rdObj.nestedLink=='yes' && nestedLinkArr.push({})">{{rdObj.nestedLink=='no' ? "Select Template" : "Add Nested Link"}}</button>         
          </div>
       </div>
       <hr/>
        <div class="row" ng-show="rdObj.nestedLink=='yes'">
-          <table class="table table-hover .table-responsive">
-             <thead>
-               <tr>
-                 <th>Firstname</th>
-                 <th>Lastname</th>
-                 <th>Email</th>
-               </tr>
-             </thead>
+          <table class="table table-hover .table-responsive .table-condensed .table-striped">
+             
              <tbody>
-               <tr>
-                 <td>John</td>
-                 <td>Doe</td>
-                 <td>john@example.com</td>
-               </tr>
-               <tr>
-                 <td>Mary</td>
-                 <td>Moe</td>
-                 <td>mary@example.com</td>
-               </tr>
-               <tr>
-                 <td>July</td>
-                 <td>Dooley</td>
-                 <td>july@example.com</td>
+               <tr ng-repeat="item in nestedLinkArr">
+                 <td><input type="text" ng-model = "item.linkName" placeholder="Enter Link Name" class="form-control"></td>
+                 <td><button type="button" class="btn btn-primary" ng-click = "global.openModal('template/modals/addEditTemplate.html', 'addEditTemplate', {header: constant.msg.addEditTemplate}, 'extraLarge-Modal', undefined, true);">Select Template</button> </td>
+                 <td><button type="button" class="btn btn-warning" >Edit</button> </td>
+                 <td><button type="button" class="btn btn-danger" ng-click = "confirmClick() && nestedLinkArr.splice($index, 1)" confirm-click = "Are You sure you want to delete this Link">Delete</button></td>
                </tr>
              </tbody>
            </table>
