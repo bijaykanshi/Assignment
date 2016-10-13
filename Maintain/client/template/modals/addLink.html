@@ -19,15 +19,45 @@
       <!-- <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" name="optradio" value="quest">Question</label>
       <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" value="ans" name="optradio">Answer</label> -->
       <hr/>
-      <div class="sample-show-hide summerNotePos">
-         <summernote height = "100"  ng-model = "questAns[rdObj.val]"></summernote>
+      <div class="row">
+         <div class="form-group col-xs-6">
+            <label for="pwd">Do You want Nested Link : </label><br/>
+            <label class="radio-inline"><input type="radio" ng-model = "rdObj.nestedLink" class="handSign" name="nestedLink" value="yes">Yes</label>
+            <label class="radio-inline"><input type="radio" ng-model = "rdObj.nestedLink" class="handSign" value="no" name="nestedLink">No</label>            
+         </div>
+         <div class="form-group col-xs-6">
+            <button type="button" ng-show="rdObj.nestedLink=='no'" class="btn btn-success">Select Template</button>         
+         </div>
       </div>
-      <h6>Question : - </h6>
-      {{questAns.quest}}
-      <h6>Answer : - </h6>
-      {{questAns.ans}}
-      <h6>Total no of Q&A you have addded is :- </h6>
-      {{QArr.length}}
+      <hr/>
+       <div class="row" ng-show="rdObj.nestedLink=='yes'">
+          <table class="table table-hover .table-responsive">
+             <thead>
+               <tr>
+                 <th>Firstname</th>
+                 <th>Lastname</th>
+                 <th>Email</th>
+               </tr>
+             </thead>
+             <tbody>
+               <tr>
+                 <td>John</td>
+                 <td>Doe</td>
+                 <td>john@example.com</td>
+               </tr>
+               <tr>
+                 <td>Mary</td>
+                 <td>Moe</td>
+                 <td>mary@example.com</td>
+               </tr>
+               <tr>
+                 <td>July</td>
+                 <td>Dooley</td>
+                 <td>july@example.com</td>
+               </tr>
+             </tbody>
+           </table>
+      </div>
    </div>
    <div  class="footerClose">
       <button type="button" class="btn btn-default" ng-click="add()" data-dismiss="modal">Add</button>

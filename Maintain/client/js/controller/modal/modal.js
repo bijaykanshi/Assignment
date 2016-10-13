@@ -87,7 +87,7 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
 app.controller('addLink', function ($scope, $modalInstance, parameter, global, constant) {
     $scope.header = parameter.header || 'Alert Message';
     $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
-    $scope.rdObj = {val: 'quest'};
+    $scope.rdObj = {val: 'leftSideBar', nestedLink: 'no'};
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
