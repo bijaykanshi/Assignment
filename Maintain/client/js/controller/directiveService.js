@@ -67,6 +67,11 @@ app.service('dialogModal', ['$modal', function($modal) {
         return modalInstance;
     }
 }]);
+app.filter('to_trusted', ['$sce', function($sce){
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
 Array.prototype.getCustomIndex = function(toSearch, key) {
     for (var i = 0; i < this.length; i += 1) {
         if (this[i][key] == toSearch)

@@ -88,6 +88,7 @@ app.controller('addEditTemplate', function ($scope, $modalInstance, parameter, g
     $scope.header = parameter.header;
     $scope.rdObj = {val: 'panelTemp', nestedLink: 'tabTemp'};
     $scope.panelArr = [];
+    $scope.tabArr = [];
     $scope.panelClass = {};
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -95,6 +96,10 @@ app.controller('addEditTemplate', function ($scope, $modalInstance, parameter, g
     $scope.removeItem = function (item, index, parIndex) {
         item.splice(index, 1);
         $scope.panelClass[parIndex] = "col-sm-" + (12 / item.length);
+    };
+    $scope.addItem = function (item, index) {
+        item.push({});
+        $scope.panelClass[index] = "col-sm-" + (12 / item.length);
     };
 });
 app.controller('editContent', function ($scope, $modalInstance, parameter, global, constant) {
