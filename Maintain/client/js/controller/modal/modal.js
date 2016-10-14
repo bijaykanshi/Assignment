@@ -87,34 +87,21 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
 app.controller('addEditTemplate', function ($scope, $modalInstance, parameter, global, constant) {
     $scope.header = parameter.header;
     $scope.rdObj = {val: 'panelTemp', nestedLink: 'tabTemp'};
+    $scope.panelArr = [];
+    $scope.panelClass = {};
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
-    /*$scope.nestedLinkArr = [];
-    $scope.add = function () {
-      if ($scope.questAns.quest == 'Add Question' || $scope.questAns.ans == 'Add Answer' || 
-          !($scope.pass && $scope.uname)) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddBothQD});
-        return;
-      }
-      $scope.QArr.push($scope.questAns);
-      $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
-      global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddedSucessfully});
+    $scope.removeItem = function (item, index, parIndex) {
+        item.splice(index, 1);
+        $scope.panelClass[parIndex] = "col-sm-" + (12 / item.length);
     };
-    $scope.submit = function () {
-      if (!($scope.pass && $scope.uname)) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustPresent});
-        return;
-      }
-      //angular.extend(global.currentItem.data, $scope.QArr);
-      [].push.apply(global.currentItem.data, $scope.QArr);
-      global.sendRequest('submitQA', global.sidebarLink, 'post', function(data, status, headers, config) {$scope.close();
-        $scope.close();
-        [].push.apply(global.dispData[global.dispData.length - 1], $scope.QArr);
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
-
-      });
-    };*/
+});
+app.controller('editContent', function ($scope, $modalInstance, parameter, global, constant) {
+    $scope.header = parameter.header;
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
 });
 app.controller('addLink', function ($scope, $modalInstance, parameter, global, constant) {
     $scope.header = parameter.header;

@@ -11,35 +11,26 @@
             <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" value="tabTemp" class="handSign" name="optradio">Tab Template</label>           
          </div>
          <div class="form-group col-xs-6">
-            <button type="button" class="btn btn-success" ng-show = "rdObj.val == 'panelTemp'" ng-click = "">Add Panel Row</button>          
+            <button type="button" class="btn btn-success" ng-show = "rdObj.val == 'panelTemp'" ng-click = "panelClass[panelArr.length] = 'col-sm-3';panelArr.push([{},{},{},{}])">Add Panel Row</button>          
          </div>
       </div>
       <hr/>
-      <div class="row">
-         <div class=" col-sm-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">Panel with panel-success class</div>
-              <div class="panel-body">Panel Content</div>
-            </div>          
-         </div>
-         <div class="col-sm-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">Panel with panel-success class</div>
-              <div class="panel-body">Panel Content</div>
-            </div>          
-         </div>
-         <div class=" col-sm-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">Panel with panel-success class</div>
-              <div class="panel-body">Panel Content</div>
-            </div>          
-         </div>
-         <div class="col-sm-3">
-            <div class="panel panel-success">
-              <div class="panel-heading">Panel with panel-success class</div>
-              <div class="panel-body">Panel Content</div>
-            </div>          
-         </div>
+      <div ng-repeat = "item in panelArr">
+           <div class="row" >
+              <div ng-repeat="inItem in item">
+                <div ng-class="panelClass[$parent.$index]">
+                  <div class="panel panel-success">
+                    <div class="panel-heading" ng-bind-html="inItem.header"></div>
+                    <div class="panel-body" ng-bind-html="inItem.body">
+                    </div>
+                    <button type="button" onmouseenter="$(this).tooltip('show')" ng-click = "global.currentEditItem = inItem;global.openModal('template/modals/editContent.html', 'editContent', {header: constant.msg.editPanelTab}, 'extraLarge-Modal');" title="Click here to edit Content of header and body" class="btn btn-warning" >Edit</button>
+                    <button type="button" title="Click here to Delete this panel" onmouseenter="$(this).tooltip('show')" class="btn btn-danger" ng-click = "confirmClick() && removeItem(item, $index, $parent.$index)" confirm-click = "Are You sure you want to delete this Panel">Delete</button>
+                  </div>          
+               </div>
+              </div>
+               
+           </div>
+         
       </div>
       
    </div>
