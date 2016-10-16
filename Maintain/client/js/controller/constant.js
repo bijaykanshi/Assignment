@@ -17,7 +17,10 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         addEditTemplate: 'Add Your Template Here',
         editPanelTab: 'Edit your Panel or Tab Here',
         editTab: 'Edit your tab body and header here',
-        unsavedData: 'You have unsaved data that may destroy by switching Template'
+        unsavedData: 'You have unsaved data that may destroy on clicking this button',
+        plzInsertLinkName: 'Please insert Link Name',
+        tempSelected: 'Your Template has been selected, click here to edit your template',
+        deleteTemp: 'Click here to delete this template'
     };
     constant.loginForm = [
         {

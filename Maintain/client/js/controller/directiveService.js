@@ -1,9 +1,10 @@
 app.directive('confirmClick', ['$q', 'dialogModal', function($q, dialogModal) {
     return {
         link: function(scope, element, attrs) {
-            var ngClick = attrs.ngClick.replace('confirmClick()', 'true')
-                .replace('confirmClick(', 'confirmClick(true,');
+            
             scope.confirmClick = function(msg) {
+                var ngClick = attrs.ngClick.replace('confirmClick()', 'true')
+                    .replace('confirmClick(', 'confirmClick(true,');
                 if (msg === true) {
                     return true;
                 }

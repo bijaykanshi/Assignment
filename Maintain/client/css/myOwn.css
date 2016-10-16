@@ -7,4 +7,11 @@
 .extraLarge-Modal .modal-dialog {
    width: 75%;
 }
-/*input[type='radio'] { transform: scale(2); }*/
+.smallImg {
+	width: 18%;
+    height: 10%;
+}
+.imgPix {
+	width: 65px;
+    height: 56px;
+}

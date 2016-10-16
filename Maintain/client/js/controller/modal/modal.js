@@ -84,25 +84,47 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
         $modalInstance.dismiss('cancel');
     };
 });
-app.controller('addEditTemplate', function ($scope, $modalInstance, parameter, global, constant) {
+app.controller('addEditTemplate', function ($scope, $modalInstance, parameter, $window, constant) {
     $scope.header = parameter.header;
-    $scope.rdObj = {val: 'panelTemp', nestedLink: 'tabTemp'};
+    $scope.rdObj = {nestedLink: 'tabTemp'};
+    $scope.itemRef = parameter.itemRef;
+    
     $scope.panelArr = [];
     $scope.tabArr = [];
     $scope.panelClass = {};
+    var obj = {panelTemp: 'panelArr', tabTemp: 'tabArr'};
+    var tType = parameter.itemRef.templateType;
+    if (tType && parameter.itemRef.templateData) {
+      $scope[obj[tType]] = parameter.itemRef.templateData;
+      if (tType == 'panelTemp') {
+          $scope.panelArr.forEach(function(val, index) {
+            $scope.panelClass[index] = "col-sm-" + (12 / val.length);
+          })
+      }
+    }
+    $scope.itemRef.templateType = 'panelTemp';
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
     $scope.removeItem = function (item, index, parIndex) {
-        item.splice(index, 1);
-        $scope.panelClass[parIndex] = "col-sm-" + (12 / item.length);
+      item.splice(index, 1);
+      if (!item.length) {
+        $scope.panelArr.splice(parIndex, 1);
+        $scope.panelClass[parIndex] = $scope.panelClass[parIndex + 1];
+        return;
+      }
+      $scope.panelClass[parIndex] = "col-sm-" + (12 / item.length);
+    };
+    $scope.saveTemp = function () {
+      parameter.itemRef.templateData = $scope[obj[parameter.itemRef.templateType]];
+      $scope.close();
     };
     $scope.addItem = function (item, index) {
         item.push({});
         $scope.panelClass[index] = "col-sm-" + (12 / item.length);
     };
 });
-app.controller('editContent', function ($scope, $modalInstance, parameter, global, constant) {
+app.controller('editContent', function ($scope, $modalInstance, parameter, global) {
     $scope.header = parameter.header;
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -110,11 +132,24 @@ app.controller('editContent', function ($scope, $modalInstance, parameter, globa
 });
 app.controller('addLink', function ($scope, $modalInstance, parameter, global, constant) {
     $scope.header = parameter.header;
-    $scope.rdObj = {val: 'leftSideBar', nestedLink: 'no'};
+    //$scope.rdObj = {nestedLink: 'no'};
+    global.linkObj.place = 'leftSideBar';
+    global.linkObj.nestedLink = 'no';
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
     $scope.nestedLinkArr = [];
+    $scope.selectTemp = function (item) {
+      if (!item.linkName || !global.linkObj.linkName) {
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.plzInsertLinkName});
+        return;
+      }
+      global.openModal('template/modals/addEditTemplate.html', 'addEditTemplate', {header: constant.msg.addEditTemplate, itemRef: item}, 'extraLarge-Modal', undefined, true);
+      
+    }
+    $scope.deleteTemp = function(item) {
+      item.templateData = undefined;
+    }
     $scope.add = function () {
       if ($scope.questAns.quest == 'Add Question' || $scope.questAns.ans == 'Add Answer' || 
           !($scope.pass && $scope.uname)) {
