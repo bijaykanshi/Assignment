@@ -1,0 +1,3 @@
+task to do
+1.	disable video link and img link in summernote
+2. 	adjust panel widthe in % addEditTemplate.html
