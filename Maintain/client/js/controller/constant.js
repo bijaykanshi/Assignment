@@ -12,7 +12,7 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         AddedSucessfully: 'Whatever you have written added successfully',
         AddBothQD: 'please Add both Question and Answer',
         NotAdded: 'You havent added any Question and Answer yet',
-        allAdded: 'All Question and Answer has been added successfully',
+        allAdded: 'Your template has been saved successfully on server',
         mustPresent: 'Username and password must be present',
         addEditTemplate: 'Add Your Template Here',
         editPanelTab: 'Edit your Panel or Tab Here',

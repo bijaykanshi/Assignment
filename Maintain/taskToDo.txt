@@ -1,3 +1,5 @@
 task to do
 1.	disable video link and img link in summernote
 2. 	adjust panel widthe in % addEditTemplate.html
+3.	adjust color of panel head
+4. class of each link font awesome

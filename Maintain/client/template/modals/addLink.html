@@ -48,7 +48,7 @@
                 </td>
                  <td ng-show = "!item.templateData"><button type="button" class="btn btn-primary" ng-click = "selectTemp(item)">Select Template</button> </td>
                  <td ng-show = "item.templateData"><button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.tempSelected}}" ng-click = "selectTemp(item)" class="btn btn-warning" >Edit Template</button> </td>
-                 <td ng-show = "item.templateData"><button type="button" class="btn btn-danger" ng-click = "confirmClick() && nestedLinkArr.splice($index, 1)" confirm-click = "Are You sure, you want to delete this Link" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}">Delete</button></td>
+                 <td ><button type="button" class="btn btn-danger" ng-click = "confirmClick() && nestedLinkArr.splice($index, 1)" confirm-click = "Are You sure, you want to delete this Link" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}">Delete</button></td>
                </tr>
              </tbody>
            </table>

@@ -10,7 +10,7 @@ function Ref() {
 	this.routeJson = require('./serverData/routing.json');
 	this.commonAPIFn = require('./route/commonAPI.js');
 	this.commonAPI = new this.commonAPIFn(this);
-	this.sidebar = require('./serverData/sidebar.json');
+	this.webTemp = require('./serverData/webTemp.json');
 	this.msg = require('./serverData/msg.json');
 }
 var ref = new Ref();

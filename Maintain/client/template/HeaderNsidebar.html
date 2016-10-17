@@ -30,12 +30,12 @@
             <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
             <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li> -->
          <li class="dropdown user-dropdown" ng-repeat = "item in global.webJSON.leftSideBar" ng-class = "{'selected': (decVar == $index && item.nestedLink=='no')}" ng-click = "decVar = $index;global.dispData = item.nestedLink == 'yes' ? global.dispData : global.getPaination(item.templateData)">
-            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"> 
+            <a class="dropdown-toggle" data-toggle="dropdown"> 
             <i class="fa fa-list-ol"></i>
             {{item.linkName}} <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png" ng-if = "item.dropDown">
             </a>
             <ul class="dropdown-menu" autoClose="nonInput" ng-if = "item.nestedLink == 'yes'">
-               <li ng-repeat = "innerItem in item.templateData"  ng-click="decVar = ($parent.$index + '' + $index + 'inn'); $event.stopPropagation();global.dispData = global.getPaination(innerItem.templateData)" ng-class = "{'selected': decVar == ($parent.$index + '' + $index + 'inn')}"><a href="javascript:void(0)"><i class="fa fa-user"></i> {{innerItem.linkName}}</a></li>
+               <li ng-repeat = "innerItem in item.templateData"  ng-click="decVar = ($parent.$index + '' + $index + 'inn'); $event.stopPropagation();global.clickedLink = innerItem" ng-class = "{'selected': decVar == ($parent.$index + '' + $index + 'inn')}"><a href="javascript:void(0)"><i class="fa fa-user"></i> {{innerItem.linkName}}</a></li>
             </ul>
          </li>
          <!-- <li ng-click = "global.openModal('template/modals/addQuetionAns.html', 'addQuetionAns', {header: constant.msg.addQue}, 'extraLarge-Modal', undefined, true);">
@@ -43,17 +43,28 @@
          </li>> -->
       </ul>
       <ul class="nav navbar-nav navbar-right navbar-user">
+         <li class="dropdown messages-dropdown" ng-repeat = "topLink in global.webJSON.topBar">
+            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> {{topLink.linkName}} <!-- <span class="badge">2</span> --> <b class="caret"></b></a>
+            <ul class="dropdown-menu" ng-if = "topLink.nestedLink == 'yes'">
+               <li class="message-preview handSign" ng-repeat = "inTopLink in topLink.templateData" ng-click = "global.clickedLink = inTopLink; $event.stopPropagation();">
+                  <a>
+                     <span class="avatar"><i class="fa fa-user"></i></span>
+                     <span class="message">{{inTopLink.linkName}}</span>
+                  </a>
+                  <hr/>
+               </li>
+            </ul>
+         </li>
          <li class="dropdown messages-dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Developer's Profile <!-- <span class="badge">2</span> --> <b class="caret"></b></a>
             <ul class="dropdown-menu">
                <li class="message-preview" ng-repeat = "link in global.profileData">
-                  <a ng-href="{{link.link}}" target="_blank">
+                  <a ng-href="{{::link.link}}" target="_blank">
                      <span class="avatar"><i class="fa fa-user"></i></span>
-                     <span class="message">{{link.dispName}}</span>
+                     <span class="message">{{::link.dispName}}</span>
                   </a>
                   <hr/>
                </li>
-               <li class="divider"></li>
             </ul>
          </li>
          <li class="dropdown user-dropdown" ng-click = "global.linkObj = {};global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.addLink}, 'extraLarge-Modal', undefined, true);">
