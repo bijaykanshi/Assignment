@@ -11,6 +11,7 @@ function Ref() {
 	this.commonAPIFn = require('./route/commonAPI.js');
 	this.commonAPI = new this.commonAPIFn(this);
 	this.sidebar = require('./serverData/sidebar.json');
+	this.msg = require('./serverData/msg.json');
 }
 var ref = new Ref();
 require('./config')(ref);

@@ -29,13 +29,13 @@
             <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
             <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
             <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li> -->
-         <li class="dropdown user-dropdown" ng-repeat = "item in global.sidebarLink" ng-class = "{'selected': (decVar == $index && !item.dropDown)}" ng-click = "decVar = $index;global.dispData = item.dropDown ? global.dispData : global.getPaination(item)">
+         <li class="dropdown user-dropdown" ng-repeat = "item in global.webJSON.leftSideBar" ng-class = "{'selected': (decVar == $index && item.nestedLink=='no')}" ng-click = "decVar = $index;global.dispData = item.nestedLink == 'yes' ? global.dispData : global.getPaination(item.templateData)">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"> 
             <i class="fa fa-list-ol"></i>
             {{item.linkName}} <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png" ng-if = "item.dropDown">
             </a>
-            <ul class="dropdown-menu" autoClose="nonInput" ng-if = "item.dropDown">
-               <li ng-repeat = "innerItem in item.dropDown"  ng-click="decVar = ($parent.$index + '' + $index + 'inn'); $event.stopPropagation();global.dispData = global.getPaination(innerItem)" ng-class = "{'selected': decVar == ($parent.$index + '' + $index + 'inn')}"><a href="javascript:void(0)"><i class="fa fa-user"></i> {{innerItem.linkName}}</a></li>
+            <ul class="dropdown-menu" autoClose="nonInput" ng-if = "item.nestedLink == 'yes'">
+               <li ng-repeat = "innerItem in item.templateData"  ng-click="decVar = ($parent.$index + '' + $index + 'inn'); $event.stopPropagation();global.dispData = global.getPaination(innerItem.templateData)" ng-class = "{'selected': decVar == ($parent.$index + '' + $index + 'inn')}"><a href="javascript:void(0)"><i class="fa fa-user"></i> {{innerItem.linkName}}</a></li>
             </ul>
          </li>
          <!-- <li ng-click = "global.openModal('template/modals/addQuetionAns.html', 'addQuetionAns', {header: constant.msg.addQue}, 'extraLarge-Modal', undefined, true);">

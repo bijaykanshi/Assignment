@@ -5,11 +5,15 @@
    </div>
    <div class="modal-body">
       <div class="row">
-         <div class="form-group col-xs-5">
+         <div class="form-group col-xs-4">
             <label >Link Name:</label>
             <input type="text" ng-model = "global.linkObj.linkName" class="form-control">            
          </div>
-         <div class="form-group col-xs-6">
+         <div class="form-group col-xs-4">
+            <label >Position :</label>
+            <input type="number" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.positionOp}}" ng-model = "position" class="form-control">            
+         </div>
+         <div class="form-group col-xs-4">
             <label ">Select Place to insert : </label><br/>
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.place" class="handSign" name="optradio" value="leftSideBar">Left SideBar</label>
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.place" class="handSign" value="topBar" name="optradio">Top Bar</label>
@@ -51,7 +55,7 @@
       </div>
    </div>
    <div  class="footerClose">
-      <button type="button" class="btn btn-default" ng-click="add()" data-dismiss="modal">Add</button>
+      <button type="button" class="btn btn-default" ng-click="saveTemp()" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.saveTemp}}" ng-click = "selectTemp(item)" data-dismiss="modal">Save your Template on Server</button>
       <button ng-show = "QArr.length" type="button" class="btn btn-default" ng-click="submit()" data-dismiss="modal">Save your Q & A on Server</button>
       <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
    </div>

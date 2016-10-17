@@ -20,7 +20,10 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         unsavedData: 'You have unsaved data that may destroy on clicking this button',
         plzInsertLinkName: 'Please insert Link Name',
         tempSelected: 'Your Template has been selected, click here to edit your template',
-        deleteTemp: 'Click here to delete this template'
+        deleteTemp: 'Click here to delete this template',
+        saveTemp: 'Click here to save your template on server',
+        mustSelectTemp: 'You must have to select template',
+        positionOp: 'Plz enter the position where you want to insert this link (Its optional, if its blank we will insert at end)'
     };
     constant.loginForm = [
         {

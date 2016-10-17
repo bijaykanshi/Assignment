@@ -150,19 +150,9 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
     $scope.deleteTemp = function(item) {
       item.templateData = undefined;
     }
-    $scope.add = function () {
-      if ($scope.questAns.quest == 'Add Question' || $scope.questAns.ans == 'Add Answer' || 
-          !($scope.pass && $scope.uname)) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddBothQD});
-        return;
-      }
-      $scope.QArr.push($scope.questAns);
-      $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
-      global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddedSucessfully});
-    };
-    $scope.submit = function () {
-      if (!($scope.pass && $scope.uname)) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustPresent});
+    $scope.saveTemp = function () {
+      if (!global.linkObj.templateData) {
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustSelectTemp});
         return;
       }
       //angular.extend(global.currentItem.data, $scope.QArr);
