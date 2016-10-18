@@ -151,6 +151,10 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
       item.templateData = undefined;
     }
     $scope.saveTemp = function () {
+      if (parameter.index) {
+          $scope.close();
+          return;
+      }
       if (global.linkObj.nestedLink == 'yes' && $scope.nestedLinkArr.length)
           global.linkObj.templateData = $scope.nestedLinkArr;
       if (!global.linkObj.templateData) {
@@ -158,12 +162,13 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
         return;
       }
       var dataRef = global.webJSON[global.linkObj.place];
+
       if ($scope.position < dataRef.length) {
         dataRef.splice($scope.position, 0, global.linkObj);
       } else {
         dataRef.push(global.linkObj);
       }
-      global.sendRequest('submitWebTemp', global.webJSON, 'post', function(data, status, headers, config) {$scope.close();
+      global.sendRequest('submitWebTemp', global.webJSON, 'post', function(data, status, headers, config) {
         $scope.close();
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
 

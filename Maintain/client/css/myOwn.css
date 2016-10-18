@@ -19,3 +19,6 @@
 	width: 17px;
     height: 16px;
 }
+.panel-body  {
+    word-break:break-all
+}
