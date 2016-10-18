@@ -30,8 +30,8 @@
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.nestedLink" class="handSign" value="no" name="nestedLink">No</label>            
          </div>
          <div class="form-group col-xs-6">
-            <button type="button" ng-show = "!global.linkObj.templateData" class="btn btn-success" ng-click = "global.linkObj.nestedLink=='yes' ? nestedLinkArr.push({}) : selectTemp(global.linkObj)">{{global.linkObj.nestedLink=='no' ? "Select Template" : "Add Nested Link"}}</button>
-            <div ng-show = "global.linkObj.templateData">
+            <button type="button" ng-show = "!global.linkObj.templateData || global.linkObj.nestedLink == 'yes'" class="btn btn-success" ng-click = "global.linkObj.nestedLink=='yes' ? nestedLinkArr.push({}) : selectTemp(global.linkObj)">{{global.linkObj.nestedLink=='no' ? "Select Template" : "Add Nested Link"}}</button>
+            <div ng-show = "global.linkObj.templateData && global.linkObj.nestedLink=='no'">
                 <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.tempSelected}}" ng-click = "selectTemp(global.linkObj)" class="btn btn-warning" >Edit Template</button>
                  <button type="button" class="btn btn-danger" ng-click = "confirmClick() && deleteTemp(global.linkObj)" confirm-click = "Are You sure you want to delete this Link" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}">Delete</button>
             </div>         

@@ -133,12 +133,12 @@ app.controller('editContent', function ($scope, $modalInstance, parameter, globa
 app.controller('addLink', function ($scope, $modalInstance, parameter, global, constant) {
     $scope.header = parameter.header;
     //$scope.rdObj = {nestedLink: 'no'};
-    global.linkObj.place = 'leftSideBar';
-    global.linkObj.nestedLink = 'no';
+    global.linkObj.place = parameter.place || 'leftSideBar';
+    global.linkObj.nestedLink = global.linkObj.nestedLink || 'no';
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
-    $scope.nestedLinkArr = [];
+    $scope.nestedLinkArr = (global.linkObj.nestedLink == 'yes' && global.linkObj.templateData) || [];
     $scope.selectTemp = function (item) {
       if (!item.linkName || !global.linkObj.linkName) {
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.plzInsertLinkName});

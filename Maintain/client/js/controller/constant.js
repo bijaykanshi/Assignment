@@ -23,7 +23,9 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         deleteTemp: 'Click here to delete this template',
         saveTemp: 'Click here to save your template on server',
         mustSelectTemp: 'You must have to select template',
-        positionOp: 'Plz enter the position where you want to insert this link (Its optional, if its blank we will insert at end)'
+        positionOp: 'Plz enter the position where you want to insert this link (Its optional, if its blank we will insert at end)',
+        editTemp: 'Click Here to edit your link and template',
+        deleteTemp: 'Click Here to delete Link completely'
     };
     constant.loginForm = [
         {
