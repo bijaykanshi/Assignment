@@ -29,11 +29,11 @@
             <li><a href="typography.html"><i class="fa fa-font"></i> Typography</a></li>
             <li><a href="bootstrap-elements.html"><i class="fa fa-list-ul"></i> Bootstrap Elements</a></li>
             <li><a href="bootstrap-grid.html"><i class="fa fa-table"></i> Bootstrap Grid</a></li> -->
-         <li class="dropdown user-dropdown" ng-repeat = "item in global.webJSON.leftSideBar" ng-class = "{'selected': (decVar == $index && item.nestedLink=='no')}" ng-click = "decVar = $index;global.dispData = item.nestedLink == 'yes' ? global.dispData : global.getPaination(item.templateData)">
+         <li class="dropdown user-dropdown" ng-repeat = "item in global.webJSON.leftSideBar" ng-class = "{'selected': (decVar == $index && item.nestedLink=='no')}" ng-click = "decVar = $index;global.clickedLink = item.nestedLink == 'yes' ? global.clickedLink : item">
             <a class="dropdown-toggle" data-toggle="dropdown"> 
                <i class="fa fa-list-ol"></i>
                {{item.linkName}} 
-               <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png" ng-if = "item.dropDown">
+               <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png" ng-if = "item.nestedLink == 'yes'">
                <div ng-if = "showEditDelete">
                   <img src="webdata/imgOwn/edit.png" class="varySmallImg handSign" type="button" onmouseenter="$(this).tooltip('show')"  ng-click = "global.linkObj = item;global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.editPanelTab, place: 'leftSideBar',index: $index}, 'extraLarge-Modal');" title="{{::constant.msg.editTemp}}">
                   <img src="webdata/imgOwn/delete.png" class="varySmallImg handSign" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}" ng-click = "confirmClick() && global.webJSON.leftSideBar.splice($index, 1)" confirm-click = title="{{::constant.msg.deleteTemp}}">
@@ -50,7 +50,7 @@
          </li>> -->
       </ul>
       <ul class="nav navbar-nav navbar-right navbar-user">
-         <li class="dropdown messages-dropdown" ng-repeat = "topLink in global.webJSON.topBar">
+         <li class="dropdown messages-dropdown" ng-repeat = "topLink in global.webJSON.topBar" ng-click = "global.clickedLink = topLink.nestedLink == 'yes' ? global.clickedLink : topLink">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                <i class="fa fa-envelope"></i> {{topLink.linkName}} <!-- <span class="badge">2</span> -->
                 <b class="caret"></b>
