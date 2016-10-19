@@ -141,10 +141,17 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
     ]
     return formFactory;
 });
-app.controller('formBuilderCtrl', function ($scope, $modalInstance, $state, global, parameter, formFactory) {
-    formFactory.abc = 0;
+app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, parameter, formFactory, constant) {
+    $scope.header = parameter.header || 'Alert Message';
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
+    $scope.saveForm = function () {
+        global.sendRequest('saveJSON', {data: formFactory.formFieldEditDelete, name: 'formJSON'}, 'post', function(data, status, headers, config) {
+            $scope.close();
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});
+
+        });
+    }
 });
 

@@ -26,7 +26,10 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         positionOp: 'Plz enter the position where you want to insert this link (Its optional, if its blank we will insert at end)',
         editTemp: 'Click Here to edit your link and template',
         deleteTemp: 'Click Here to delete Link completely',
-        buildForm: 'Customize your form Here, Add Whatever you want'
+        buildForm: 'Customize your form Here, Add Whatever you want',
+        addOption: 'Click Here to add more option',
+        selectField: 'Select desired Input field here to add',
+        formSaved: 'your form has been saved successfully'
     };
     constant.loginForm = [
         {

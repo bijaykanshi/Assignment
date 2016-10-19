@@ -161,7 +161,7 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustSelectTemp});
         return;
       }
-      var dataRef = global.webJSON[global.linkObj.place];
+      var dataRef = global.webJSON[global.linkObj.place] || [];
 
       if ($scope.position < dataRef.length) {
         dataRef.splice($scope.position, 0, global.linkObj);

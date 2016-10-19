@@ -1,7 +1,15 @@
-app.controller('initialBody', function($scope) {
-	/*$scope.setClass = function (item) {
-		$scope.classVar
-	}*/
+app.controller('initialBody', function($scope, global, constant) {
+	$scope.editSaveLink = function() {
+		if (!global.showEditDelete) {
+			global.showEditDelete = true;
+			return;
+		}
+		global.sendRequest('saveJSON', {data: global.webJSON}, 'post', function(data, status, headers, config) {
+	        global.showEditDelete = false;
+	        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
+
+	    });
+	}
 });
 app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant) {
 	global.isLoading = true;
@@ -9,16 +17,6 @@ app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant) 
 		global.webJSON = data;
 		global.profileData = data.profileData;
 	});
-	$scope.editSaveLink = function() {
-		if (!$scope.showEditDelete) {
-			$scope.showEditDelete = true;
-			return;
-		}
-		global.sendRequest('submitWebTemp', global.webJSON, 'post', function(data, status, headers, config) {
-	        $scope.showEditDelete = false;
-	        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
-
-	    });
-	}
+	
 	
 });

@@ -34,7 +34,7 @@
                <i class="fa fa-list-ol"></i>
                {{item.linkName}} 
                <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png" ng-if = "item.nestedLink == 'yes'">
-               <div ng-if = "showEditDelete">
+               <div ng-if = "global.showEditDelete">
                   <img src="webdata/imgOwn/edit.png" class="varySmallImg handSign" type="button" onmouseenter="$(this).tooltip('show')"  ng-click = "global.linkObj = item;global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.editPanelTab, place: 'leftSideBar',index: $index}, 'extraLarge-Modal');" title="{{::constant.msg.editTemp}}">
                   <img src="webdata/imgOwn/delete.png" class="varySmallImg handSign" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}" ng-click = "confirmClick() && global.webJSON.leftSideBar.splice($index, 1)" confirm-click = title="{{::constant.msg.deleteTemp}}">
                </div>
@@ -54,7 +54,7 @@
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
                <i class="fa fa-envelope"></i> {{topLink.linkName}} <!-- <span class="badge">2</span> -->
                 <b class="caret"></b>
-                <div ng-if = "showEditDelete">
+                <div ng-if = "global.showEditDelete">
                    <img src="webdata/imgOwn/edit.png" class="varySmallImg handSign" type="button"   ng-click = "global.linkObj = topLink;global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.editPanelTab, place: 'topBar',index: $index}, 'extraLarge-Modal');" >
                   <img  src="webdata/imgOwn/delete.png" class="varySmallImg handSign"  ng-click = "confirmClick() && global.webJSON.topBar.splice($index, 1)" confirm-click = "{{::constant.msg.deleteTemp}}">
                 </div>
@@ -82,12 +82,7 @@
                </li>
             </ul>
          </li>
-         <li class="dropdown user-dropdown" ng-click = "global.linkObj = {};global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.addLink}, 'extraLarge-Modal', undefined, true);">
-            <a href="javascript:void(0)" class="dropdown-toggle handSign">Add Link</a>
-         </li>
-         <li class="dropdown user-dropdown" ng-click = "editSaveLink()">
-            <a class="dropdown-toggle handSign">{{showEditDelete ? 'Save your change' : 'Edit Link'}}</a>
-         </li>
+         
          <!-- <li class="dropdown user-dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Steve Miller<b class="caret"></b></a>
             <ul class="dropdown-menu">
