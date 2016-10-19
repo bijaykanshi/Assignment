@@ -55,8 +55,8 @@
                <i class="fa fa-envelope"></i> {{topLink.linkName}} <!-- <span class="badge">2</span> -->
                 <b class="caret"></b>
                 <div ng-if = "showEditDelete">
-                   <img src="webdata/imgOwn/edit.png" class="varySmallImg handSign" type="button" onmouseenter="$(this).tooltip('show')"  ng-click = "global.linkObj = topLink;global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.editPanelTab, place: 'topBar',index: $index}, 'extraLarge-Modal');" title="{{::constant.msg.editTemp}}">
-                  <img  src="webdata/imgOwn/delete.png" class="varySmallImg handSign" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}" ng-click = "confirmClick() && global.webJSON.topBar.splice($index, 1)" confirm-click = "{{::constant.msg.deleteTemp}}">
+                   <img src="webdata/imgOwn/edit.png" class="varySmallImg handSign" type="button"   ng-click = "global.linkObj = topLink;global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.editPanelTab, place: 'topBar',index: $index}, 'extraLarge-Modal');" >
+                  <img  src="webdata/imgOwn/delete.png" class="varySmallImg handSign"  ng-click = "confirmClick() && global.webJSON.topBar.splice($index, 1)" confirm-click = "{{::constant.msg.deleteTemp}}">
                 </div>
                 
             </a>

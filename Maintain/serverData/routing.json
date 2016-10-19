@@ -10,8 +10,8 @@
         "callbackFun":  "commonAPI_getJson"
     },
     {
-        "url": "/submitWebTemp",
+        "url": "/saveJSON",
         "method": "post",
-        "callbackFun":  "commonAPI_submitWebTemp"
+        "callbackFun":  "commonAPI_saveJSON"
     }
 ]

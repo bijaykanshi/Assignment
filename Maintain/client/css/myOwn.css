@@ -22,3 +22,8 @@
 .panel-body  {
     word-break:break-all
 }
+.imgResize {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}

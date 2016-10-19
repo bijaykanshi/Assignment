@@ -168,7 +168,7 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
       } else {
         dataRef.push(global.linkObj);
       }
-      global.sendRequest('submitWebTemp', global.webJSON, 'post', function(data, status, headers, config) {
+      global.sendRequest('saveJSON', {data: global.webJSON}, 'post', function(data, status, headers, config) {
         $scope.close();
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
 

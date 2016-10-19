@@ -25,7 +25,8 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         mustSelectTemp: 'You must have to select template',
         positionOp: 'Plz enter the position where you want to insert this link (Its optional, if its blank we will insert at end)',
         editTemp: 'Click Here to edit your link and template',
-        deleteTemp: 'Click Here to delete Link completely'
+        deleteTemp: 'Click Here to delete Link completely',
+        buildForm: 'Customize your form Here, Add Whatever you want'
     };
     constant.loginForm = [
         {
