@@ -4,7 +4,7 @@ function commonAPI (ref) {
 	}
 	this.getJson = function(req, res) {
 		console.log(" hi i am here");
-		res.json(ref.webTemp);
+		res.json({webTemp: ref.webTemp, form: ref.form});
 	}
 	this.saveJSON = function(req, res) {
 		var name = req.body.name || 'webTemp';

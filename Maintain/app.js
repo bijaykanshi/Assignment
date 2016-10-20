@@ -14,6 +14,7 @@ function Ref() {
 	this.MongoConfFn = require('./route/db/mongo.js');
 	this.mongoObj = new this.MongoConfFn(this);
 	this.webTemp = require('./serverData/webTemp.json');
+	this.form = require('./serverData/formJSON.json');
 	this.msg = require('./serverData/msg.json');
 }
 var ref = new Ref();

@@ -1,4 +1,4 @@
-funfunction MongoConf (ref) {
+function MongoConf (ref) {
 	var MongoClient = ref.mongo.MongoClient;
 	var me = this;
 	var options = {

@@ -11,10 +11,11 @@ app.controller('initialBody', function($scope, global, constant) {
 	    });
 	}
 });
-app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant) {
+app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, formFactory) {
 	global.isLoading = true;
 	global.sendRequest('getJson', undefined, 'get', function(data, status, headers, config) {
-		global.webJSON = data;
+		global.webJSON = data.webTemp;
+		formFactory.formFieldEditDelete = data.form;
 		global.profileData = data.profileData;
 	});
 	
