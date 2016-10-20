@@ -10,6 +10,9 @@ function Ref() {
 	this.routeJson = require('./serverData/routing.json');
 	this.commonAPIFn = require('./route/commonAPI.js');
 	this.commonAPI = new this.commonAPIFn(this);
+	this.mongo = require('mongodb');
+	this.MongoConfFn = require('./route/db/mongo.js');
+	this.mongoObj = new this.MongoConfFn(this);
 	this.webTemp = require('./serverData/webTemp.json');
 	this.msg = require('./serverData/msg.json');
 }
