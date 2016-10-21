@@ -5,56 +5,18 @@
               <h2 class="modal-title">{{header}}</h2>
           </div>
       
-                
-          <div class="modal-body">
-              <div class="row">
-                  <div class="col-sm-6">
-                      <form role="form">
-                          <div class="form-group" ng-repeat = "form in formFactory.formFieldEditDelete" ng-switch on="form.type" ng-init = "formFactory.editFieldFun(form)">
-                           
-                            <div class="col-xs-6" >
-                                <label>{{form.label}}</label>
-
-                                <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
-                                    <option ng-repeat = "select in form.options" value="{{select.value}}">{{select.label}}</option>
-                                </select>
-
-                                <label ng-switch-when="radio" class="radio-inline" ng-repeat="option in form.options">
-                                    <input type="{{form.type}}" name="{{$parent.$index}}" value="{{option.value}}">{{option.label}}
-                                </label>
-
-                                <label ng-switch-when="checkbox" class="checkbox-inline" ng-repeat="option in form.options">
-                                    <input type="{{form.type}}" value="{{option.value}}">{{option.label}}
-                                </label>
-
-                                <input ng-switch-default type="{{form.type}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" max = "{{form.max}}">
-
-
-
-                                <span class="help-block">{{form.helpText}}</span>
-                                <img ng-click = "formFactory.editFieldFun(form)" ng-src="./webdata/imgOwn/edit.jpg" class="imgResize" >
-                                <img class="imgResize"  src="./webdata/imgOwn/delete.png" alt="" ng-click="confirmClick() && formFactory.formFieldEditDelete.splice($index, 1);"  confirm-click = "{{global.msg.confirm_delete}}">
-                                <hr>
-                            </div>
-                            
-                            
-                          </div>
-                      </form>
-                  </div>
-                  <div class="col-sm-6">
-                       <div class="col-sm-12">
-                          <form role="form">
-                          <div class="form-group">
-                              <label for="sel1">Select Type of input Field</label>
-                              <select class="form-control" ng-model="formFactory.selectedType" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectField}}">
-                                <option ng-repeat = "item in formFactory.selectType" value="{{item.value}}">{{item.displayName}}</option>
-                              </select>
-                              
-                          </div>
-                          </form>
-                         <button type="button" class="btn btn-primary" ng-click = "formFactory.addField()">Add Field</button>
-                       </div>
-                       <div class="col-sm-12">
+            <!-- <button popover-template="'popover.html'" 
+            popover-placement="right" 
+            popover-trigger="mouseenter" 
+            type="button"
+            class="btn btn-default">Mouse over me</button>    -->
+            <script type="text/ng-template" id="popover.html">
+              <div class="popover fade left in" style="top: 14px; left: -255px; display: block;">
+                  <div class="arrow"></div><h3 class="popover-title">Text Input</h3>
+                    <div class="popover-content">
+    
+      
+                        <div class="col-sm-12">
                            <form role="form">
                               <div class="form-group">
                                   <div class="col-xs-6" ng-repeat="(key, value) in formFactory.editField">
@@ -92,6 +54,66 @@
                               </div>
                           </form>
                        </div>
+      
+      
+      
+
+
+                    <hr>
+                    <button id="save" class="btn btn-info col-md-4">Save</button>&nbsp;<button id="cancel" class="btn btn-danger">Cancel</button>
+
+                  </div>
+              </div>
+      </script>  
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-sm-6">
+                      <form role="form">
+                          <div class="form-group" ng-repeat = "form in formFactory.formFieldEditDelete" ng-switch on="form.type" ng-init = "formFactory.editFieldFun(form)">
+                           
+                            <div class="col-xs-6" >
+                                <label>{{form.label}}</label>
+
+                                <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
+                                    <option ng-repeat = "select in form.options" value="{{select.value}}">{{select.label}}</option>
+                                </select>
+
+                                <label ng-switch-when="radio" class="radio-inline" ng-repeat="option in form.options">
+                                    <input type="{{form.type}}" name="{{$parent.$index}}" value="{{option.value}}">{{option.label}}
+                                </label>
+
+                                <label ng-switch-when="checkbox" class="checkbox-inline" ng-repeat="option in form.options">
+                                    <input type="{{form.type}}" value="{{option.value}}">{{option.label}}
+                                </label>
+
+                                <input ng-switch-default type="{{form.type}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" max = "{{form.max}}">
+
+
+
+                                <span class="help-block">{{form.helpText}}</span>
+                                <img ng-click = "formFactory.editFieldFun(form)" ng-src="./webdata/imgOwn/edit.jpg" class="imgResize" popover-template="'popover.html'" popover-placement="right">
+                                <img class="imgResize"  src="./webdata/imgOwn/delete.png" alt="" ng-click="confirmClick() && formFactory.formFieldEditDelete.splice($index, 1);"  confirm-click = "{{global.msg.confirm_delete}}">
+                                <hr>
+                            </div>
+                            
+                            
+                          </div>
+                      </form>
+                  </div>
+                  <div class="col-sm-6">
+                       <div class="col-sm-12">
+                          <form role="form">
+                          <div class="form-group">
+                              <label for="sel1">Select Type of input Field</label>
+                              <select class="form-control" ng-model="formFactory.selectedType" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectField}}">
+                                <option ng-repeat = "item in formFactory.selectType" value="{{item.value}}">{{item.displayName}}</option>
+                              </select>
+                              
+                          </div>
+                          </form>
+                         <button type="button" class="btn btn-primary" ng-click = "formFactory.addField()">Add Field</button>
+                       </div>
+                       
                      
                   </div>
                   <div class="col-sm-2">
