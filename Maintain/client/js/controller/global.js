@@ -74,9 +74,10 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
     });*/
     return global;
 });
-app.run(function($rootScope, $state, global, constant) {
+app.run(function($rootScope, $state, global, constant, formFactory) {
     $rootScope.global = global;
     $rootScope.constant = constant;
+    $rootScope.formFactory = formFactory;
 	global.sendRequest('./webdata/routing.json',
         undefined,
         'GET',

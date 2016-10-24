@@ -1,7 +1,7 @@
 app.factory('formFactory', function($http, $modal, $state, $location, $rootScope){
      
     var formFactory = {};
-    $rootScope.formFactory = formFactory;
+   
     formFactory.inputAttr = {
         defaultAttr: {
             label: 'label',
@@ -147,9 +147,29 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         $modalInstance.dismiss('cancel');
     };
     $scope.saveForm = function () {
+        var obj = {};
+        var dontSub = false;
+        formFactory.formFieldEditDelete.forEach(function (val) {
+            val.key = val.label.replace(/\s/g, '');
+            if (obj[val.key])
+                dontSub = true;
+            obj[val.key] = true;
+        });
+        if (dontSub) {
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.uniqueKey});
+            return;
+        }
         global.sendRequest('saveJSON', {data: formFactory.formFieldEditDelete, name: 'formJSON'}, 'post', function(data, status, headers, config) {
             $scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});
+
+        });
+    }
+    $scope.formObj = {};
+    $scope.register = function () {
+        global.sendRequest('register', {data: $scope.formObj}, 'post', function(data, status, headers, config) {
+            $scope.close();
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.successRegister});
 
         });
     }

@@ -19,5 +19,18 @@ function commonAPI (ref) {
 			ref[name] = req.body.data;
 		});
 	}
+	this.register = function (req, res) {
+		var dbName = req.body.dbName || 'mydb';
+		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
+			if (err)
+				res.status(500).send(err);
+			clientDb.collection('users').insert(req.body.data, function(err, data) {
+				if (err)
+					res.status(500).send(err);
+				res.send("successfully inserted");
+			})
+			
+		})
+	}
 }
 module.exports = commonAPI;

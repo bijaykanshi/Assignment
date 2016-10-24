@@ -29,7 +29,15 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         buildForm: 'Customize your form Here, Add Whatever you want',
         addOption: 'Click Here to add more option',
         selectField: 'Select desired Input field here to add',
-        formSaved: 'your form has been saved successfully'
+        formSaved: 'your form has been saved successfully',
+        uniqueKey: 'Please enter unique label, because this field is going to be key in database',
+        successRegister: 'you have successfully registered',
+        BuidYour: 'Made your query to extract particular record from selected collection',
+        selectColl: 'Select collection from where you want to see record',
+        rowSel: 'Click here to select particular row from selected collection',
+        projection: 'click here to select particular column you want to see (default value is all column)',
+        rowSelTemp: 'put condition on column'
+
     };
     constant.loginForm = [
         {

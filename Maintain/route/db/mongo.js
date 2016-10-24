@@ -43,7 +43,7 @@ function MongoConf (ref) {
 	            res.status(500).send(err);
 	            return;
 	        }
-	        clientDbCatche[cached_key] = {'ts': new Date().getTime(), 'conn': opened_db, 'wait': false};
+	        clientDbCatche[catcheKey] = {'ts': new Date().getTime(), 'conn': opened_db, 'wait': false};
 	        callback(false, opened_db);
 	        if (Object.keys(clientDbCatche[catcheKey]).length > 100) 
 	        	me.deleteObjKey(catcheKey);

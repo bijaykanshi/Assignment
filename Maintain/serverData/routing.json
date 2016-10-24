@@ -13,5 +13,10 @@
         "url": "/saveJSON",
         "method": "post",
         "callbackFun":  "commonAPI_saveJSON"
+    },
+    {
+        "url": "/register",
+        "method": "post",
+        "callbackFun":  "commonAPI_register"
     }
 ]
