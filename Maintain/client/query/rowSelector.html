@@ -3,25 +3,40 @@
       <h4 class="modal-title">{{header}}</h4>
    </div>
    <div class="modal-body" >
+      <div class="row"> 
+          <div class="col-sm-6">
+              <h3>Column</h3>
+          </div>
+          <div class="col-sm-3">
+            <h3>Condition</h3>
+          </div>
+          <div class="col-sm-3">
+            <h3>Value to be equated</h3>
+          </div>
+      </div>
+      <hr>
       <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete"> 
           <div class="col-sm-6">
             <div class="checkbox">
-              <label><input type="checkbox" value="">{{key.key + " ( " + key.label + " )"}}</label>
+              <label><input type="checkbox" ng-click = "checkObj[$index] = !checkObj[$index]">{{key.key + " ( " + key.label + " )"}}</label>
             </div>
           </div>
-          <div class="col-sm-3">
-            <div class="form-group">
-              <select class="form-control" id="sel1">
-                <option ng-repeat = "opt in arrOpt">{{opt}}</option>
-              </select>
-            </div>
+          <div ng-show = "checkObj[$index]">
+            <div class="col-sm-3">
+                <div class="form-group">
+                  <select class="form-control" id="sel1">
+                    <option ng-repeat = "opt in arrOpt">{{opt}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+      
+                    <input type="text" class="form-control" placeholder="Value" id="usr">
+                </div>
+              </div>
           </div>
-          <div class="col-sm-3">
-            <div class="form-group">
-  
-                <input type="text" class="form-control" id="usr">
-            </div>
-          </div>
+          
       </div>
    </div>
 </div>
