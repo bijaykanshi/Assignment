@@ -9,7 +9,7 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter) 
     	$scope.queryStr = opt;
     }
 });
-app.controller('rowSelector', function ($scope, $modalInstance, parameter, formFactory) {
+app.controller('rowSelector', function ($scope, $modalInstance, parameter, formFactory, global) {
     $scope.header = parameter.header || 'Alert Message';
     var map = {
         "=": "equal",
