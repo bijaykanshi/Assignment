@@ -1,0 +1,50 @@
+<div>
+   <div class="modal-header">
+      <h4 class="modal-title">{{header}}</h4>
+   </div>
+   <div class="modal-body" >
+      <div class="row">
+         <div class="col-sm-2">db.collection(</div>
+         <div class="col-sm-2">
+            <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
+            <ul class="dropdown-menu option" role="menu">
+               <li  class="handSign" ng-repeat = "opt in collectionArr" ng-click="setColl(opt)"><a >{{opt}}</li>
+            </ul>
+         </div>
+         <div class="col-sm-1">).</div>
+         <div class="col-sm-1">find</div>
+         <div class="col-sm-1">(</div>
+         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.rowSel}}" type="button" class="btn btn-info" popover-template="'selectRow.html'" popover-placement="right"> Row selection</button></div>
+         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" class="btn btn-success">Projection</button></div>
+         <div class="col-sm-1">)</div>
+      </div>
+      <hr>
+      <div class="row">
+         <div class="col-sm-3"> Your query is :- </div>
+         <div class="col-sm-4">{{queryStr}}</div>
+      </div>
+      <script type="text/ng-template" id="selectRow.html">
+         <div class="popover fade left in" style="width: 270px; display: block;">
+           <div class="arrow"></div><h3 class="popover-title">write query or click on row selector (that will help you to select your row)</h3>
+             <div class="popover-content">
+                 <div class="row">
+                    <div class="form-group">
+                      <label for="comment">Direct Write your row selctor here :- </label>
+                      <textarea class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+                 </div>
+                 <hr>
+                 OR
+                 <div class="row">
+                     <button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" ng-click = "global.openModal('query/rowSelector.html', 'rowSelector', {header: constant.msg.rowSelTemp}, 'extraLarge-Modal', undefined, true);" class="btn btn-success">Row Selector</button>
+                 </div>
+             </div>
+         </div>
+      </script>  
+   </div>
+</div>
+<div class="footerClose">
+   <hr>
+   <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
+</div>
+</div>
