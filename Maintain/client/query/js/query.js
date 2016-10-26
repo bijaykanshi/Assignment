@@ -38,11 +38,16 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
     }
     $scope.arrOpt = ['=', '<', '>', '<=', '>='];
     $scope.queryInd = {};
-    $scope.countAdd = {};
+    //$scope.
     $scope.addOrNotOpt = function(opt, index) {
         return !(opt in $scope.queryInd[index])
     }
     $scope.addCond = function(index) {
+    	var len = $scope.queryInd[index].length;
+    	if (!$scope.queryInd[index][len - 1].opt) {
+
+    	}
+    	$scope.queryInd[$index].push({})
         $scope.countAdd[index] += 1;
         $scope.queryInd[index]['index' + $scope.countAdd[index]] = {}
     }

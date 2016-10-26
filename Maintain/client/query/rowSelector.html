@@ -59,36 +59,13 @@
             </div> -->
          <hr>
          <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete">
-            <div class="col-sm-3">
-               <div class="checkbox">
-                  <label><input type="checkbox" ng-click = "queryInd[$index] = !queryInd[$index] ? {'index0': {}} : !queryInd[$index];countAdd[$index] = 0;">{{key.key + " ( " + key.label + " )"}}</label>
-               </div>
-            </div>
-            <div ng-show = "queryInd[$index]">
-               <div class="col-sm-1">
-                  <i class="fa fa-plus fa-3x" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.addMoreCond}}" aria-hidden="true" ng-click = "addCond($index)"></i>
-               </div>
-               <div ng-repeat="(key, value) in queryInd[$index]">
-                  <div ng-if = "$index != 0" class="col-sm-3"></div>
-                  <div class="col-sm-2">
-                     <div class="form-group">
-                        <select class="form-control">
-                           <option ng-repeat = "opt in arrOpt" ng-click = "" ng-if = "addOrNotOpt(opt, $parent.$parent.$index)">{{opt + " ( " + map[opt].desc + " )"}}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-sm-2">
-                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Value">
-                     </div>
-                  </div>
-                  <div class="col-sm-1">
-                     <i class="fa fa-times fa-3x"  onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteCond}}"aria-hidden="true"></i>
-                  </div>
-                  <div ng-if = "$index != 0" class="col-sm-1"></div>
-                  <div class="col-sm-3">sdf</div>
-               </div>
-            </div>
+              <div class="col-sm-6">
+                {{key.key + " ( " + key.label + " )"}}
+              </div>
+              <div class="col-sm-3">
+                <button type="button" popover-template="'putCond.html'" popover-placement="right" popover-is-open="$index === popOverObj.openCond" ng-click = "popOverObj.openCond = $index; queryInd[$index] = queryInd[$index] || [{}]"  class="btn btn-default">Put / Edit Condition</button>
+              </div>
+              <hr>
          </div>
       </div>
       <div  ng-show = "step == 'step2'">
@@ -114,6 +91,42 @@
             </div>
          </div>
       </div>
+      <script type="text/ng-template" id="putCond.html">
+         <div class="popover fade left in" style="width: 270px; display: block;">
+           <div class="arrow"></div><h3 class="popover-title">Add Condition</h3>
+             <div class="popover-content">
+                <div class="row">
+                   <div class="col-sm-6">
+                      <i class="fa fa-plus fa-3x" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.addMoreCond}}" aria-hidden="true" ng-click = "addCond($index);"></i>
+                   </div>
+                   <div class="col-sm-6">
+                     <button type="button" ng-click = "popOverObj.openCond = false"  class="btn btn-success">Save</button>
+                   </div>
+                    
+
+                 </div>
+                <div class="row" ng-repeat = "cond in queryInd[$index]">
+                  <div class="col-sm-5">
+                     <div class="form-group">
+                        <select class="form-control">
+                           <option ng-repeat = "opt in arrOpt" ng-click = "" ng-if = "addOrNotOpt(opt, $parent.$parent.$index)">{{opt + " ( " + map[opt].desc + " )"}}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-5">
+                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Value">
+                     </div>
+                  </div>
+                  <div class="col-sm-1">
+                     <i class="fa fa-times fa-3x" ng-click = "confirmClick() && queryInd[$parent.$index].splice($index, 1)" confirm-click = "{{::constant.msg.deleteCond}}" aria-hidden="true"></i>
+                  </div>
+                </div>
+                 
+                 <hr>
+             </div>
+         </div>
+      </script>  
    </div>
 </div>
 <div class="footerClose">
