@@ -36,7 +36,9 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         selectColl: 'Select collection from where you want to see record',
         rowSel: 'Click here to select particular row from selected collection',
         projection: 'click here to select particular column you want to see (default value is all column)',
-        rowSelTemp: 'put condition on column'
+        rowSelTemp: 'put condition on column',
+        addMoreCond: 'Click here to add more condition',
+        deleteCond: 'Click here to delete this condition'
 
     };
     constant.loginForm = [

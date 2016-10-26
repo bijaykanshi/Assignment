@@ -4,94 +4,116 @@
    </div>
    <div class="modal-body" >
       <div class="container">
-  <div class="row">
-    <article class="col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
-        <div id="wid-id-0">
-            <header role="heading">
-                <h2>Very Basic Wizard Example </h2>
-            </header>
-            <!-- widget div-->
-            <div role="content">
-                <!-- widget content -->
-                <div class="widget-body">
-
-                    <div class="row">
-                        <form id="wizard-1" novalidate="novalidate">
-                            <div id="bootstrap-wizard-1" class="col-sm-12">
-                                <div class="form-bootstrapWizard">
+         <div class="row">
+            <article >
+               <div id="wid-id-0">
+                  <header role="heading">
+                     <h2>Very Basic Wizard Example </h2>
+                  </header>
+                  <!-- widget div-->
+                  <div role="content">
+                     <!-- widget content -->
+                     <div class="widget-body">
+                        <div class="row">
+                           <form id="wizard-1" novalidate="novalidate">
+                              <div id="bootstrap-wizard-1" class="col-sm-12">
+                                 <div class="form-bootstrapWizard">
                                     <ul class="bootstrapWizard form-wizard">
-                                        <li class="active" data-target="#step1">
-                                            <a href="#tab1" data-toggle="tab" class="active"> <span class="step">1</span> <span class="title">Basic information</span> </a>
-                                        </li>
-                                        <li data-target="#step4">
-                                            <a href="#tab4" data-toggle="tab"> <span class="step">4</span> <span class="title">Save Form</span> </a>
-                                        </li>
+                                       <li ng-class="{'active': step == 'step1'}" class="handSign" ng-click = "step='step1'">
+                                          <a  > <span class="step">1</span> <span class="title">Basic information</span> </a>
+                                       </li>
+                                       <li ng-class="{'active': step == 'step2'}"  class="handSign" ng-click = "step='step2'">
+                                          <a> <span class="step">4</span> <span class="title">Save Form</span> </a>
+                                       </li>
                                     </ul>
                                     <div class="clearfix"></div>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="tab1">
-                                        <br>
-                                        <h3><strong>Step 1 </strong> - Basic Information</h3>
-
-                                        <div class="form-actions">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <ul class="pager wizard no-margin">
-                                                        <li class="previous disabled">
-                                                            <a href="#" class="btn btn-lg btn-default"> Previous </a>
-                                                        </li>
-                                                        <li class="previous disabled">
-                                                            <a href="#" class="btn btn-lg btn-default"> Previous </a>
-                                                        </li>
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab4">
-                                        <br>
-                                        <h3><strong>Step 4</strong> - Save Form</h3>
-                                        <br>
-                                        <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
-                                        <h4 class="text-center">Click next to finish</h4>
-                                        <br>
-                                        <br>
-                                        <div class="form-actions">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <ul class="pager wizard no-margin">
-                                                        <li class="previous">
-                                                            <a href="#" class="btn btn-lg btn-default"> Previous </a>
-                                                        </li>
-                                                        <li class="next disabled">
-                                                            <a href="#" class="btn btn-lg txt-color-darken"> Next </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-                <!-- end widget content -->
-
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                     <!-- end widget content -->
+                  </div>
+                  <!-- end widget div -->
+               </div>
+               <!-- end widget -->
+            </article>
+         </div>
+      </div>
+      <div ng-show = "step == 'step1'"  >
+         <br>
+         <h5><strong>Step 1 </strong> - Put condition on column</h5>
+         <!-- <div class="row">
+            <div class="col-sm-5">
+               <h5>Column</h5>
             </div>
-            <!-- end widget div -->
-
-        </div>
-        <!-- end widget -->
-
-    </article>
-</div>
-</div>
+            <div class="col-sm-2">
+               <h5>Condition</h5>
+            </div>
+            <div class="col-sm-2">
+               <h5>Value to be equated</h5>
+            </div>
+            <div class="col-sm-3">
+               <h5>query</h5>
+            </div>
+            </div> -->
+         <hr>
+         <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete">
+            <div class="col-sm-3">
+               <div class="checkbox">
+                  <label><input type="checkbox" ng-click = "queryInd[$index] = !queryInd[$index] ? {'index0': {}} : !queryInd[$index];countAdd[$index] = 0;">{{key.key + " ( " + key.label + " )"}}</label>
+               </div>
+            </div>
+            <div ng-show = "queryInd[$index]">
+               <div class="col-sm-1">
+                  <i class="fa fa-plus fa-3x" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.addMoreCond}}" aria-hidden="true" ng-click = "addCond($index)"></i>
+               </div>
+               <div ng-repeat="(key, value) in queryInd[$index]">
+                  <div ng-if = "$index != 0" class="col-sm-3"></div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <select class="form-control">
+                           <option ng-repeat = "opt in arrOpt" ng-click = "" ng-if = "addOrNotOpt(opt, $parent.$parent.$index)">{{opt + " ( " + map[opt].desc + " )"}}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-2">
+                     <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Value">
+                     </div>
+                  </div>
+                  <div class="col-sm-1">
+                     <i class="fa fa-times fa-3x"  onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteCond}}"aria-hidden="true"></i>
+                  </div>
+                  <div ng-if = "$index != 0" class="col-sm-1"></div>
+                  <div class="col-sm-3">sdf</div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div  ng-show = "step == 'step2'">
+         <br>
+         <h3><strong>Step 4</strong> - Save Form</h3>
+         <br>
+         <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
+         <h4 class="text-center">Click next to finish</h4>
+         <br>
+         <br>
+         <div class="form-actions">
+            <div class="row">
+               <div class="col-sm-12">
+                  <ul class="pager wizard no-margin">
+                     <li class="previous">
+                        <a href="#" class="btn btn-lg btn-default"> Previous </a>
+                     </li>
+                     <li class="next disabled">
+                        <a href="#" class="btn btn-lg txt-color-darken"> Next </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
    </div>
 </div>
 <div class="footerClose">
@@ -99,10 +121,6 @@
    <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
 </div>
 </div>
-
-
-
-
 <!-- <div>
    <div class="modal-header">
       <h4 class="modal-title">{{header}}</h4>
@@ -144,9 +162,9 @@
           
       </div>
    </div>
-</div>
-<div class="footerClose">
+   </div>
+   <div class="footerClose">
    <hr>
    <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
-</div>
-</div> -->
+   </div>
+   </div> -->
