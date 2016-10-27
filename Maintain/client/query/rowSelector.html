@@ -63,7 +63,7 @@
                 {{key.key + " ( " + key.label + " )"}}
               </div>
               <div class="col-sm-3">
-                <button type="button" popover-template="'putCond.html'" popover-placement="right" popover-is-open="$index === popOverObj.openCond" ng-click = "popOverObj.openCond = $index; queryInd[$index] = queryInd[$index] || [{}]"  class="btn btn-default">Put / Edit Condition</button>
+                <button type="button" popover-template="'putCond.html'" popover-placement="right" popover-is-open="$index === popOverObj.openCond" ng-click = "popOverObj.openCond = $index; queryInd[$index] = queryInd[$index] || [{opt: '>='}]"  class="btn btn-default">Put / Edit Condition</button>
               </div>
               <hr>
          </div>
@@ -108,8 +108,8 @@
                 <div class="row" ng-repeat = "cond in queryInd[$index]">
                   <div class="col-sm-5">
                      <div class="form-group">
-                        <select class="form-control">
-                           <option ng-repeat = "opt in arrOpt" ng-click = "" ng-if = "addOrNotOpt(opt, $parent.$parent.$index)">{{opt + " ( " + map[opt].desc + " )"}}</option>
+                        <select class="form-control" ng-model = "cond.opt">
+                           <option ng-repeat = "opt in arrOpt" value="{{opt}}">{{opt  + " ( " + map[opt].desc + " )"}}</option>
                         </select>
                      </div>
                   </div>

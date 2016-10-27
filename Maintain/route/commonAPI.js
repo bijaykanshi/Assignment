@@ -32,5 +32,9 @@ function commonAPI (ref) {
 			
 		})
 	}
+	this.test = function (req, res) {
+		console.log("reached there with data :--- " + JSON.stringify(req.body));
+		res.send("successfully");
+	}
 }
 module.exports = commonAPI;

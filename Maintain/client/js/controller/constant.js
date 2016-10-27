@@ -39,7 +39,8 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         rowSelTemp: 'put condition on column',
         addMoreCond: 'Click here to add more condition',
         deleteCond: 'Click here to delete this condition',
-        deleteCond: 'Are you sure you want to delete this condition'
+        deleteCond: 'Are you sure you want to delete this condition',
+        plzPutCond: 'Please select condition from select field'
 
     };
     constant.loginForm = [

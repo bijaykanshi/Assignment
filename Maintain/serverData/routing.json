@@ -18,5 +18,10 @@
         "url": "/register",
         "method": "post",
         "callbackFun":  "commonAPI_register"
+    },
+    {
+        "url": "/test",
+        "method": "post",
+        "callbackFun":  "commonAPI_test"
     }
 ]

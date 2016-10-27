@@ -9,7 +9,7 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter) 
     	$scope.queryStr = opt;
     }
 });
-app.controller('rowSelector', function ($scope, $modalInstance, parameter, formFactory, global) {
+app.controller('rowSelector', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
     $scope.header = parameter.header || 'Alert Message';
     $scope.map = {
         "=": {
@@ -38,19 +38,13 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
     }
     $scope.arrOpt = ['=', '<', '>', '<=', '>='];
     $scope.queryInd = {};
-    //$scope.
-    $scope.addOrNotOpt = function(opt, index) {
-        return !(opt in $scope.queryInd[index])
-    }
+    
     $scope.addCond = function(index) {
-    	var len = $scope.queryInd[index].length;
-    	if (!$scope.queryInd[index][len - 1].opt) {
-
+    	if ($scope.queryInd[index].length >= $scope.arrOpt.length) {
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.alrPut});
+            return;
     	}
-    	$scope.queryInd[$index].push({})
-        $scope.countAdd[index] += 1;
-        $scope.queryInd[index]['index' + $scope.countAdd[index]] = {}
-    }
+    	$scope.queryInd[index].push({opt: '>='});    }
     $scope.selectEval = function(opt, index) {
         if (opt == "=") {
             $scope.queryInd[index] = {};
