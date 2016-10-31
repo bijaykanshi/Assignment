@@ -1,0 +1,12 @@
+[
+    {
+        "url": "/",
+        "method": "get",
+        "callbackFun":  "commonAPI_renderIndex"
+    },
+    {
+        "url": "/getJson",
+        "method": "get",
+        "callbackFun":  "commonAPI_getJson"
+    }
+]

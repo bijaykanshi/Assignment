@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Interview's Collection</title>
+     
+   </head>
+   <body>
+      <div id="wrapper" ui-view></div>
+      <div ng-show="global.isLoading" id='loader' style="width: 100% !important;position:fixed !important;height: 100% !important;opacity: 0.3 !important;background-color: #333 !important;z-index:1000 !important; top: 0">
+           <img src="./webdata/loader.gif" style="position: fixed;left:0;right:0;margin: 0 auto;top: 50%;">
+      </div>
+      
+   </body>
+   <link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css" />
+   <link rel="stylesheet" href="css/lib/font-aw/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="css/lib/local.css" />
+   <link rel="stylesheet" type="text/css" href="css/lib/all.min.css" />
+   <link rel="stylesheet" type="text/css" href="css/copy.css" />
+   <link rel="stylesheet" type="text/css" href="css/myOwn.css" />
+   <script type="text/javascript" src="js/lib/jquery-3.1.1.min.js"></script>
+   <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+   
+   <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-ui-router.min.js"></script>
+    <script src="js/lib/ui-bootstrap-tpls-0.14.2.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller/constant.js"></script>
+    <script src="js/controller/global.js"></script>
+    <script src="js/controller/chatBox.js"></script>
+    <script src="js/controller/modal/modal.js"></script>
+    <script src="js/controller/mainCtrl.js"></script>
+    <script src="js/controller/directiveService.js"></script>
+</html>

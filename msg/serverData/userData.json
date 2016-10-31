@@ -1,0 +1,52 @@
+[
+	{
+		"userId": 1,
+		"email": "bijay.iit12@gmail.com",
+		"name": "bijay"	
+	},
+	{
+		"userId": 2,
+		"email": "bijay.iit12@gmail.com",
+		"name": "kanshi"		
+	},
+	{
+		"userId": 3,
+		"email": "bijay.iit12@gmail.com",
+		"name": "anjli"		
+	},
+	{
+		"userId": 4,
+		"email": "bijay.iit12@gmail.com",
+		"name": "puja"		
+	},
+	{
+		"userId": 5,
+		"email": "bijay.iit12@gmail.com",
+		"name": "laxmi"		
+	},
+	{
+		"userId": 6,
+		"email": "bijay.iit12@gmail.com",
+		"name": "jadu"		
+	},
+	{
+		"userId": 7,
+		"email": "bijay.iit12@gmail.com",
+		"name": "rashi"		
+	},
+	{
+		"userId": 8,
+		"email": "bijay.iit12@gmail.com",
+		"name": "rakhi"		
+	},
+	{
+		"userId": 9,
+		"email": "bijay.iit12@gmail.com",
+		"name": "sachin"		
+	},
+	{
+		"userId": 10,
+		"email": "bijay.iit12@gmail.com",
+		"name": "aryan"		
+	}
+]
