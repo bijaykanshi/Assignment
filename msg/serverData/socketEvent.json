@@ -1,0 +1,14 @@
+[
+    {
+        "event": "userAuth",
+        "callbackFun":  "socketEventHandler_userAuth"
+    },
+    {
+        "event": "disconnect",
+        "callbackFun":  "socketEventHandler_disconnect"
+    },
+    {
+        "event": "msg",
+        "callbackFun":  "socketEventHandler_msg"
+    }
+]
