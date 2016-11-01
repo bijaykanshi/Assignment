@@ -28,7 +28,17 @@ app.filter('range', function() {
     };
 });
 
-
+app.filter('prettyJSON', function () {
+    function prettyPrintJson(json) {
+        if (!json)
+            return "";
+        var obj = {};
+        for (var i = 0; i < json.length; i += 1)
+            obj[json[i].opt] = json[i].value;
+      return JSON.stringify(obj, null, '  ');
+    }
+    return prettyPrintJson;
+});
 app.service('dialogModal', ['$modal', function($modal) {
     return function(message, title, okButton, cancelButton) {
         okButton = okButton === false ? false : (okButton || 'Confirm');
