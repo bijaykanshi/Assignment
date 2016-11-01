@@ -1,10 +1,9 @@
-<aside class="tabbed_sidebar ng-scope chat_sidebar popup-box-on" id = "bijay">
+<aside class="tabbed_sidebar ng-scope chat_sidebar popup-box-on">
    <div class="popup-head">
       <div class="popup-head-left pull-left">
-         <a Design and Developmenta title="Gurdeep Osahan (Web Designer)" target="_blank" href="https://web.facebook.com/iamgurdeeposahan">
-            <img class="md-user-image" alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" title="Gurdeep Osahan (Web Designer)" alt="Gurdeep Osahan (Web Designer)">
+         <a>
+            <!-- <img class="md-user-image" alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" title="Gurdeep Osahan (Web Designer)" alt="Gurdeep Osahan (Web Designer)"> -->
             <h1>{{item.name}}</h1>
-            <small><br> <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Web Designer</small>
          </a>
       </div>
       <div class="popup-head-right pull-right">
@@ -27,66 +26,15 @@
    </div>
    <div  class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);background-color: currentColor;">
       <div class="chat_box touchscroll chat_box_colors_a">
-         <div class="chat_message_wrapper">
+         <div ng-repeat = "item in chatBox.msgObj['@id@']" class="chat_message_wrapper" ng-class="{'chat_message_right': item.writtenById == chatBox.myInfo.userId}">
             <div class="chat_user_avatar">
-               <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-               <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)"  src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image">
+               <a>
+               <img   src="https://yt3.ggpht.com/-gyjTaTx2heI/AAAAAAAAAAI/AAAAAAAAAAA/pEAZPeJ8YX0/s900-c-k-no-rj-c0xffffff/photo.jpg" class="md-user-image">
                </a>
             </div>
             <ul class="chat_message">
-               <li>
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, eum? </p>
-               </li>
-               <li>
-                  <p> Lorem ipsum dolor sit amet.<span class="chat_message_time">13:38</span> </p>
-               </li>
-            </ul>
-         </div>
-         <div class="chat_message_wrapper chat_message_right">
-            <div class="chat_user_avatar">
-               <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-               <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">
-               </a>
-            </div>
-            <ul class="chat_message">
-               <li>
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem delectus distinctio dolor earum est hic id impedit ipsum minima mollitia natus nulla perspiciatis quae quasi, quis recusandae, saepe, sunt totam.
-                     <span class="chat_message_time">13:34</span>
-                  </p>
-               </li>
-            </ul>
-         </div>
-         <div class="chat_message_wrapper">
-            <div class="chat_user_avatar">
-               <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-               <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://www.webncc.in/images/gurdeeposahan.jpg" class="md-user-image">
-               </a>
-            </div>
-            <ul class="chat_message">
-               <li>
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque ea mollitia pariatur porro quae sed sequi sint tenetur ut veritatis.https://www.facebook.com/iamgurdeeposahan
-                     <span class="chat_message_time">23 Jun 1:10am</span>
-                  </p>
-               </li>
-            </ul>
-         </div>
-         <div class="chat_message_wrapper chat_message_right">
-            <div class="chat_user_avatar">
-               <a href="https://web.facebook.com/iamgurdeeposahan" target="_blank" >
-               <img alt="Gurdeep Osahan (Web Designer)" title="Gurdeep Osahan (Web Designer)" src="http://bootsnipp.com/img/avatars/bcf1c0d13e5500875fdd5a7e8ad9752ee16e7462.jpg" class="md-user-image">
-               </a>
-            </div>
-            <ul class="chat_message">
-               <li>
-                  <p> Lorem ipsum dolor sit amet, consectetur. </p>
-               </li>
-               <li>
-                  <p>
-                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                     <span class="chat_message_time">Friday 13:34</span>
-                  </p>
+               <li ng-repeat= "msg in item.msg">
+                  <p> {{msg}} </p>
                </li>
             </ul>
          </div>
@@ -94,17 +42,21 @@
    </div>
    <div class="chat_submit_box">
       <div class="uk-input-group">
-         <div class="gurdeep-chat-box">
+         <div class="gurdeep-chat-box" style="display: -webkit-box;height: 15px;">
             <span style="vertical-align: sub;" class="uk-input-group-addon">
-            <a href="#"><i class="fa fa-smile-o"></i></a>
+            <a ><i class="fa fa-smile-o"></i></a>
             </span>
-            <input type="text" placeholder="Type a message" id="submit_message" name="submit_message" class="md-input">
+            <!-- <div class="form-group">
+               <textarea class="form-control" rows="2" cols="10"></textarea>
+            </div> -->
+            <textarea class="form-control" rows="2" cols="20" ng-model = "currentMsg['@id@']"  ng-keypress="$event.which === 13 && chatBox.addMsg(currentMsg, '@id@')"></textarea>
+           <!--  <input type="text" placeholder="Type a message" id="submit_message" name="submit_message" class="md-input"> -->
             <span style="vertical-align: sub;" class="uk-input-group-addon">
-            <a href="#"><i class="fa fa-camera"></i></a>
+            <a ><i class="fa fa-camera"></i></a>
             </span>
          </div>
          <span class="uk-input-group-addon">
-         <a href="#"><i class="glyphicon glyphicon-send"></i></a>
+         <a><i class="glyphicon glyphicon-send"></i></a>
          </span>
       </div>
    </div>

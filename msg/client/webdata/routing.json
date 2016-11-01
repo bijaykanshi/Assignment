@@ -18,7 +18,13 @@
           "templateUrl": "template/initialBody.html",
           "controller": "initialBody"
         }
-      ]
+      ],
+       "onEnter": {
+            "controller": "loginSignUp",
+            "templateUrl": "template/modals/loginSignUp.html",
+            "windowClass": "extraLarge-Modal",
+            "parameter": ""
+        }
     }
   ]
 }

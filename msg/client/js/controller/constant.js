@@ -27,11 +27,6 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
             "placeholder": "Password",
             "label": "Password",
             "key": "password"
-        },
-        {
-            "type": "select",
-            "label": "User Category",
-            "key": "ucat"
         }
     ];
     constant.newsFeed = [

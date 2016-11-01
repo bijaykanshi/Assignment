@@ -6,13 +6,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin Panel</a>
+                <a class="navbar-brand" ng-bind="'Welcome  ' + chatBox.myInfo.name"></a>
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                    
 
-                    <li  ng-repeat = "item in chatBox.userData" class="handSign" ng-class = "{'active': (decVar === $index)}" add-html><a><i class="fa fa-bullseye"></i> {{::item.name}}</a></li>
+                    <li  ng-repeat = "item in chatBox.userData" ng-if = "item.email != chatBox.myInfo.email" class="handSign" add-html><a><i class="fa fa-bullseye"></i> {{::item.name}}</a></li>
 
                     <!-- <li class="active"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard</a></li>
                     <li><a href="portfolio.html"><i class="fa fa-tasks"></i> Portfolio</a></li>

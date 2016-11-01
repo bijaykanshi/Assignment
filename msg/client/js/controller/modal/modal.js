@@ -1,70 +1,37 @@
-app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, parameter, extra, constant) {
+app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, parameter, extra, constant, chatBox, socket) {
   
    $scope.loginData = {
       email: 'bijay@gmail.com',
       password: 'new',
       ucat: 'site_user'
    };
+   console.log("sdf" + socket.a);
    $scope.loginFun = function(dec) {
-      var requestData = dec === 'login' ? $scope.loginData : global.myInfo;
-      if (dec != 'login') {
-          var dob = requestData.dob;
-          if (dob)
-            requestData.birthdate = dob.getDate() + '-' + (dob.getMonth() + 1) + '-' + dob.getFullYear();
-      }
-      requestData.dec = dec;
-      global.sendRequest('/loginSignUp',
-        requestData,
+      socket.emit('userAuth', {authData: $scope.loginData});
+      socket.on('authSuccess', function(data) {
+          chatBox.myInfo = data.myInfo;
+          chatBox.myInfo.name = chatBox.myInfo.email.split('@')[0];
+          global.isLoading = false;
+          chatBox.userData = data.userData;
+          $scope.close();
+      });
+      socket.on('authFail', function(data) {
+          global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.alert_user_not_registered});
+      })
+      /*global.sendRequest('/loginSignUp',
+        $scope.loginData,
         'POST',
         function (data, status, headers, config) {
-          if (data.status === 'error') {
-              global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.error_server, err: JSON.stringify(data.error)});
+         
+          if (!data.userData) {
+              global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.alert_user_not_registered});
               return;
           }
-          var parameter = {};
-          
-          if (dec === 'login') {
-              if (!data.result.length) {
-                  parameter.msg = constant.msg.alert_user_not_registered;
-                  global.openModal('template/modals/popupMsg.html', 'popupMsg', parameter);
-                  return;
-              }
-              if (requestData.ucat === 'management'){
-                  global.adminUser = true;
-              } else {
-                  global.dataToDisplay = data.result[0];
-                  $scope.loginData.name = data.result[2][0].name;
-                  var comment = data.result[3];
-                  var buildArrOnId = {};
-                  comment.forEach(function(obj){
-                      if (!buildArrOnId[obj.news_id])
-                          buildArrOnId[obj.news_id] = [];
-                      buildArrOnId[obj.news_id].push(obj);
-                  });
-                  var map = {};
-                  data.result[1].forEach(function(obj) {
-                      map[obj.news_id] = obj.action;
-                  })
-                  global.dataToDisplay.forEach(function(obj) {
-                      if (map[obj.news_id])
-                        obj.action = map[obj.news_id];
-                      if (buildArrOnId[obj.news_id])
-                        obj.commentArr = buildArrOnId[obj.news_id];
-                  });
-              }
-              global.myInfo = $scope.loginData;
-              $scope.loginData = {};
-              $scope.close();
-              global.showInitial = true;
-          }  else {
-              parameter.msg = constant.msg.alert_siginUp_success;
-              //global.myInfo = {};
-              global.openModal('template/modals/popupMsg.html', 'popupMsg', parameter);
-          }
-        },
-        function (data, status, headers, config) {
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.error_server});
-        });
+          $scope.close();
+          chatBox.myInfo = data.myInfo;
+          chatBox.myInfo.name = chatBox.myInfo.email.split('@')[0];
+          chatBox.userData = data.userData;
+        });*/
      };
    
    $scope.close = function () {
@@ -82,38 +49,5 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
     }, 2000);
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
-    };
-});
-app.controller('addQuetionAns', function ($scope, $modalInstance, parameter, global, constant) {
-    $scope.header = parameter.header || 'Alert Message';
-    $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
-    $scope.rdObj = {val: 'quest'};
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
-    $scope.QArr = [];
-    $scope.add = function () {
-      if ($scope.questAns.quest == 'Add Question' || $scope.questAns.ans == 'Add Answer' || 
-          !($scope.pass && $scope.uname)) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddBothQD});
-        return;
-      }
-      $scope.QArr.push($scope.questAns);
-      $scope.questAns = {quest: 'Add Question', ans: 'Add Answer'};
-      global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.AddedSucessfully});
-    };
-    $scope.submit = function () {
-      if (!($scope.pass && $scope.uname)) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustPresent});
-        return;
-      }
-      //angular.extend(global.currentItem.data, $scope.QArr);
-      [].push.apply(global.currentItem.data, $scope.QArr);
-      global.sendRequest('submitQA', global.sidebarLink, 'post', function(data, status, headers, config) {$scope.close();
-        $scope.close();
-        [].push.apply(global.dispData[global.dispData.length - 1], $scope.QArr);
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
-
-      });
     };
 });

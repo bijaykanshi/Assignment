@@ -8,5 +8,10 @@
         "url": "/getJson",
         "method": "get",
         "callbackFun":  "commonAPI_getJson"
+    },
+    {
+        "url": "/loginSignUp",
+        "method": "post",
+        "callbackFun":  "commonAPI_loginSignUp"
     }
 ]
