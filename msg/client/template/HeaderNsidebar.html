@@ -12,7 +12,7 @@
                 <ul class="nav navbar-nav side-nav">
                    
 
-                    <li  ng-repeat = "item in chatBox.userData" ng-if = "item.email != chatBox.myInfo.email" class="handSign" add-html><a><i class="fa fa-bullseye"></i> {{::item.name}}</a></li>
+                    <li id= "{{item.userId}}"  ng-repeat = "item in chatBox.userData" ng-if = "item.email != chatBox.myInfo.email" class="handSign" add-html><a><i class="fa fa-bullseye"></i> {{item.name}}</a></li>
 
                     <!-- <li class="active"><a href="index.html"><i class="fa fa-bullseye"></i> Dashboard</a></li>
                     <li><a href="portfolio.html"><i class="fa fa-tasks"></i> Portfolio</a></li>
