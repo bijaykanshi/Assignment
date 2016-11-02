@@ -42,3 +42,15 @@ app.directive('addHtml', function($compile, $templateRequest, chatBox) {
         }
     }
 });
+app.directive('schrollBottom', function () {
+  return {
+    scope: {
+      schrollBottom: "="
+    },
+    link: function (scope, element) {
+      scope.$watchCollection('schrollBottom', function (newValue) {
+        $(element).scrollTop($(element)[0].scrollHeight);
+      });
+    }
+  }
+})

@@ -9,7 +9,8 @@ function socketEventHandler (ref) {
 		}
 	}
 	this.msg = function (data) {
-		conn[chatRouter.clientIdToSocketId[data.to]].emit('recieve', data);
+		if (conn[chatRouter.clientIdToSocketId[data.to]])
+			conn[chatRouter.clientIdToSocketId[data.to]].emit('recieve', data);
 	}
 	this.userAuth = function (data) {
 		var dataToSend = {};

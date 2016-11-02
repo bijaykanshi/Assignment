@@ -28,7 +28,13 @@ app.factory('chatBox', ['$rootScope', 'socket', '$compile', '$templateRequest', 
         }
       ]
     };
+    var scrollTop = function(whereToInsert) {
+      var element = $('#' + whereToInsert + 'divToScroll');
+      element[0].scrollTop += 500;
+      //element.scrollTop(element[0].scrollHeight - 100);
+    }
     var pushMsg = function (whereToInsert, msg, writtenById) {
+        scrollTop(whereToInsert);
         if (!chatBox.msgObj[whereToInsert])
           chatBox.msgObj[whereToInsert] = [];
         var msgArrRef = chatBox.msgObj[whereToInsert];

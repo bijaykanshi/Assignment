@@ -24,8 +24,8 @@
          <button data-widget="remove" id="removeClass" class="chat-header-button pull-right" type="button"><i class="glyphicon glyphicon-remove"></i></button>
       </div>
    </div>
-   <div  class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);background-color: currentColor;">
-      <div class="chat_box touchscroll chat_box_colors_a">
+   <div  class="chat_box_wrapper chat_box_small chat_box_active" style="opacity: 1; display: block; transform: translateX(0px);background-color: currentColor;" id = "@id@divToScroll">
+      <div class="chat_box touchscroll chat_box_colors_a"  >
          <div ng-repeat = "item in chatBox.msgObj['@id@']" class="chat_message_wrapper" ng-class="{'chat_message_right': item.writtenById == chatBox.myInfo.userId}">
             <div class="chat_user_avatar">
                <a>
@@ -33,7 +33,7 @@
                </a>
             </div>
             <ul class="chat_message">
-               <li ng-repeat= "msg in item.msg">
+               <li ng-repeat= "msg in item.msg track by $index">
                   <p> {{msg}} </p>
                </li>
             </ul>
