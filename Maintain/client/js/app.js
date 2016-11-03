@@ -7,3 +7,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
    $urlRouterProviderRef = $urlRouterProvider;
    $stateProviderRef = $stateProvider;
 });
+

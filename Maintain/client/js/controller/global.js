@@ -1,4 +1,4 @@
-app.factory('global', function($http, $modal, $state, $location, $rootScope) {
+app.factory('global', function($http, $uibModal, $state, $location, $rootScope) {
     var global = {};
     global.currentPage = 0;
     global.itemsPerPage = 10;
@@ -58,7 +58,8 @@ app.factory('global', function($http, $modal, $state, $location, $rootScope) {
             obj.backdrop = 'static';
             obj.keyboard = false;
       }
-      $modal.open(obj);
+      //$modal.open(obj);
+      $uibModal.open(obj);
     };
    /* global.sendRequest('/getData',
         undefined,

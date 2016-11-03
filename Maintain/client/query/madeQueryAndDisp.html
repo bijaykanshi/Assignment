@@ -14,15 +14,19 @@
          <div class="col-sm-1">).</div>
          <div class="col-sm-1">find</div>
          <div class="col-sm-1">(</div>
-         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.rowSel}}" type="button" class="btn btn-info" popover-template="'selectRow.html'" popover-placement="right"> Row selection</button></div>
-         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" class="btn btn-success">Projection</button></div>
+         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.rowSel}}" type="button" class="btn btn-info" uib-popover-template="'selectRow.html'" popover-is-open="formFactory.isPopOverOpen" popover-placement="right" ng-click = "setInitialVal();"> Row selection</button></div>
+         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" class="btn btn-success" uib-popover-template="'projection.html'" popover-is-open="formFactory.projection" popover-placement="right" ng-click = "formFactory.projection = true">Projection</button></div>
          <div class="col-sm-1">)</div>
       </div>
       <hr>
       <div class="row">
-         <div class="col-sm-3"> Your query is :- </div>
-         <div class="col-sm-4">{{queryStr}}</div>
-      </div>
+            <div class="col-sm-12">
+             <h4>Your Query is</h4><br>
+             db.collection({{queryStr}}).find( {{formFactory.rowSelector | json}}, {{projectionObj | json}})
+
+          </div>
+         
+       </div>
       <script type="text/ng-template" id="selectRow.html">
          <div class="popover fade left in" style="width: 270px; display: block;">
            <div class="arrow"></div><h3 class="popover-title">write query or click on row selector (that will help you to select your row)</h3>
@@ -30,17 +34,41 @@
                  <div class="row">
                     <div class="form-group">
                       <label for="comment">Direct Write your row selctor here :- </label>
-                      <textarea class="form-control" rows="5" id="comment"></textarea>
+                      <textarea class="form-control" ng-model = "formFactory.queryOwn" rows="5"></textarea>
                     </div>
+                    <button type="button" ng-click = "setRowSelect()" class="btn btn-primary">Save above Row Selector</button>
                  </div>
                  <hr>
                  OR
                  <div class="row">
                      <button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" ng-click = "global.openModal('query/rowSelector.html', 'rowSelector', {header: constant.msg.rowSelTemp}, 'extraLarge-Modal', undefined, true);" class="btn btn-success">Row Selector</button>
+                     <button type="button" ng-click = "formFactory.isPopOverOpen = false" class="btn btn-primary">Close</button>
                  </div>
              </div>
          </div>
-      </script>  
+      </script>
+      <script type="text/ng-template" id="projection.html">
+         <div class="popover fade left in" style="width: 270px; display: block;">
+           <div class="arrow"></div><h3 class="popover-title">select which column you want</h3>
+             <div class="popover-content">
+                    <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete">
+                        
+                            <div class="col-sm-3">
+                                <i ng-class="{'fa fa-circle-thin fa-2x': !projectionObj[key.key], 'fa fa-check-circle-o fa-2x': projectionObj[key.key]}" aria-hidden="true" ng-click = "projectionObj[key.key] = projectionObj[key.key] ? 0 : 1"></i>
+                            </div>
+                        
+                        <div class="col-sm-9">
+                          {{key.label}}
+                        </div>
+                   </div>
+                 <hr>
+                 <div class="row">
+                     <button type="button" ng-click = "formFactory.projection=false" class="btn btn-success">Save Your Choice</button>
+                     <button type="button" ng-click = "formFactory.projection = false" class="btn btn-primary">Close</button>
+                 </div>
+             </div>
+         </div>
+      </script>    
    </div>
 </div>
 <div class="footerClose">

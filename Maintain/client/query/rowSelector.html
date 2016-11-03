@@ -22,8 +22,8 @@
                                        <li ng-class="{'active': step == 'step1'}" class="handSign" ng-click = "step='step1'">
                                           <a  > <span class="step">1</span> <span class="title">Put Condition</span> </a>
                                        </li>
-                                       <li ng-class="{'active': step == 'step2'}"  class="handSign" ng-click = "step='step2'">
-                                          <a> <span class="step">2</span> <span class="title">Put logical 'AND' and 'OR'</span> </a>
+                                       <li ng-class="{'active': step == 'step2'}"  class="handSign" ng-click = "step1Next()">
+                                          <a> <span class="step">2</span> <span class="title">Submit Query</span> </a>
                                        </li>
                                     </ul>
                                     <div class="clearfix"></div>
@@ -74,31 +74,37 @@
              <li class="previous disabled">
                 <a  class="btn btn-lg btn-default"> Previous </a>
              </li>
-             <li class="next " class="handSign" ng-click = "putLog()">
+             <li class="next " class="handSign" ng-click = "step1Next()">
                 <a class="btn btn-lg txt-color-darken"> Next </a>
              </li>
           </ul>
       </div>
       <div  ng-show = "step == 'step2'">
          <br>
-         <h3><strong>Step 2</strong> Put Logical "AND" or "OR"</h3>
+         <h4><strong>Step 2</strong>   Submit Row Selector</h4>
          <br>
          <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                <div class="row" ng-repeat = "(key, value) in queryObj">
                  <div class="col-sm-2"> {{$index + 1}}</div>
                  <div class="col-sm-5"> {{key}}</div>
                  <div class="col-sm-5"> {{value | json}}</div>
                </div>
             </div>
-            <div class="col-sm-6">
-              
+         </div>
+         <hr>
+          <div class="row">
+            <div class="col-sm-12">
+               <h4>Your Query is</h4><br>
+               db.collection().find( {{queryObj | json}}, {})
+
             </div>
            
          </div>
-         <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete</strong></h1>
-         <h4 class="text-center">Click next to finish</h4>
-         <br>
+         <div class="handSign" ng-click = "formFactory.rowSelector = queryObj;close();formFactory.isPopOverOpen =false">
+            <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete ?</strong></h1>
+            <h4 class="text-center" class="handSign">Click next to finish</h4>
+         </div>
          <br>
          <div class="form-actions">
             <div class="row">
@@ -116,7 +122,7 @@
          </div>
       </div>
       <script type="text/ng-template" id="putCond.html">
-         <div class="popover fade left in" style="width: 270px; display: block;">
+         <div class="popover fade left in" style="width: 450px; display: block;">
            <div class="arrow"></div><h3 class="popover-title">Add Condition</h3>
              <div class="popover-content">
                 <div class="row">
@@ -158,50 +164,3 @@
    <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
 </div>
 </div>
-<!-- <div>
-   <div class="modal-header">
-      <h4 class="modal-title">{{header}}</h4>
-   </div>
-   <div class="modal-body" >
-      <div class="row"> 
-          <div class="col-sm-6">
-              <h3>Column</h3>
-          </div>
-          <div class="col-sm-3">
-            <h3>Condition</h3>
-          </div>
-          <div class="col-sm-3">
-            <h3>Value to be equated</h3>
-          </div>
-      </div>
-      <hr>
-      <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete"> 
-          <div class="col-sm-6">
-            <div class="checkbox">
-              <label><input type="checkbox" ng-click = "checkObj[$index] = !checkObj[$index]">{{key.key + " ( " + key.label + " )"}}</label>
-            </div>
-          </div>
-          <div ng-show = "checkObj[$index]">
-            <div class="col-sm-3">
-                <div class="form-group">
-                  <select class="form-control" id="sel1">
-                    <option ng-repeat = "opt in arrOpt">{{opt}}</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-group">
-      
-                    <input type="text" class="form-control" placeholder="Value" id="usr">
-                </div>
-              </div>
-          </div>
-          
-      </div>
-   </div>
-   </div>
-   <div class="footerClose">
-   <hr>
-   <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
-   </div>
-   </div> -->

@@ -1,16 +1,40 @@
-app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter) {
+app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
     $scope.header = parameter.header || 'Alert Message';
     $scope.collectionArr = ['users', 'abc', 'xyz'];
-
+    formFactory.isPopOverOpen = false;
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
     $scope.setColl = function(opt) {
     	$scope.queryStr = opt;
     }
+    $scope.setInitialVal = function () {
+        formFactory.isPopOverOpen = true;
+        formFactory.queryOwn = (formFactory.rowSelector && JSON.stringify(formFactory.rowSelector)) || "";
+    }
+    $scope.projectionObj = {};
+    /*$scope.buildProjection = function() {
+        formFactory.projectionObj = $scope.projectionObj;
+
+    }*/
+    $scope.setRowSelect = function() {
+        var parsed;
+        try {
+            parsed = JSON.parse(formFactory.queryOwn)
+        } catch (e) {
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.plzEnterValidJSON});
+            return;
+        }
+        formFactory.isPopOverOpen =false;
+        formFactory.rowSelector = parsed;
+        delete formFactory.queryOwn;
+        console.log();
+    }
+    formFactory.rowSelector = {};
 });
 app.controller('rowSelector', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
     $scope.header = parameter.header || 'Alert Message';
+    $scope.popOverObj = {};
     $scope.step = "step1";
     $scope.map = {
         "=": {
@@ -40,7 +64,8 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
     }
     $scope.arrOpt = ['=', '<', '>', '<=', '>='];
     $scope.queryInd = {};
-    $scope.putLog = function () {
+    formFactory.projection = false;
+    $scope.step1Next = function () {
     	$scope.queryObj = {};
     	$scope.step='step2';
     	for (var i = 0; i < formFactory.formFieldEditDelete.length; i += 1) {
@@ -67,7 +92,8 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.alrPut});
             return;
     	}
-    	$scope.queryInd[index].push({opt: '$lt'});    }
+    	$scope.queryInd[index].push({opt: '$lt'});    
+    }
     $scope.selectEval = function(opt, index) {
         if (opt == "=") {
             $scope.queryInd[index] = {};
@@ -78,7 +104,13 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
 
 
     }
+    
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
 });
+
+/*property need to be delete
+formFactory.isPopOverOpen
+formFactory.projection
+*/

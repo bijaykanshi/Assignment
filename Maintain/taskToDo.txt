@@ -4,3 +4,5 @@ task to do
 3.	adjust color of panel head
 4. class of each link font awesome
 5. provide option for changing background and panel
+ Nested field
+ query validator
