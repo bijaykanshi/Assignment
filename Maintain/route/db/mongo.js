@@ -11,7 +11,7 @@ function MongoConf (ref) {
             poolSize : 5
         }
     };
-    var clientDbCatche = {};
+    var clientDbCatche = {lengthOf: 0};
     this.getCachedClientConnectionDb = function (url, retries, res, callback) {
     	var catcheKey = url.replace(/([^a-zA-Z0-9]*)/g ,  '');
     	if (retries <= 0) {
@@ -44,8 +44,9 @@ function MongoConf (ref) {
 	            return;
 	        }
 	        clientDbCatche[catcheKey] = {'ts': new Date().getTime(), 'conn': opened_db, 'wait': false};
+	        clientDbCatche.lengthOf += 1;
 	        callback(false, opened_db);
-	        if (Object.keys(clientDbCatche[catcheKey]).length > 100) 
+	        if (clientDbCatche.lengthOf > 100) 
 	        	me.deleteObjKey(catcheKey);
 	        
 	    });

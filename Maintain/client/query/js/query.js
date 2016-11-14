@@ -1,5 +1,15 @@
 app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
-    $scope.header = parameter.header || 'Alert Message';
+    //$scope.header = parameter.header || 'Alert Message';
+    $scope.submitQuery = function () {
+        if ($scope.showQ) {
+            $scope.showQ = false;
+            return;
+        }
+        global.sendRequest('submitQuery', {collection: $scope.queryStr, row: formFactory.rowSelector, col: $scope.projectionObj}, 'post', function(data, status, headers, config) {
+            $scope.showQ = true;
+            
+        });
+    }
     $scope.collectionArr = ['users', 'abc', 'xyz'];
     formFactory.isPopOverOpen = false;
     $scope.close = function () {

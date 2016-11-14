@@ -6,6 +6,23 @@ function commonAPI (ref) {
 		console.log(" hi i am here");
 		res.json({webTemp: ref.webTemp, form: ref.form});
 	}
+	this.submitQuery = function(req, res) {
+		var dbName = req.body.dbName || 'mydb';
+		debugger;
+		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
+			if (err)
+				res.status(500).send(err);
+			clientDb.collection(req.body.collection).find(req.body.row, req.body.col, function(err, data) {
+				if (err)
+					res.status(500).send(err);
+				data.toArray(function(jsonData) {
+					res.json(jsonData);
+				})
+				
+			})
+			
+		})
+	}
 	this.saveJSON = function(req, res) {
 		var name = req.body.name || 'webTemp';
 		var path = './serverData/' + name + '.json';

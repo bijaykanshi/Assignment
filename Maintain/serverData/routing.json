@@ -20,6 +20,11 @@
         "callbackFun":  "commonAPI_register"
     },
     {
+        "url": "/submitQuery",
+        "method": "post",
+        "callbackFun":  "commonAPI_submitQuery"
+    },
+    {
         "url": "/test",
         "method": "post",
         "callbackFun":  "commonAPI_test"

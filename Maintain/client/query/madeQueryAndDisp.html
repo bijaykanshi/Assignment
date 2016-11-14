@@ -1,6 +1,8 @@
 <div>
    <div class="modal-header">
-      <h4 class="modal-title">{{header}}</h4>
+      <!-- <h4 class="modal-title">{{header}}</h4> -->
+      <button type="button" class="btn btn-success" ng-click = "submitQuery()">{{showQ ? "Made Query" : "Submit Query"}}</button>
+      <button type="button" ng-show = "submitQnce" class="btn btn-primary" >{{showQ ? "Save Changes on Server" : "Show Result of Previous Query"}}</button>
    </div>
    <div class="modal-body" >
       <div class="row">
