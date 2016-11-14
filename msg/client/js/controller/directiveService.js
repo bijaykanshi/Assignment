@@ -1,4 +1,4 @@
-app.directive('addHtml', function($compile, $templateRequest, chatBox) {
+app.directive('addHtml', function($compile, $templateRequest, chatBox, $timeout) {
     return {
         restrict: 'AE',
         link: function(scope, element, attrs) {
@@ -36,6 +36,9 @@ app.directive('addHtml', function($compile, $templateRequest, chatBox) {
                         $('#' + chatBox.visibleEl.pop()).removeClass('popup-box-on');
                     }
                     adjustPos(chatBox.visibleEl);
+                    $timeout(function() {
+                        chatBox.scrollTop(id);
+                    },1000);
                 });
 
             })
