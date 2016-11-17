@@ -1,34 +1,53 @@
 <div>
    <div class="modal-header">
       <!-- <h4 class="modal-title">{{header}}</h4> -->
-      <button type="button" class="btn btn-success" ng-click = "submitQuery()">{{showQ ? "Made Query" : "Submit Query"}}</button>
+      <button type="button" class="btn btn-success" ng-click = "submitQuery()">{{showQ ? "Made Query" : "Submit Query"}}</button>&nbsp;&nbsp;
       <button type="button" ng-show = "submitQnce" class="btn btn-primary" >{{showQ ? "Save Changes on Server" : "Show Result of Previous Query"}}</button>
    </div>
    <div class="modal-body" >
-      <div class="row">
-         <div class="col-sm-2">db.collection(</div>
-         <div class="col-sm-2">
-            <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
-            <ul class="dropdown-menu option" role="menu">
-               <li  class="handSign" ng-repeat = "opt in collectionArr" ng-click="setColl(opt)"><a >{{opt}}</li>
-            </ul>
+      <div ng-hide = "showQ">
+         <div class="row">
+            <div class="col-sm-2">db.collection(</div>
+            <div class="col-sm-2">
+               <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
+               <ul class="dropdown-menu option" role="menu">
+                  <li  class="handSign" ng-repeat = "opt in collectionArr" ng-click="setColl(opt)"><a >{{opt}}</li>
+               </ul>
+            </div>
+            <div class="col-sm-1">).</div>
+            <div class="col-sm-1">find</div>
+            <div class="col-sm-1">(</div>
+            <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.rowSel}}" type="button" class="btn btn-info" uib-popover-template="'selectRow.html'" popover-is-open="formFactory.isPopOverOpen" popover-placement="right" ng-click = "setInitialVal();"> Row selection</button></div>
+            <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" class="btn btn-success" uib-popover-template="'projection.html'" popover-is-open="formFactory.projection" popover-placement="right" ng-click = "formFactory.projection = true">Projection</button></div>
+            <div class="col-sm-1">)</div>
          </div>
-         <div class="col-sm-1">).</div>
-         <div class="col-sm-1">find</div>
-         <div class="col-sm-1">(</div>
-         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.rowSel}}" type="button" class="btn btn-info" uib-popover-template="'selectRow.html'" popover-is-open="formFactory.isPopOverOpen" popover-placement="right" ng-click = "setInitialVal();"> Row selection</button></div>
-         <div class="col-sm-2"><button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" class="btn btn-success" uib-popover-template="'projection.html'" popover-is-open="formFactory.projection" popover-placement="right" ng-click = "formFactory.projection = true">Projection</button></div>
-         <div class="col-sm-1">)</div>
-      </div>
-      <hr>
-      <div class="row">
+         <hr>
+         <div class="row">
             <div class="col-sm-12">
-             <h4>Your Query is</h4><br>
-             db.collection({{queryStr}}).find( {{formFactory.rowSelector | json}}, {{projectionObj | json}})
-
+               <h4>Your Query is</h4>
+               <br>
+               db.collection({{queryStr}}).find( {{formFactory.rowSelector | json}}, {{projectionObj | json}})
+            </div>
+         </div>
+      </div>
+      <div ng-show = "showQ">
+        <div class="container">
+            <table class="table table-hover table-responsive">
+              <thead>
+                <tr>
+                  <th ng-repeat = "head in headerArr">{{head}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat = "rowData in dataToDisplay" ng-show = "!deleteObj[rowData._id]">
+                  <td ng-repeat = "(colKey, value) in rowData">{{value}}</td>
+                  <td><button class="btn btn-warning" ng-click = "global.openModal('query/modal/editRowData.html', 'editRowData', {header: constant.msg.editRowData, rowData: rowData}, 'extraLarge-Modal');">Edit</button></td>
+                  <td><button class="btn btn-danger" ng-click = "confirmClick() && removeItem(rowData._id);" confirm-click = "Are You sure you want to delete this Item">Delete</button></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-         
-       </div>
+      </div>
       <script type="text/ng-template" id="selectRow.html">
          <div class="popover fade left in" style="width: 270px; display: block;">
            <div class="arrow"></div><h3 class="popover-title">write query or click on row selector (that will help you to select your row)</h3>
@@ -43,7 +62,7 @@
                  <hr>
                  OR
                  <div class="row">
-                     <button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" ng-click = "global.openModal('query/rowSelector.html', 'rowSelector', {header: constant.msg.rowSelTemp}, 'extraLarge-Modal', undefined, true);" class="btn btn-success">Row Selector</button>
+                     <button onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.projection}}" type="button" ng-click = "global.openModal('query/modal/rowSelector.html', 'rowSelector', {header: constant.msg.rowSelTemp}, 'extraLarge-Modal', undefined, true);" class="btn btn-success">Row Selector</button>
                      <button type="button" ng-click = "formFactory.isPopOverOpen = false" class="btn btn-primary">Close</button>
                  </div>
              </div>

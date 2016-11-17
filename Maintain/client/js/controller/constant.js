@@ -41,7 +41,8 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         deleteCond: 'Click here to delete this condition',
         deleteCond: 'Are you sure you want to delete this condition',
         plzPutCond: 'Please select condition from select field',
-        plzEnterValidJSON: 'Please write query in valid json format'
+        plzEnterValidJSON: 'Please write query in valid json format',
+        editRowData: 'Edit row data here'
 
     };
     constant.loginForm = [

@@ -10,12 +10,16 @@ function commonAPI (ref) {
 		var dbName = req.body.dbName || 'mydb';
 		debugger;
 		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
-			if (err)
+			if (err) {
 				res.status(500).send(err);
+				return;
+			}
 			clientDb.collection(req.body.collection).find(req.body.row, req.body.col, function(err, data) {
-				if (err)
+				if (err) {
 					res.status(500).send(err);
-				data.toArray(function(jsonData) {
+					return;
+				}
+				data.toArray(function(err, jsonData) {
 					res.json(jsonData);
 				})
 				

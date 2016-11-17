@@ -1,18 +1,32 @@
 app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
     //$scope.header = parameter.header || 'Alert Message';
+    $scope.deleteObj = {};
+    global.modifyObj = {};
     $scope.submitQuery = function () {
         if ($scope.showQ) {
             $scope.showQ = false;
             return;
         }
         global.sendRequest('submitQuery', {collection: $scope.queryStr, row: formFactory.rowSelector, col: $scope.projectionObj}, 'post', function(data, status, headers, config) {
+            $scope.headerArr = Object.keys(data[0]);
+            $scope.dataToDisplay = data;
+            $scope.submitQnce = true;
             $scope.showQ = true;
             
         });
     }
+    $scope.removeItem = function (id) {
+        $scope.deleteObj[id] = true; 
+    }
+    $scope.saveOnServer = function () {
+        $scope.deleteObj[id] = true; 
+    }
     $scope.collectionArr = ['users', 'abc', 'xyz'];
     formFactory.isPopOverOpen = false;
     $scope.close = function () {
+        delete formFactory.isPopOverOpen;
+        delete formFactory.projection;
+        delete global.modifyObj;
         $modalInstance.dismiss('cancel');
     };
     $scope.setColl = function(opt) {
@@ -87,7 +101,7 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
     				var condRef = $scope.queryInd[i][j];
     				if (condRef.opt == "$eq") {
     					$scope.queryObj[itemInfo.key] = {};
-    					$scope.queryObj[itemInfo.key][condRef.opt] = condRef.value;
+    					$scope.queryObj[itemInfo.key] = condRef.value;
     					break;
     				} else {
     					$scope.queryObj[itemInfo.key][condRef.opt] = condRef.value;
@@ -119,8 +133,17 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
         $modalInstance.dismiss('cancel');
     };
 });
-
-/*property need to be delete
-formFactory.isPopOverOpen
-formFactory.projection
-*/
+app.controller('editRowData', function ($scope, $modalInstance, parameter, constant) {
+    $scope.header = parameter.header || 'Alert Message';
+    $scope.rowData = parameter.rowData;
+    $scope.rowDataBackUp = angular.copy($scope.rowData);
+    $scope.close = function () {
+        for (var key in $scope.rowDataBackUp)
+            parameter.rowData[key] = $scope.rowDataBackUp[key];
+        $modalInstance.dismiss('cancel');
+    };
+    $scope.save = function () {
+        global.modifyObj[parameter.rowData._id] = true;
+        $modalInstance.dismiss('cancel');
+    };
+});
