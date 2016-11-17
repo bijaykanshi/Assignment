@@ -2,7 +2,7 @@
    <div class="modal-header">
       <!-- <h4 class="modal-title">{{header}}</h4> -->
       <button type="button" class="btn btn-success" ng-click = "submitQuery()">{{showQ ? "Made Query" : "Submit Query"}}</button>&nbsp;&nbsp;
-      <button type="button" ng-show = "submitQnce" class="btn btn-primary" >{{showQ ? "Save Changes on Server" : "Show Result of Previous Query"}}</button>
+      <button type="button" ng-show = "submitQnce" class="btn btn-primary" ng-click = "saveOnServer()" >{{showQ ? "Save Changes on Server" : "Show Result of Previous Query"}}</button>
    </div>
    <div class="modal-body" >
       <div ng-hide = "showQ">
@@ -35,13 +35,13 @@
             <table class="table table-hover table-responsive">
               <thead>
                 <tr>
-                  <th ng-repeat = "head in headerArr">{{head}}</th>
+                  <th ng-repeat = "head in headerArr" ng-if = "head != '_id'">{{head}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat = "rowData in dataToDisplay" ng-show = "!deleteObj[rowData._id]">
-                  <td ng-repeat = "(colKey, value) in rowData">{{value}}</td>
-                  <td><button class="btn btn-warning" ng-click = "global.openModal('query/modal/editRowData.html', 'editRowData', {header: constant.msg.editRowData, rowData: rowData}, 'extraLarge-Modal');">Edit</button></td>
+                  <td ng-repeat = "(colKey, value) in rowData" ng-if = "colKey != '_id'">{{value}}</td>
+                  <td><button class="btn btn-warning" ng-click = "global.openModal('formBuilder/registration.html', 'editRowData', {header: constant.msg.editRowData, rowData: rowData}, 'extraLarge-Modal');">Edit</button></td>
                   <td><button class="btn btn-danger" ng-click = "confirmClick() && removeItem(rowData._id);" confirm-click = "Are You sure you want to delete this Item">Delete</button></td>
                 </tr>
               </tbody>

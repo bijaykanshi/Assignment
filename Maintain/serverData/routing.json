@@ -25,6 +25,11 @@
         "callbackFun":  "commonAPI_submitQuery"
     },
     {
+        "url": "/saveChange",
+        "method": "post",
+        "callbackFun":  "commonAPI_saveChange"
+    },
+    {
         "url": "/test",
         "method": "post",
         "callbackFun":  "commonAPI_test"

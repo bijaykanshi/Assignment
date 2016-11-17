@@ -166,7 +166,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         });
     }
     $scope.formObj = {};
-    $scope.register = function () {
+    $scope.save = function () {
         global.sendRequest('register', {data: $scope.formObj}, 'post', function(data, status, headers, config) {
             $scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.successRegister});

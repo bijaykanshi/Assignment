@@ -1,4 +1,5 @@
 function commonAPI (ref) {
+	
 	this.renderIndex = function(req, res) {
 		res.render('index');
 	}
@@ -6,9 +7,12 @@ function commonAPI (ref) {
 		console.log(" hi i am here");
 		res.json({webTemp: ref.webTemp, form: ref.form});
 	}
+	this.saveChange = function(req, res) {
+		var ObjectID = ref.mongo.ObjectID;
+		res.json({webTemp: ref.webTemp, form: ref.form});
+	}
 	this.submitQuery = function(req, res) {
 		var dbName = req.body.dbName || 'mydb';
-		debugger;
 		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
 			if (err) {
 				res.status(500).send(err);

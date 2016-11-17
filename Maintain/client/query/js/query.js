@@ -8,7 +8,12 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, 
             return;
         }
         global.sendRequest('submitQuery', {collection: $scope.queryStr, row: formFactory.rowSelector, col: $scope.projectionObj}, 'post', function(data, status, headers, config) {
-            $scope.headerArr = Object.keys(data[0]);
+            if (data.length)
+                $scope.headerArr = Object.keys(data[0]);
+            else {
+                global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.noDataOnDb});
+                return;
+            }
             $scope.dataToDisplay = data;
             $scope.submitQnce = true;
             $scope.showQ = true;
@@ -19,6 +24,10 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, 
         $scope.deleteObj[id] = true; 
     }
     $scope.saveOnServer = function () {
+        var dataToSave = {};
+        var removeArr = Object.keys($scope.deleteObj);
+        if (removeArr.length)
+            dataToSave.remove = {_id: {$in: removeArr}}
         $scope.deleteObj[id] = true; 
     }
     $scope.collectionArr = ['users', 'abc', 'xyz'];
@@ -133,10 +142,10 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
         $modalInstance.dismiss('cancel');
     };
 });
-app.controller('editRowData', function ($scope, $modalInstance, parameter, constant) {
+app.controller('editRowData', function ($scope, $modalInstance, parameter, constant, global) {
     $scope.header = parameter.header || 'Alert Message';
-    $scope.rowData = parameter.rowData;
-    $scope.rowDataBackUp = angular.copy($scope.rowData);
+    $scope.formObj = parameter.rowData;
+    $scope.rowDataBackUp = angular.copy($scope.formObj);
     $scope.close = function () {
         for (var key in $scope.rowDataBackUp)
             parameter.rowData[key] = $scope.rowDataBackUp[key];
