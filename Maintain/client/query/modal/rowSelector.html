@@ -1,0 +1,152 @@
+<div>
+   <div class="modal-header">
+      <h4 class="modal-title">{{header}}</h4>
+   </div>
+   <div class="modal-body" >
+      <div class="container">
+         <div class="row">
+            <article >
+               <div id="wid-id-0">
+                  <header role="heading">
+                     <h2>Query Builder</h2>
+                  </header>
+                  <!-- widget div-->
+                  <div role="content">
+                     <!-- widget content -->
+                     <div class="widget-body">
+                        <div class="row">
+                           <form id="wizard-1" novalidate="novalidate">
+                              <div id="bootstrap-wizard-1" class="col-sm-12">
+                                 <div class="form-bootstrapWizard">
+                                    <ul class="bootstrapWizard form-wizard">
+                                       <li ng-class="{'active': step == 'step1'}" class="handSign" ng-click = "step='step1'">
+                                          <a  > <span class="step">1</span> <span class="title">Put Condition</span> </a>
+                                       </li>
+                                       <li ng-class="{'active': step == 'step2'}"  class="handSign" ng-click = "step1Next()">
+                                          <a> <span class="step">2</span> <span class="title">Submit Query</span> </a>
+                                       </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                     <!-- end widget content -->
+                  </div>
+                  <!-- end widget div -->
+               </div>
+               <!-- end widget -->
+            </article>
+         </div>
+      </div>
+      <div ng-show = "step == 'step1'"  >
+         <br>
+         <h5><strong>Step 1 </strong> - Put condition on column</h5>
+         <hr>
+         <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete">
+              <div class="col-sm-6">
+                {{key.key + " ( " + key.label + " )"}}
+              </div>
+              <div class="col-sm-3">
+                <button type="button" popover-template="'putCond.html'" popover-placement="right" popover-is-open="$index === popOverObj.openCond" ng-click = "popOverObj.openCond = $index; queryInd[$index] = queryInd[$index] || [{opt: '$lt'}]"  class="btn btn-default">Put / Edit Condition</button>
+              </div>
+              <div class="col-sm-3">
+                  {{queryInd[$index] | prettyJSON}}
+              </div>
+              <hr>
+         </div>
+         <ul class="pager wizard no-margin">
+             <li class="previous disabled">
+                <a  class="btn btn-lg btn-default"> Previous </a>
+             </li>
+             <li class="next " class="handSign" ng-click = "step1Next()">
+                <a class="btn btn-lg txt-color-darken"> Next </a>
+             </li>
+          </ul>
+      </div>
+      <div  ng-show = "step == 'step2'">
+         <br>
+         <h4><strong>Step 2</strong>   Submit Row Selector</h4>
+         <br>
+         <!-- <div class="row">
+            <div class="col-sm-12">
+               <div class="row" ng-repeat = "(key, value) in queryObj">
+                 <div class="col-sm-2"> {{$index + 1}}</div>
+                 <div class="col-sm-5"> {{key}}</div>
+                 <div class="col-sm-5"> {{value | json}}</div>
+               </div>
+            </div>
+         </div>
+         <hr> -->
+          <div class="row">
+            <div class="col-sm-12">
+               <h4>Your Query is</h4><br>
+               db.collection().find( {{queryObj | json}}, {})
+
+            </div>
+           
+         </div>
+         <div class="handSign" ng-click = "formFactory.rowSelector = queryObj;close();formFactory.isPopOverOpen =false">
+            <h1 class="text-center text-success"><strong><i class="fa fa-check fa-lg"></i> Complete ?</strong></h1>
+            <h4 class="text-center" class="handSign">Click next to finish</h4>
+         </div>
+         <br>
+         <div class="form-actions">
+            <div class="row">
+               <div class="col-sm-12">
+                  <ul class="pager wizard no-margin">
+                     <li class="previous" class="handSign" ng-click = "step='step1'">
+                        <a  class="btn btn-lg btn-default"> Previous </a>
+                     </li>
+                     <li class="next disabled">
+                        <a  class="btn btn-lg txt-color-darken"> Next </a>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <script type="text/ng-template" id="putCond.html">
+         <div class="popover fade left in" style="width: 450px; display: block;">
+           <div class="arrow"></div><h3 class="popover-title">Add Condition</h3>
+             <div class="popover-content">
+                <div class="row">
+                   <div class="col-sm-6">
+                      <i class="fa fa-plus fa-3x" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.addMoreCond}}" aria-hidden="true" ng-click = "addCond($index);"></i>
+                   </div>
+                   <div class="col-sm-6">
+                     <button type="button" ng-click = "popOverObj.openCond = false"  class="btn btn-success">Save</button>
+                   </div>
+                    
+
+                 </div>
+                <div class="row" ng-repeat = "cond in queryInd[$index]">
+                  <div class="col-sm-5">
+                     <div class="form-group">
+                        <select class="form-control" ng-model = "cond.opt">
+                           <option ng-repeat = "opt in arrOpt" value="{{map[opt].mongo}}">{{opt  + " ( " + map[opt].desc + " )"}}</option>
+                        </select>
+                     </div>
+                  </div>
+                  <div class="col-sm-5">
+                     <div class="form-group">
+                        <input type="text" ng-model = "cond.value" class="form-control" placeholder="Value">
+                     </div>
+                  </div>
+                  <div class="col-sm-1">
+                     <i class="fa fa-times fa-3x" ng-click = "confirmClick() && queryInd[$parent.$index].splice($index, 1)" confirm-click = "{{::constant.msg.deleteCond}}" aria-hidden="true"></i>
+                  </div>
+                </div>
+                 
+                 <hr>
+             </div>
+         </div>
+      </script>  
+   </div>
+</div>
+<div class="footerClose">
+   <hr>
+   <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
+</div>
+</div>
