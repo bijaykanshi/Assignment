@@ -26,9 +26,20 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, 
     $scope.saveOnServer = function () {
         var dataToSave = {};
         var removeArr = Object.keys($scope.deleteObj);
+        var modifyArr = Object.keys(global.modifyObj);
+        if (!modifyArr.length && !removeArr.length) {
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.notChangeAnyThing});
+            return;
+        }
         if (removeArr.length)
-            dataToSave.remove = {_id: {$in: removeArr}}
-        $scope.deleteObj[id] = true; 
+            dataToSave.remove = {_id: {$in: removeArr}};
+        if (removeArr.length)
+            dataToSave.update = global.modifyObj;
+        global.sendRequest('saveChange', {collection: $scope.queryStr, data: dataToSave, dbName: 'mydb'}, 'post', function(data, status, headers, config) {
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.changSavedSucces});
+            $scope.deleteObj = {};
+            global.modifyObj = {};
+        });
     }
     $scope.collectionArr = ['users', 'abc', 'xyz'];
     formFactory.isPopOverOpen = false;
@@ -152,7 +163,12 @@ app.controller('editRowData', function ($scope, $modalInstance, parameter, const
         $modalInstance.dismiss('cancel');
     };
     $scope.save = function () {
-        global.modifyObj[parameter.rowData._id] = true;
+        var objRef = global.modifyObj[parameter.rowData._id] = {$set: {}};
+        for (var key in parameter.rowData) {
+            if (key != '_id') {
+                objRef['$set'][key] = parameter.rowData[key];
+            }
+        }
         $modalInstance.dismiss('cancel');
     };
 });

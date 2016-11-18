@@ -8,16 +8,48 @@ function commonAPI (ref) {
 		res.json({webTemp: ref.webTemp, form: ref.form});
 	}
 	this.saveChange = function(req, res) {
-		var ObjectID = ref.mongo.ObjectID;
-		res.json({webTemp: ref.webTemp, form: ref.form});
+		debugger;
+		var data = req.body.data;
+		var dbName = req.body.dbName || 'mydb';
+		if (data.remove) {
+			var ObjectID = ref.mongo.ObjectID;
+			var innArr = data.remove._id.$in;
+			for (var i = 0; i < innArr.length; i += 1)
+				innArr[i] = new ObjectID(innArr[i]);
+			ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
+				clientDb.collection(req.body.collection).remove(data.remove, function(err, data) {
+					if (err) {
+						res.status(500).send(err);
+						return;
+					}
+					res.json('success');
+				});
+			});
+		}
+		if (data.update) {
+			var innArr = data.remove._id.$in;
+			for (var key in data.update) {
+				(function (key) {
+					var where = {_id: key};
+					var updateWith = data.update[key];
+					ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
+						clientDb.collection(req.body.collection).update(where, updateWith, {multi: true}, function(err, data) {
+							if (err) {
+								res.status(500).send(err);
+								return;
+							}
+							console.log("updated successfully");
+						});
+					});
+				})(key)
+			}
+			
+		}
+		
 	}
 	this.submitQuery = function(req, res) {
 		var dbName = req.body.dbName || 'mydb';
 		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
-			if (err) {
-				res.status(500).send(err);
-				return;
-			}
 			clientDb.collection(req.body.collection).find(req.body.row, req.body.col, function(err, data) {
 				if (err) {
 					res.status(500).send(err);
@@ -26,9 +58,7 @@ function commonAPI (ref) {
 				data.toArray(function(err, jsonData) {
 					res.json(jsonData);
 				})
-				
 			})
-			
 		})
 	}
 	this.saveJSON = function(req, res) {

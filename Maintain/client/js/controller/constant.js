@@ -43,7 +43,9 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         plzPutCond: 'Please select condition from select field',
         plzEnterValidJSON: 'Please write query in valid json format',
         editRowData: 'Edit row data here',
-        noDataOnDb: 'No data found in data base'
+        noDataOnDb: 'No data found in data base',
+        notChangeAnyThing: 'You Have not change any thing till now',
+        changSavedSucces: 'Your change has been saved successfully'
 
     };
     constant.loginForm = [
