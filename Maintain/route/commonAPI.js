@@ -11,25 +11,29 @@ function commonAPI (ref) {
 		debugger;
 		var data = req.body.data;
 		var dbName = req.body.dbName || 'mydb';
+		var fnArr = [];
 		if (data.remove) {
-			var ObjectID = ref.mongo.ObjectID;
-			var innArr = data.remove._id.$in;
-			for (var i = 0; i < innArr.length; i += 1)
-				innArr[i] = new ObjectID(innArr[i]);
-			ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
-				clientDb.collection(req.body.collection).remove(data.remove, function(err, data) {
-					if (err) {
-						res.status(500).send(err);
-						return;
-					}
-					res.json('success');
+			fnArr.push(function () {
+				var ObjectID = ref.mongo.ObjectID;
+				var innArr = data.remove._id.$in;
+				for (var i = 0; i < innArr.length; i += 1)
+					innArr[i] = new ObjectID(innArr[i]);
+				ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
+					clientDb.collection(req.body.collection).remove(data.remove, function(err, data) {
+						if (err) {
+							res.status(500).send(err);
+							return;
+						}
+						res.json('success');
+					});
 				});
-			});
+			})
+			
 		}
 		if (data.update) {
 			var innArr = data.remove._id.$in;
 			for (var key in data.update) {
-				(function (key) {
+				fnArr.push(function() {
 					var where = {_id: key};
 					var updateWith = data.update[key];
 					ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
@@ -41,7 +45,7 @@ function commonAPI (ref) {
 							console.log("updated successfully");
 						});
 					});
-				})(key)
+				})
 			}
 			
 		}
