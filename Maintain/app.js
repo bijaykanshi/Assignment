@@ -1,6 +1,7 @@
 
 function Ref() {
     this.express =  require('express');
+    this.async = require('async');
 	this.app = this.express();
 	this.port = process.env.PORT || 8084;
 	this.bodyParser = require('body-parser');
@@ -9,9 +10,12 @@ function Ref() {
 	this.router = this.express.Router();
 	this.routeJson = require('./serverData/routing.json');
 	this.commonAPIFn = require('./route/commonAPI.js');
+	var commonAPIHelper = require('./route/helper/commonAPIHelper.js');
 	var envOpt = require('./serverData/env.json');
 	this.envVar = envOpt[process.env.NODE_ENV || 'local'];
+	this.commonAPIFn.prototype = new commonAPIHelper(this);
 	this.commonAPI = new this.commonAPIFn(this);
+	
 	this.mongo = require('mongodb');
 	this.MongoConfFn = require('./route/db/mongo.js');
 	this.mongoObj = new this.MongoConfFn(this);
