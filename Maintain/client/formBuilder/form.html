@@ -55,9 +55,9 @@
               <button type="button" class="btn btn-info" ng-click = "showBtn = 'showBtn'">Edit Existing Collection</button>
           </div>
           <div class="col-sm-6">
-            <div class="form-group" ng-show = "showBtn == 'showCol'">
-                <label >Enter Collection Name:</label>
-                <input type="text" placeholder="Collection Name" class="form-control">
+            <div class="form-group" ng-show = "showBtn == 'showCol'" style="  display: -webkit-box;">
+                <input type="text" placeholder="Enter Collection Name" ng-model = "newColl" class="form-control" style="width: 55%;">&emsp;&emsp;
+                <button type="button" class="btn btn-info" ng-click = "addColl()">Add</button>
             </div>
              <div ng-show = "showBtn == 'showBtn'">
                 <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
@@ -78,11 +78,11 @@
                      </select>
                   </div>
                </form>
-               <button type="button" class="btn btn-primary" ng-click = "formFactory.addField()">Add Field</button>
+               <button type="button" class="btn btn-primary" ng-click = "formFactory.addField(currentCol)">Add Field</button>
          </div>
          <div class="col-sm-6">
             <form role="form">
-               <div class="form-group" ng-repeat = "form in formFactory.formFieldEditDelete" ng-switch on="form.type" ng-init = "formFactory.editFieldFun(form)" >
+               <div class="form-group" ng-repeat = "form in formFactory.formFieldEditDelete[currentCol]" ng-switch on="form.type" ng-init = "formFactory.editFieldFun(form)" >
                   <div class="col-xs-6" >
                      <label>{{form.label}}</label>
                      <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
@@ -104,10 +104,11 @@
          </div>
         
       </div>
+      <hr>
       <div class="row">
          <button type="button" class="btn btn-info" ng-click = "showJSON = !showJSON">{{showJSON ? 'Hide JSON' : 'Show JSON'}}</button>
          <div ng-show="showJSON">
-            {{formFactory.getData()}}
+            {{formFactory.formFieldEditDelete[currentCol] | json}}
          </div>
       </div>
       <hr>
@@ -116,7 +117,7 @@
          Your form here
          <form role="form">
             <div class="form-group" ng-form name="afterFormBuild" >
-               <div class="col-xs-6" ng-repeat = "form in formFactory.formFieldEditDelete" ng-switch on="form.type">
+               <div class="col-xs-6" ng-repeat = "form in formFactory.formFieldEditDelete[currentCol]" ng-switch on="form.type">
                   <label>{{form.label}}</label>
                   <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
                      <option ng-repeat = "select in form.options" value="{{select.value}}">{{select.label}}</option>

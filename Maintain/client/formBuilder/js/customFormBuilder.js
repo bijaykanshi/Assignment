@@ -61,13 +61,13 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
     formFactory.getData = function() {
         return JSON.stringify(formFactory.formFieldEditDelete);
     }
-    formFactory.addField = function () {
+    formFactory.addField = function (currentCol) {
         var obj;
         obj = angular.copy(formFactory.inputAttr[formFactory.handleDiff.indexOf(formFactory.selectedType) === -1 ? 'defaultAttr' : formFactory.selectedType])
         obj['type'] =  formFactory.selectedType;
         obj['position'] = formFactory.formFieldEditDelete.length;
         obj.helpText = 'pleas provide some help to user';
-        formFactory.formFieldEditDelete.push(obj);
+        formFactory.formFieldEditDelete[currentCol].push(obj);
     };
     var numberType = ['text', 'number', 'range'];
     formFactory.getType = function(key, type) {
@@ -143,6 +143,10 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
 });
 app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, parameter, formFactory, constant) {
     $scope.header = parameter.header || 'Alert Message';
+    $scope.addColl = function () {
+        formFactory.formFieldEditDelete[$scope.newColl] = [];
+        $scope.currentCol = $scope.newColl;
+    }
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
