@@ -10,9 +10,9 @@
         "callbackFun":  "commonAPI_getJson"
     },
     {
-        "url": "/saveJSON",
+        "url": "/saveFormJSON",
         "method": "post",
-        "callbackFun":  "commonAPI_saveJSON"
+        "callbackFun":  "commonAPI_saveFormJSON"
     },
     {
         "url": "/register",

@@ -5,7 +5,8 @@
     </div>
     <div class="modal-body" >
          <div class="bg">
-            <p>{{msg}}</p>
+
+            <p ng-bind-html="msg | to_trusted"></p>
         </div><br><br>
         <div ng-show = "err">
             <h3>Error Information</h3><br>

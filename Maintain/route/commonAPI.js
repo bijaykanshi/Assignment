@@ -35,18 +35,17 @@ function commonAPI (ref) {
 			})
 		})
 	}
-	this.saveJSON = function(req, res) {
-		var name = req.body.name || 'webTemp';
-		var path = './serverData/' + name + '.json';
-		ref.fs.writeFile(path, JSON.stringify(req.body.data), function(err, data) {
-			if (err) {
-				res.status(400).send(err);
-				return;
-			}
-			res.send(ref.msg.webTemp);
-			//@improve need to save on mongo
-			ref[name] = req.body.data;
-		});
+	this.saveFormJSON = function(req, res) {
+		var dbName = req.body.dbName || 'mydb';
+		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
+			clientDb.collection('formCollection').insertMany(req.body.data, function(err, data) {
+				if (err) {
+					res.status(500).send(err);
+					return;
+				}
+				res.send("successfully inserted");
+			})
+		})
 	}
 	this.register = function (req, res) {
 		var dbName = req.body.dbName || 'mydb';
@@ -54,8 +53,10 @@ function commonAPI (ref) {
 			if (err)
 				res.status(500).send(err);
 			clientDb.collection('users').insert(req.body.data, function(err, data) {
-				if (err)
+				if (err) {
 					res.status(500).send(err);
+					return;
+				}
 				res.send("successfully inserted");
 			})
 			

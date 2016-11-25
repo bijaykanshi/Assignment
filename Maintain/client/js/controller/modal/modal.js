@@ -77,9 +77,10 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
     $scope.msg = parameter.msg || 'Something went wrong';
     $scope.header = parameter.header || 'Alert Message';
     $scope.err = parameter.err;
+    var timeToShow = parameter.timeToShow || 2000;
     setTimeout(function() {
        $scope.close();
-    }, 2000);
+    }, timeToShow);
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };

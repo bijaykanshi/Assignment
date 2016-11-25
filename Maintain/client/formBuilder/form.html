@@ -12,6 +12,9 @@
       <div class="popover fade left in" style="width: 270px; display: block;">
           <div class="arrow"></div><h3 class="popover-title">Add Attribute</h3>
             <div class="popover-content">
+              <div class="row">
+                     <button type="button" ng-click = "closePopOver()" class="btn btn-danger">Close</button>
+                 </div>
                 <form role="form">
                       <div class="form-group">
                           <div class="row" ng-repeat="(key, value) in formFactory.editField">
@@ -45,45 +48,82 @@
                           
                       </div>
                   </form>
-      </div>
+          </div>
       </div>
    </script>  
    <div class="modal-body">
       <div class="row">
-          <div class="col-sm-6">
-              <button type="button" class="btn btn-primary" ng-click = "showBtn = 'showCol'">Add Collection</button>&emsp;&emsp;&emsp;
-              <button type="button" class="btn btn-info" ng-click = "showBtn = 'showBtn'">Edit Existing Collection</button>
-          </div>
-          <div class="col-sm-6">
+         <div class="col-sm-6">
+            <button type="button" class="btn btn-primary" ng-click = "showBtn = 'showCol';currentCol = '';newColl = ''">Add {{anotherCol}} Collection</button>&emsp;&emsp;&emsp;
+            <button type="button" class="btn btn-info" ng-click = "showBtn = 'showBtn'">Edit Existing Collection</button>
+         </div>
+         <div class="col-sm-6">
             <div class="form-group" ng-show = "showBtn == 'showCol'" style="  display: -webkit-box;">
-                <input type="text" placeholder="Enter Collection Name" ng-model = "newColl" class="form-control" style="width: 55%;">&emsp;&emsp;
-                <button type="button" class="btn btn-info" ng-click = "addColl()">Add</button>
+               <input type="text" placeholder="Enter Collection Name" ng-model = "newColl" class="form-control" style="width: 55%;">&emsp;&emsp;
+               <button type="button" class="btn btn-info" ng-click = "addColl()">Add</button>
             </div>
-             <div ng-show = "showBtn == 'showBtn'">
-                <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
-                <ul class="dropdown-menu option" role="menu">
-                    <li  class="handSign" ng-repeat = "opt in collectionArr" ng-click="setColl(opt)"><a >{{opt}}</li>
-                </ul>
-             </div>
-          </div>
+            <div ng-show = "showBtn == 'showBtn'">
+               <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
+               <ul class="dropdown-menu option" role="menu">
+                  <li  class="handSign" ng-repeat = "opt in collectionArr" ng-click="setColl(opt)"><a >{{opt}}</li>
+               </ul>
+            </div>
+            <div ng-show = "currentCol"><h5>You are editing this collection ===> {{currentCol}}</h5></div>
+         </div>
       </div>
       <hr>
-      <div class="row">
-          <div class="col-sm-6">
-              <form role="form">
-                  <div class="form-group">
-                     <label for="sel1">Select Type of input Field</label>
-                     <select class="form-control" ng-model="formFactory.selectedType" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectField}}">
-                        <option ng-repeat = "item in formFactory.selectType" value="{{item.value}}">{{item.displayName}}</option>
-                     </select>
-                  </div>
-               </form>
-               <button type="button" class="btn btn-primary" ng-click = "formFactory.addField(currentCol)">Add Field</button>
+      <div class="row" ng-show = "currentCol">
+         <div class="col-sm-6">
+            <form role="form">
+               <div class="form-group">
+                  <label for="sel1">Select Type of input Field</label>
+                  <select class="form-control" ng-model="formFactory.selectedType" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectField}}">
+                     <option ng-repeat = "item in formFactory.selectType" value="{{item.value}}">{{item.displayName}}</option>
+                  </select>
+               </div>
+            </form>
+            <button type="button" class="btn btn-primary" ng-click = "formFactory.addField(currentCol)">Add Field</button>
          </div>
          <div class="col-sm-6">
             <form role="form">
-               <div class="form-group" ng-repeat = "form in formFactory.formFieldEditDelete[currentCol]" ng-switch on="form.type" ng-init = "formFactory.editFieldFun(form)" >
+               <div class="form-group" ng-repeat = "form in formFactory.formFieldEditDelete[currentCol]" ng-switch on="form.type">
                   <div class="col-xs-6" >
+                     <label>{{form.label}}</label>
+                     <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
+                        <option ng-repeat = "select in form.options" value="{{select.value}}">{{select.label}}</option>
+                     </select>
+                     <label ng-switch-when="radio" ng-repeat="option in form.options">
+                     <input type="{{form.type}}" name="{{$parent.$index}}" value="{{option.value}}">{{option.label}}
+                     </label>
+                     <label ng-switch-when="checkbox" class="checkbox-inline" ng-repeat="option in form.options">
+                     <input type="{{form.type}}"  value="{{option.value}}">{{option.label}}
+                     </label>
+                     <input ng-switch-default type="{{form.type}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" max = "{{form.max}}">
+                     <img ng-click = "editFieldFun(form, $index);" ng-src="./webdata/imgOwn/edit.png" popover-is-open="formFactory.popoverObj[$index]" class="imgResize" popover-template="'popover.html'" popover-placement="right">
+                     <img class="imgResize"  src="./webdata/imgOwn/delete.png" alt="" ng-click="confirmClick() && formFactory.formFieldEditDelete[currentCol].splice($index, 1);"  confirm-click = "{{global.msg.confirm_delete}}">
+                     <hr>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+      <hr>
+      <div ng-show = "formFactory.formFieldEditDelete[currentCol].length">
+         <div class="row">
+             <button type="button" class="btn btn-danger" ng-click = "showForm = !showForm">{{showForm ? 'Hide Form' : 'Show Form'}}</button>
+            <button type="button" class="btn btn-info" ng-click = "showJSON = !showJSON">{{showJSON ? 'Hide JSON' : 'Show JSON'}}</button>
+            <div ng-show="showJSON">
+               {{formFactory.formFieldEditDelete[currentCol] | json}}
+            </div>
+
+         </div>
+         <hr>
+         
+         <div class="row" ng-show = "showForm">
+            Your form here
+            <form role="form">
+               <div class="form-group" ng-form name="afterFormBuild" >
+                  <div class="col-xs-6" ng-repeat = "form in formFactory.formFieldEditDelete[currentCol]" ng-switch on="form.type">
                      <label>{{form.label}}</label>
                      <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
                         <option ng-repeat = "select in form.options" value="{{select.value}}">{{select.label}}</option>
@@ -91,54 +131,21 @@
                      <label ng-switch-when="radio" class="radio-inline" ng-repeat="option in form.options">
                      <input type="{{form.type}}" name="{{$parent.$index}}" value="{{option.value}}">{{option.label}}
                      </label>
-                     <label ng-switch-when="checkbox" class="checkbox-inline" ng-repeat="option in form.options">
-                     <input type="{{form.type}}" value="{{option.value}}">{{option.label}}
+                     <label ng-switch-when="checkbox"  class="checkbox-inline" ng-repeat="option in form.options">
+                        <input type="{{form.type}}" value="{{option.value}}">{{option.label}}
                      </label>
-                     <input ng-switch-default type="{{form.type}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" max = "{{form.max}}">
-                     <img ng-click = "formFactory.editFieldFun(form)" ng-src="./webdata/imgOwn/edit.png" class="imgResize" popover-template="'popover.html'" popover-placement="right">
-                     <img class="imgResize"  src="./webdata/imgOwn/delete.png" alt="" ng-click="confirmClick() && formFactory.formFieldEditDelete.splice($index, 1);"  confirm-click = "{{global.msg.confirm_delete}}">
+                     <div ng-switch-default ng-class="{'has-error has-feedback': afterFormBuild[$index].$invalid, 'has-success has-feedback': afterFormBuild[$index].$valid && afterFormBuild[$index].$dirty}">
+                        <input ng-if="form.required" type="{{form.type}}" name = "{{$index}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" ng-model = "form.feedValue" max = "{{form.max}}" required>
+                        <input ng-if="!form.required"  type="{{form.type}}" name = "{{$index}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" ng-model = "form.feedValue" max = "{{form.max}}">
+                        <!-- <span ng-class="{'glyphicon glyphicon-remove form-control-feedback': afterFormBuild[$index].$invalid, 'glyphicon glyphicon-ok form-control-feedback': afterFormBuild[$index].$valid && afterFormBuild[$index].$dirty}" ></span> -->
+                        <span ng-show="afterFormBuild[$index].$error.required" class = "help-block help-block-error custom-date-error">{{form.error_msg_required}}</span>
+                     </div>
+                     <span class="help-block">{{form.helpText}}</span>
                      <hr>
                   </div>
                </div>
             </form>
          </div>
-        
-      </div>
-      <hr>
-      <div class="row">
-         <button type="button" class="btn btn-info" ng-click = "showJSON = !showJSON">{{showJSON ? 'Hide JSON' : 'Show JSON'}}</button>
-         <div ng-show="showJSON">
-            {{formFactory.formFieldEditDelete[currentCol] | json}}
-         </div>
-      </div>
-      <hr>
-      <button type="button" class="btn btn-danger" ng-click = "showForm = !showForm">{{showForm ? 'Hide Form' : 'Show Form'}}</button>
-      <div class="row" ng-show = "showForm">
-         Your form here
-         <form role="form">
-            <div class="form-group" ng-form name="afterFormBuild" >
-               <div class="col-xs-6" ng-repeat = "form in formFactory.formFieldEditDelete[currentCol]" ng-switch on="form.type">
-                  <label>{{form.label}}</label>
-                  <select  ng-switch-when="select" class="form-control" ng-model="formFactory.selectedType">
-                     <option ng-repeat = "select in form.options" value="{{select.value}}">{{select.label}}</option>
-                  </select>
-                  <label ng-switch-when="radio" class="radio-inline" ng-repeat="option in form.options">
-                  <input type="{{form.type}}" name="{{$parent.$index}}" value="{{option.value}}">{{option.label}}
-                  </label>
-                  <label ng-switch-when="checkbox" class="checkbox-inline" ng-repeat="option in form.options">
-                  <input type="{{form.type}}" value="{{option.value}}">{{option.label}}
-                  </label>
-                  <div ng-switch-default ng-class="{'has-error has-feedback': afterFormBuild[$index].$invalid, 'has-success has-feedback': afterFormBuild[$index].$valid && afterFormBuild[$index].$dirty}">
-                     <input ng-if="form.required" type="{{form.type}}" name = "{{$index}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" ng-model = "form.feedValue" max = "{{form.max}}" required>
-                     <input ng-if="!form.required"  type="{{form.type}}" name = "{{$index}}" class="form-control" placeholder = "{{form.placeholder}}" min = "{{form.min}}" ng-model = "form.feedValue" max = "{{form.max}}">
-                     <!-- <span ng-class="{'glyphicon glyphicon-remove form-control-feedback': afterFormBuild[$index].$invalid, 'glyphicon glyphicon-ok form-control-feedback': afterFormBuild[$index].$valid && afterFormBuild[$index].$dirty}" ></span> -->
-                     <span ng-show="afterFormBuild[$index].$error.required" class = "help-block help-block-error custom-date-error">{{form.error_msg_required}}</span>
-                  </div>
-                  <span class="help-block">{{form.helpText}}</span>
-                  <hr>
-               </div>
-            </div>
-         </form>
       </div>
    </div>
    <div class="footerClose">

@@ -30,7 +30,7 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         addOption: 'Click Here to add more option',
         selectField: 'Select desired Input field here to add',
         formSaved: 'your form has been saved successfully',
-        uniqueKey: 'Please enter unique label, because this field is going to be key in database',
+        uniqueKey: 'Please enter unique label, because this field is going to be key in database. Following is the label that need to be taken care of',
         successRegister: 'you have successfully registered',
         BuidYour: 'Made your query to extract particular record from selected collection',
         selectColl: 'Select collection from where you want to see record',

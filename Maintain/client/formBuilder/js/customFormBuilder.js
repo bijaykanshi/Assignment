@@ -57,7 +57,6 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
         
     };
     formFactory.handleDiff = ['select', 'radio', 'checkbox'];
-    formFactory.formFieldEditDelete = [];
     formFactory.getData = function() {
         return JSON.stringify(formFactory.formFieldEditDelete);
     }
@@ -65,7 +64,7 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
         var obj;
         obj = angular.copy(formFactory.inputAttr[formFactory.handleDiff.indexOf(formFactory.selectedType) === -1 ? 'defaultAttr' : formFactory.selectedType])
         obj['type'] =  formFactory.selectedType;
-        obj['position'] = formFactory.formFieldEditDelete.length;
+        obj['position'] = formFactory.formFieldEditDelete[currentCol].length;
         obj.helpText = 'pleas provide some help to user';
         formFactory.formFieldEditDelete[currentCol].push(obj);
     };
@@ -75,9 +74,9 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
             return 'checkbox';
         return numberType.indexOf(type) === -1 ? type : 'number';
     }
-    formFactory.editFieldFun = function (objRef) {
-       formFactory.editField = objRef;
-    }
+    /*formFactory.editFieldFun = function (objRef) {
+        formFactory.editField = objRef;
+    }*/
     formFactory.addOptions = function (objRef) {
        objRef.options.push(angular.copy(formFactory.inputAttr[objRef.type].options[0]));
     }
@@ -142,34 +141,74 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
     return formFactory;
 });
 app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, parameter, formFactory, constant) {
+    formFactory.popoverObj = {};
     $scope.header = parameter.header || 'Alert Message';
+    $scope.anotherCol = "";
+    formFactory.formFieldEditDelete = {};
     $scope.addColl = function () {
+        $scope.anotherCol = "Another";
+        $scope.showBtn = "";
         formFactory.formFieldEditDelete[$scope.newColl] = [];
         $scope.currentCol = $scope.newColl;
     }
     $scope.close = function () {
+        delete formFactory.currentIndex;
+        delete formFactory.editField;
+        delete formFactory.formFieldEditDelete;
         $modalInstance.dismiss('cancel');
     };
+    $scope.checkboxObj = {};
+    $scope.closePopOver = function () {
+        formFactory.popoverObj[formFactory.popoverObj.currentIndex] = false;
+    }
     $scope.saveForm = function () {
+        var str = "";
         var obj = {};
-        var dontSub = false;
-        formFactory.formFieldEditDelete.forEach(function (val) {
-            val.key = val.label.replace(/\s/g, '');
-            if (obj[val.key])
-                dontSub = true;
-            obj[val.key] = true;
-        });
-        if (dontSub) {
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.uniqueKey});
+        
+        for (var key in formFactory.formFieldEditDelete) {
+            var arr = formFactory.formFieldEditDelete[key];
+            obj[key] = {};
+            for (var i = 0; i < arr.length; i += 1) {
+                var keyToStore = arr[i].label.replace(/\s/g, '');
+                if (obj[key][keyToStore]) {
+                    obj[key][keyToStore] += 1;
+                    str = " ";
+                    //str += "\n" + keyToStore + " label of collection " + key;
+                    continue;
+                }
+                arr[i].key = keyToStore
+                obj[key][keyToStore] = 1;
+            }
+
+        }
+        if (str) {
+            str = "<h5>" + constant.msg.uniqueKey + "</h5>";
+            for (var key in obj) {
+                for (var inKey in obj[key]) {
+                    str += "<br/><br/>" + inKey + " 'label' of collection " + key + " repeated " + obj[key][inKey] + " times";
+                }
+            }
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str, timeToShow: 5000});
             return;
         }
-        global.sendRequest('saveJSON', {data: formFactory.formFieldEditDelete, name: 'formJSON'}, 'post', function(data, status, headers, config) {
+        var dataToSend = [];
+        for (var key in formFactory.formFieldEditDelete) {
+            var tempObj = {data: formFactory.formFieldEditDelete[key], formName: key};
+            dataToSend.push(tempObj);
+        }
+        global.sendRequest('saveFormJSON', {data: dataToSend}, 'post', function(data, status, headers, config) {
             $scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});
 
         });
     }
     $scope.formObj = {};
+    $scope.editFieldFun = function (objRef, index) {
+        formFactory.editField = objRef;
+        formFactory.popoverObj[index] = true;
+        formFactory.popoverObj[formFactory.popoverObj.currentIndex] = false;
+        formFactory.popoverObj.currentIndex = index;
+    }
     $scope.save = function () {
         global.sendRequest('register', {data: $scope.formObj}, 'post', function(data, status, headers, config) {
             $scope.close();

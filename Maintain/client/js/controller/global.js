@@ -25,6 +25,8 @@ app.factory('global', function($http, $uibModal, $state, $location, $rootScope) 
     }
     global.sendRequest = function(url, dataObj, method, successFn, failureFn, header) {
     	global.isLoading = true;
+        if (dataObj && (typeof dataObj == "object"))
+            dataObj.dbName = 'mydb';
         var res = $http({
             method: method,
             url: url,
