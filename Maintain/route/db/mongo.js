@@ -13,6 +13,27 @@ function MongoConf (ref) {
         }
     };
     var clientDbCatche = {lengthOf: 0};
+
+    this.twoArgQuery = function (firstArg, secondArg, res, clientDb, collectionName, methodName, cb) {
+    	clientDb.collection(collectionName)[methodName](firstArg, secondArg, function(err, data) {
+			if (err) {
+				res.status(500).send(err);
+				return;
+			}
+			data.toArray(function(err, jsonData) {
+				cb(jsonData);
+			})
+		})
+    }
+    this.oneArgQuery = function (firstArg, res, clientDb, collectionName, methodName, cb) {
+    	clientDb.collection(collectionName)[methodName](firstArg, function(err, data) {
+			if (err) {
+				res.status(500).send(err);
+				return;
+			}
+			cb(data);
+		})
+    }
     this.getCachedClientConnectionDb = function (url, retries, res, callback) {
     	var catcheKey = url.replace(/([^a-zA-Z0-9]*)/g ,  '');
     	if (retries <= 0) {

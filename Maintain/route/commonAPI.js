@@ -7,8 +7,13 @@ function commonAPI (ref) {
 		console.log(" hi i am here");
 		res.json({webTemp: ref.webTemp, form: ref.form});
 	}
+	this.getFormData = function(req, res) {
+		ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
+			res.json(data);
+		})
+	}
+
 	this.saveChange = function(req, res) {
-		debugger;
 		var data = req.body.data;
 		var dbName = req.body.dbName || 'mydb';
 		var fnArr = [];
@@ -36,15 +41,8 @@ function commonAPI (ref) {
 		})
 	}
 	this.saveFormJSON = function(req, res) {
-		var dbName = req.body.dbName || 'mydb';
-		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
-			clientDb.collection('formCollection').insertMany(req.body.data, function(err, data) {
-				if (err) {
-					res.status(500).send(err);
-					return;
-				}
-				res.send("successfully inserted");
-			})
+		ref.mongoObj.oneArgQuery(req.body.data, res, req.clientDb, 'formCollection', 'insertMany', function(data) {
+			res.send("successfully inserted");
 		})
 	}
 	this.register = function (req, res) {

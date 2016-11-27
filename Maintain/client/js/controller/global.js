@@ -27,12 +27,13 @@ app.factory('global', function($http, $uibModal, $state, $location, $rootScope) 
     	global.isLoading = true;
         if (dataObj && (typeof dataObj == "object"))
             dataObj.dbName = 'mydb';
-        var res = $http({
+        var objToSend = {
             method: method,
             url: url,
-            headers: protocol[header || 'json'],
-            data: dataObj
-        });
+            headers: protocol[header || 'json']
+        }
+        objToSend[method == 'get' ? 'params' : 'data'] = dataObj;
+        var res = $http(objToSend);
 		res.success(function(data, status, headers, config) {
 			global.isLoading = false;
 			if (successFn) {

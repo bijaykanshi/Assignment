@@ -145,6 +145,12 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
     $scope.header = parameter.header || 'Alert Message';
     $scope.anotherCol = "";
     formFactory.formFieldEditDelete = {};
+    global.sendRequest('getFormData', {clientDbConReq: true}, 'get', function(data, status, headers, config) {
+        console.log("get data");
+    });
+    $scope.closeEditClosePop = function () {
+        $scope.editColShow = false;
+    }
     $scope.addColl = function () {
         $scope.anotherCol = "Another";
         $scope.showBtn = "";
@@ -196,7 +202,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
             var tempObj = {data: formFactory.formFieldEditDelete[key], formName: key};
             dataToSend.push(tempObj);
         }
-        global.sendRequest('saveFormJSON', {data: dataToSend}, 'post', function(data, status, headers, config) {
+        global.sendRequest('saveFormJSON', {data: dataToSend, clientDbConReq: true}, 'post', function(data, status, headers, config) {
             $scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});
 

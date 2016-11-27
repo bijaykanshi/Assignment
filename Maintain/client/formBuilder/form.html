@@ -10,10 +10,13 @@
       class="btn btn-default">Mouse over me</button>    -->
    <script type="text/ng-template" id="popover.html">
       <div class="popover fade left in" style="width: 270px; display: block;">
-          <div class="arrow"></div><h3 class="popover-title">Add Attribute</h3>
+          <div class="arrow"></div>
+          <h3 class="popover-title">
+            <button type="button" ng-click = "closePopOver()" class="btn btn-info">Save And Close</button>
+          </h3>
             <div class="popover-content">
               <div class="row">
-                     <button type="button" ng-click = "closePopOver()" class="btn btn-danger">Close</button>
+                     
                  </div>
                 <form role="form">
                       <div class="form-group">
@@ -50,24 +53,35 @@
                   </form>
           </div>
       </div>
-   </script>  
+   </script>
+   <script type="text/ng-template" id="editCollection.html">
+      <div class="popover fade left in" style="width: 270px; display: block;">
+          <div class="arrow"></div>
+          <h3 class="popover-title">
+            <button type="button" ng-click = "closeEditClosePop()" class="btn btn-primary">Select And Close</button>
+          </h3>
+          
+          <div class="popover-content">
+          </div>
+      </div>
+   </script>
    <div class="modal-body">
       <div class="row">
          <div class="col-sm-6">
             <button type="button" class="btn btn-primary" ng-click = "showBtn = 'showCol';currentCol = '';newColl = ''">Add {{anotherCol}} Collection</button>&emsp;&emsp;&emsp;
-            <button type="button" class="btn btn-info" ng-click = "showBtn = 'showBtn'">Edit Existing Collection</button>
+            <button type="button" class="btn btn-info" ng-click = "editColShow = !editColShow" popover-is-open="editColShow" popover-template="'editCollection.html'" popover-placement="right">Edit Existing Collection</button>
          </div>
          <div class="col-sm-6">
             <div class="form-group" ng-show = "showBtn == 'showCol'" style="  display: -webkit-box;">
                <input type="text" placeholder="Enter Collection Name" ng-model = "newColl" class="form-control" style="width: 55%;">&emsp;&emsp;
                <button type="button" class="btn btn-info" ng-click = "addColl()">Add</button>
             </div>
-            <div ng-show = "showBtn == 'showBtn'">
+            <!-- <div ng-show = "showBtn == 'showBtn'">
                <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.selectColl}}" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="selected">Select Collection</span> <span class="caret"></span></button>
                <ul class="dropdown-menu option" role="menu">
                   <li  class="handSign" ng-repeat = "opt in collectionArr" ng-click="setColl(opt)"><a >{{opt}}</li>
                </ul>
-            </div>
+            </div> -->
             <div ng-show = "currentCol"><h5>You are editing this collection ===> {{currentCol}}</h5></div>
          </div>
       </div>
