@@ -23,10 +23,16 @@ app.factory('global', function($http, $uibModal, $state, $location, $rootScope) 
         global.isLoading = false;
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: JSON.stringify(data)});
     }
+    global.dbName = 'mydb';
+    global.users = 'admin';
+    var necesarryDataToSend = ['dbName', 'users'];
     global.sendRequest = function(url, dataObj, method, successFn, failureFn, header) {
     	global.isLoading = true;
-        if (dataObj && (typeof dataObj == "object"))
-            dataObj.dbName = 'mydb';
+        if (dataObj && (typeof dataObj == "object")) {
+            necesarryDataToSend.forEach(function(val) {
+                dataObj[val] = global[val];
+            })
+        }
         var objToSend = {
             method: method,
             url: url,

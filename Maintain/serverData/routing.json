@@ -5,9 +5,9 @@
         "callbackFun":  "commonAPI_renderIndex"
     },
     {
-        "url": "/getJson",
+        "url": "/getNecData",
         "method": "get",
-        "callbackFun":  "commonAPI_getJson"
+        "callbackFun":  "commonAPI_getNecData"
     },
     {
         "url": "/saveFormJSON",

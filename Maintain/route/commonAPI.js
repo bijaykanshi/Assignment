@@ -3,9 +3,17 @@ function commonAPI (ref) {
 	this.renderIndex = function(req, res) {
 		res.render('index');
 	}
-	this.getJson = function(req, res) {
+	this.getNecData = function(req, res) {
+		var fnArr = [];
+		me.buildNecData(req, res, fnArr, data, dbName);
 		console.log(" hi i am here");
-		res.json({webTemp: ref.webTemp, form: ref.form});
+		ref.async.parallel(fnArr, function(err, results){
+			if (err) 
+				res.status(500).send(err);
+			else
+				res.send("success in update")
+		});
+		//res.json({webTemp: ref.webTemp, form: ref.form});
 	}
 	this.getFormData = function(req, res) {
 		ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
