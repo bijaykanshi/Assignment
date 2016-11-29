@@ -271,10 +271,15 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         if ($scope.deletedCollection.length)
             dataToSend.remove = $scope.deletedCollection;
         var keyArr = Object.keys(dataToSend);
-       /* if (!keyArr.length || str) {
-            var msg = ""
+        if (!keyArr.length || str) {
+            var msg = "";
+            if (!keyArr.length) {
+                global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.notChangeAnyThing});
+                return
+            }
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str});
 
-        }*/
+        }
         /*
         $scope.editedCollection.forEach(function(key) {
 
