@@ -73,7 +73,7 @@
          <li class="dropdown messages-dropdown">
             <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> Developer's Profile <!-- <span class="badge">2</span> --> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-               <li class="message-preview" ng-repeat = "link in global.profileData">
+               <li class="message-preview" ng-repeat = "link in global.webJSON.profileData">
                   <a ng-href="{{::link.link}}" target="_blank">
                      <span class="avatar"><i class="fa fa-user"></i></span>
                      <span class="message">{{::link.dispName}}</span>

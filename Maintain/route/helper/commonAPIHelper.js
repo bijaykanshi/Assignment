@@ -1,4 +1,17 @@
 function commonAPIHelper (ref) {
+	this.buildNecData = function(req, res, fnArr) {
+		fnArr.push(function(callback) {
+			callback(null, ref.webTemp);
+		});
+		fnArr.push(function(callback) {
+			var users = req.body.users || req.query.users;
+			if (users == 'admin') {
+				ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
+					callback(null, data);
+				}, callback)
+			}
+		})
+	}
 	this.getSaveChangeArr = function(req, res, fnArr, data, dbName) {
 		var ObjectID = ref.mongo.ObjectID;
 		if (data.remove) {

@@ -45,7 +45,10 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         editRowData: 'Edit row data here',
         noDataOnDb: 'No data found in data base',
         notChangeAnyThing: 'You Have not change any thing till now',
-        changSavedSucces: 'Your change has been saved successfully'
+        changSavedSucces: 'Your change has been saved successfully',
+        confirm_delete: 'Are you sure you want to delete this collection',
+        notAdded: 'Your Collection has not been inserted into database because of the Following reason',
+        notEdited: 'Edit operation has not been completed because of the Following reason'
 
     };
     constant.loginForm = [

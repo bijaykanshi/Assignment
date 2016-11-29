@@ -30,11 +30,6 @@
         "callbackFun":  "commonAPI_saveChange"
     },
     {
-        "url": "/getFormData",
-        "method": "get",
-        "callbackFun":  "commonAPI_getFormData"
-    },
-    {
         "url": "/test",
         "method": "post",
         "callbackFun":  "commonAPI_test"

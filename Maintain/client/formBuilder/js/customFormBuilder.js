@@ -144,34 +144,70 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
     formFactory.popoverObj = {};
     $scope.header = parameter.header || 'Alert Message';
     $scope.anotherCol = "";
-    formFactory.formFieldEditDelete = {};
-    global.sendRequest('getFormData', {}, 'get', function(data, status, headers, config) {
+    //formFactory.formFieldEditDelete = {};
+    /*global.sendRequest('getFormData', {}, 'get', function(data, status, headers, config) {
         console.log("get data");
-    });
+    });*/
+    $scope.selectCollObj = {};
+    $scope.addedCollection = [];
+    $scope.editedCollection = [];
+    $scope.deletedCollection = [];
+    var previousKey;
+    $scope.doSelection = function (key) {
+        if (previousKey)
+            $scope.selectCollObj[previousKey] = false;
+        previousKey = key;
+    }
+    var backUpData = {delete: {}, edit: {}};
+    $scope.deleteCollection = function (key) {
+        if (key == previousKey)
+            previousKey = '';
+        if (key == $scope.currentCol) {
+            var index = $scope.editedCollection.indexOf(key);
+            if (index >= 0) {
+                delete backUpData.edit[key];
+                $scope.editedCollection.splice(index, 1);
+            }
+            $scope.currentCol = '';
+        }
+        $scope.deletedCollection.push(key);
+        backUpData.delete[key] = angular.copy(formFactory.formFieldEditDelete[key]);
+        delete formFactory.formFieldEditDelete[key];
+    }
+    $scope.editCollectionNow = function () {
+        $scope.editColShow = false;
+        if (previousKey) {
+            $scope.currentCol = previousKey;
+            $scope.editedCollection.push(previousKey);
+            backUpData.edit[key] = angular.copy(formFactory.formFieldEditDelete[previousKey])
+        }
+    }
     $scope.closeEditClosePop = function () {
         $scope.editColShow = false;
     }
     $scope.addColl = function () {
         $scope.anotherCol = "Another";
         $scope.showBtn = "";
+        $scope.addedCollection.push($scope.newColl);
         formFactory.formFieldEditDelete[$scope.newColl] = [];
         $scope.currentCol = $scope.newColl;
     }
     $scope.close = function () {
         delete formFactory.currentIndex;
         delete formFactory.editField;
-        delete formFactory.formFieldEditDelete;
+        //delete formFactory.formFieldEditDelete;
         $modalInstance.dismiss('cancel');
     };
     $scope.checkboxObj = {};
     $scope.closePopOver = function () {
         formFactory.popoverObj[formFactory.popoverObj.currentIndex] = false;
     }
-    $scope.saveForm = function () {
+    var isDuplicateLabel = function(collectionName, msg) {
         var str = "";
         var obj = {};
         
-        for (var key in formFactory.formFieldEditDelete) {
+        for (var i = 0; i < $scope[collectionName]length; i += 1) {
+            var key = $scope[collectionName][i];
             var arr = formFactory.formFieldEditDelete[key];
             obj[key] = {};
             for (var i = 0; i < arr.length; i += 1) {
@@ -188,20 +224,66 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
 
         }
         if (str) {
-            str = "<h5>" + constant.msg.uniqueKey + "</h5>";
+            str = "<h4>" + msg + "</h4><br/>";
             for (var key in obj) {
                 for (var inKey in obj[key]) {
                     str += "<br/><br/>" + inKey + " 'label' of collection " + key + " repeated " + obj[key][inKey] + " times";
                 }
             }
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str, timeToShow: 5000});
-            return;
+            /*global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str, timeToShow: 5000});
+            return;*/
         }
-        var dataToSend = [];
-        for (var key in formFactory.formFieldEditDelete) {
+        return str;
+    }
+    var buildUpdateQuery = function () {
+        var arr = [];
+        $scope.editedCollection.forEach(function(key) {
+            var currentObj = formFactory.formFieldEditDelete[key];
+            var obj = {where: {formName: key}, updateWith: formFactory.formFieldEditDelete[key]};
+            arr.push(obj);
+        });
+        return arr;
+    }
+    $scope.saveForm = function () {
+        
+        var dataToSend = {};
+        var arr = [];
+        var str = "";
+        if ($scope.addedCollection.length) {
+            str += isDuplicateLabel('addedCollection', constant.msg.notAdded);
+            if (!str) {
+                $scope.addedCollection.forEach(function(key) {
+                    var tempObj = {data: formFactory.formFieldEditDelete[key], formName: key};
+                    arr.push(tempObj);
+                });
+                if (arr.length)
+                    dataToSend.insertMany = arr;
+            }
+        }
+        if ($scope.editedCollection.length) {
+            str += isDuplicateLabel('editedCollection', constant.msg.notEdited);
+            if (!str) {
+                arr = buildUpdateQuery();
+                if (arr.length)
+                    dataToSend.save = arr;
+            }
+        }
+        if ($scope.deletedCollection.length)
+            dataToSend.remove = $scope.deletedCollection;
+        var keyArr = Object.keys(dataToSend);
+       /* if (!keyArr.length || str) {
+            var msg = ""
+
+        }*/
+        /*
+        $scope.editedCollection.forEach(function(key) {
+
+        });
+        dataToSend.save = */
+        /*for (var key in formFactory.formFieldEditDelete) {
             var tempObj = {data: formFactory.formFieldEditDelete[key], formName: key};
             dataToSend.push(tempObj);
-        }
+        }*/
         global.sendRequest('saveFormJSON', {data: dataToSend}, 'post', function(data, status, headers, config) {
             $scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});

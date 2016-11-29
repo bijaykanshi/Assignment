@@ -14,10 +14,13 @@ function MongoConf (ref) {
     };
     var clientDbCatche = {lengthOf: 0};
 
-    this.twoArgQuery = function (firstArg, secondArg, res, clientDb, collectionName, methodName, cb) {
+    this.twoArgQuery = function (firstArg, secondArg, res, clientDb, collectionName, methodName, cb, callbackAsync) {
     	clientDb.collection(collectionName)[methodName](firstArg, secondArg, function(err, data) {
 			if (err) {
-				res.status(500).send(err);
+				if (callbackAsync)
+					callbackAsync(err);
+				else
+					res.status(500).send(err);
 				return;
 			}
 			data.toArray(function(err, jsonData) {

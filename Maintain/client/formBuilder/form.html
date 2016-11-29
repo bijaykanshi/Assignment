@@ -58,10 +58,22 @@
       <div class="popover fade left in" style="width: 270px; display: block;">
           <div class="arrow"></div>
           <h3 class="popover-title">
-            <button type="button" ng-click = "closeEditClosePop()" class="btn btn-primary">Select And Close</button>
+            <button type="button" ng-click = "editCollectionNow()" class="btn btn-primary">Select Or Close</button>
           </h3>
           
           <div class="popover-content">
+              <div class="row" ng-repeat = "(key, value) in formFactory.formFieldEditDelete">
+                  <div class="col-sm-2">
+                      <input type="checkbox" ng-model = "selectCollObj[key]" ng-click = "doSelection(key)">
+                  </div>
+                  <div  class="col-sm-5">
+                      {{key}}
+                  </div>
+                  <div  class="col-sm-5">
+                      <button type="button" class="btn btn-danger" ng-click="confirmClick() && deleteCollection(key)"  confirm-click = "{{::constant.msg.confirm_delete}}">Delete</button>
+                  </div>
+                  <hr>
+              </div>
           </div>
       </div>
    </script>

@@ -5,22 +5,22 @@ function commonAPI (ref) {
 	}
 	this.getNecData = function(req, res) {
 		var fnArr = [];
-		me.buildNecData(req, res, fnArr, data, dbName);
+		me.buildNecData(req, res, fnArr);
 		console.log(" hi i am here");
-		ref.async.parallel(fnArr, function(err, results){
+		ref.async.parallel(fnArr, function(err, results) {
 			if (err) 
 				res.status(500).send(err);
 			else
-				res.send("success in update")
+				res.send({webJSON: results[0], formJSON: results[1]});
 		});
 		//res.json({webTemp: ref.webTemp, form: ref.form});
 	}
-	this.getFormData = function(req, res) {
+	/*this.getFormData = function(req, res) {
 		ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
 			res.json(data);
 		})
 	}
-
+*/
 	this.saveChange = function(req, res) {
 		var data = req.body.data;
 		var dbName = req.body.dbName || 'mydb';
