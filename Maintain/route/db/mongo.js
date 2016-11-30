@@ -28,10 +28,13 @@ function MongoConf (ref) {
 			})
 		})
     }
-    this.oneArgQuery = function (firstArg, res, clientDb, collectionName, methodName, cb) {
+    this.oneArgQuery = function (firstArg, res, clientDb, collectionName, methodName, cb, callbackAsync) {
     	clientDb.collection(collectionName)[methodName](firstArg, function(err, data) {
 			if (err) {
-				res.status(500).send(err);
+				if (callbackAsync)
+					callbackAsync(err);
+				else
+					res.status(500).send(err);
 				return;
 			}
 			cb(data);

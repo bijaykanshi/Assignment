@@ -3,17 +3,20 @@ function commonAPI (ref) {
 	this.renderIndex = function(req, res) {
 		res.render('index');
 	}
-	this.getNecData = function(req, res) {
+	var runParallelWithAsync = function (req, res, buildArr, cb) {
 		var fnArr = [];
-		me.buildNecData(req, res, fnArr);
-		console.log(" hi i am here");
+		me[buildArr](req, res, fnArr);
 		ref.async.parallel(fnArr, function(err, results) {
 			if (err) 
 				res.status(500).send(err);
 			else
-				res.send({webJSON: results[0], formJSON: results[1]});
+				cb(results);
 		});
-		//res.json({webTemp: ref.webTemp, form: ref.form});
+	}
+	this.getNecData = function(req, res) {
+		runParallelWithAsync(req, res, 'buildNecData', function (results) {
+			res.send({webJSON: results[0], formJSON: results[1]});
+		})
 	}
 	/*this.getFormData = function(req, res) {
 		ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
@@ -49,8 +52,9 @@ function commonAPI (ref) {
 		})
 	}
 	this.saveFormJSON = function(req, res) {
-		ref.mongoObj.oneArgQuery(req.body.data, res, req.clientDb, 'formCollection', 'insertMany', function(data) {
-			res.send("successfully inserted");
+		debugger;
+		runParallelWithAsync(req, res, 'buildFormArrFn', function (results) {
+			res.send({webJSON: results[0], formJSON: results[1]});
 		})
 	}
 	this.register = function (req, res) {

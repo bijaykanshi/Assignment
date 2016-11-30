@@ -1,4 +1,5 @@
 function commonAPIHelper (ref) {
+	var ObjectID = ref.mongo.ObjectID;
 	this.buildNecData = function(req, res, fnArr) {
 		fnArr.push(function(callback) {
 			callback(null, ref.webTemp);
@@ -12,8 +13,39 @@ function commonAPIHelper (ref) {
 			}
 		})
 	}
+	var obj = {};
+	obj.insertMany = function(req, res, data, fnArr) {
+		fnArr.push(function(callback) {
+			ref.mongoObj.oneArgQuery(data, res, req.clientDb, 'formCollection', 'insertMany', function(data) {
+				callback(null, data);
+			}, callback);
+		})
+	}
+	obj.save = function(req, res, data, fnArr) {
+		data.forEach(function(val) {
+			fnArr.push(function(callback) {
+				ref.mongoObj.oneArgQuery(val, res, req.clientDb, 'formCollection', 'save', function(data) {
+					callback(null, data);
+				}, callback);
+			})
+		})
+	}
+	obj.remove = function(req, res, data, fnArr) {
+		fnArr.push(function(callback) {
+			ref.mongoObj.oneArgQuery({formName: {$in: data}}, res, req.clientDb, 'formCollection', 'remove', function(data) {
+				callback(null, data);
+			}, callback);
+		})
+	}
+	this.buildFormArrFn = function(req, res, fnArr) {
+		debugger;
+		var data = req.body.data;
+		for (var key in data) {
+			obj[key](req, res, data[key], fnArr)
+		}
+	}
 	this.getSaveChangeArr = function(req, res, fnArr, data, dbName) {
-		var ObjectID = ref.mongo.ObjectID;
+		
 		if (data.remove) {
 			fnArr.push(function (callback) {
 				

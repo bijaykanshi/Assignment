@@ -162,13 +162,18 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
     $scope.deleteCollection = function (key) {
         if (key == previousKey)
             previousKey = '';
-        if (key == $scope.currentCol) {
-            var index = $scope.editedCollection.indexOf(key);
-            if (index >= 0) {
-                delete backUpData.edit[key];
-                $scope.editedCollection.splice(index, 1);
-            }
+        if (key == $scope.currentCol)
             $scope.currentCol = '';
+        var index = $scope.addedCollection.indexOf(key);
+        if (index >= 0) {
+            $scope.addedCollection.splice(index, 1);
+            delete formFactory.formFieldEditDelete[key];
+            return;
+        }
+        var index = $scope.editedCollection.indexOf(key);
+        if (index >= 0) {
+            delete backUpData.edit[key];
+            $scope.editedCollection.splice(index, 1);
         }
         $scope.deletedCollection.push(key);
         backUpData.delete[key] = angular.copy(formFactory.formFieldEditDelete[key]);
@@ -178,19 +183,29 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         $scope.editColShow = false;
         if (previousKey) {
             $scope.currentCol = previousKey;
-            $scope.editedCollection.push(previousKey);
-            backUpData.edit[key] = angular.copy(formFactory.formFieldEditDelete[previousKey])
+            var index = $scope.editedCollection.indexOf(previousKey);
+            var addedIndex = $scope.addedCollection.indexOf(previousKey);
+            if (index == -1 && addedIndex == -1) {
+                $scope.editedCollection.push(previousKey);
+                backUpData.edit[previousKey] = angular.copy(formFactory.formFieldEditDelete[previousKey])   
+            }
         }
     }
     $scope.closeEditClosePop = function () {
         $scope.editColShow = false;
     }
     $scope.addColl = function () {
-        $scope.anotherCol = "Another";
+        $scope.doSelection($scope.newColl);
+        $scope.selectCollObj[$scope.newColl] = true;
+        $scope.currentCol = $scope.newColl;
         $scope.showBtn = "";
+        if (formFactory.formFieldEditDelete[$scope.newColl]) {
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.alreadyAdded});
+            return;
+        }
+        $scope.anotherCol = "Another";
         $scope.addedCollection.push($scope.newColl);
         formFactory.formFieldEditDelete[$scope.newColl] = [];
-        $scope.currentCol = $scope.newColl;
     }
     $scope.close = function () {
         delete formFactory.currentIndex;
@@ -206,7 +221,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         var str = "";
         var obj = {};
         
-        for (var i = 0; i < $scope[collectionName]length; i += 1) {
+        for (var i = 0; i < $scope[collectionName].length; i += 1) {
             var key = $scope[collectionName][i];
             var arr = formFactory.formFieldEditDelete[key];
             obj[key] = {};
@@ -239,7 +254,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         var arr = [];
         $scope.editedCollection.forEach(function(key) {
             var currentObj = formFactory.formFieldEditDelete[key];
-            var obj = {where: {formName: key}, updateWith: formFactory.formFieldEditDelete[key]};
+            var obj = {data: formFactory.formFieldEditDelete[key], formName: key, _id: formFactory._idFormNameMap[key]};
             arr.push(obj);
         });
         return arr;
@@ -278,17 +293,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
                 return
             }
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str});
-
         }
-        /*
-        $scope.editedCollection.forEach(function(key) {
-
-        });
-        dataToSend.save = */
-        /*for (var key in formFactory.formFieldEditDelete) {
-            var tempObj = {data: formFactory.formFieldEditDelete[key], formName: key};
-            dataToSend.push(tempObj);
-        }*/
         global.sendRequest('saveFormJSON', {data: dataToSend}, 'post', function(data, status, headers, config) {
             $scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});

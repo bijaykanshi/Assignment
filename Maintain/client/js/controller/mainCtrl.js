@@ -16,8 +16,10 @@ app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, 
 	global.sendRequest('getNecData', {}, 'get', function(data, status, headers, config) {
 		global.webJSON = data.webJSON;
 		formFactory.formFieldEditDelete = {};
+		formFactory._idFormNameMap = {}
 		data.formJSON.forEach(function(val) {
 			formFactory.formFieldEditDelete[val.formName] = val.data;
+			formFactory._idFormNameMap[val.formName] = val._id;
 		});
 		//global.profileData = data.profileData;
 	});
