@@ -217,7 +217,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
     $scope.closePopOver = function () {
         formFactory.popoverObj[formFactory.popoverObj.currentIndex] = false;
     }
-    var isDuplicateLabel = function(collectionName, msg) {
+    var isDuplicateLabel = function(collectionName, msg, opt) {
         var str = "";
         var obj = {};
         
@@ -239,6 +239,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
 
         }
         if (str) {
+            str =  "<h4>" + opt + "  Operation of collection unsuccessfull</h4><br><br>"
             str = "<h4>" + msg + "</h4><br/>";
             for (var key in obj) {
                 for (var inKey in obj[key]) {
@@ -259,13 +260,22 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
         });
         return arr;
     }
+    var displayMsg = function (str, strToAdd, dataToSend, data) {
+        var msg = data ? JSON.stringify(data) : "";
+        for (var key in dataToSend) {
+            msg += "<h4>" + key + "  " + strToAdd + "</h4><br><br>";
+            delete dataToSend[key];
+        }
+        msg += str;
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: msg, timeToShow: str ? 10000 : 4000});
+    }
     $scope.saveForm = function () {
         
         var dataToSend = {};
         var arr = [];
         var str = "";
         if ($scope.addedCollection.length) {
-            str += isDuplicateLabel('addedCollection', constant.msg.notAdded);
+            str += isDuplicateLabel('addedCollection', constant.msg.notAdded, 'Add');
             if (!str) {
                 $scope.addedCollection.forEach(function(key) {
                     var tempObj = {data: formFactory.formFieldEditDelete[key], formName: key};
@@ -276,7 +286,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
             }
         }
         if ($scope.editedCollection.length) {
-            str += isDuplicateLabel('editedCollection', constant.msg.notEdited);
+            str += isDuplicateLabel('editedCollection', constant.msg.notEdited, 'Edit');
             if (!str) {
                 arr = buildUpdateQuery();
                 if (arr.length)
@@ -287,17 +297,19 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
             dataToSend.remove = $scope.deletedCollection;
         var keyArr = Object.keys(dataToSend);
         if (!keyArr.length || str) {
-            var msg = "";
+            var msg = str || constant.msg.notChangeAnyThing;
             if (!keyArr.length) {
-                global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.notChangeAnyThing});
+                global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: msg, timeToShow: 7000});
                 return
             }
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str});
+            //global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: str});
         }
+        
         global.sendRequest('saveFormJSON', {data: dataToSend}, 'post', function(data, status, headers, config) {
-            $scope.close();
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.formSaved});
-
+            //$scope.close();
+            displayMsg(str, "Operation of collection successfully executed on server", dataToSend);
+        }, function(err) {
+            displayMsg(str, "Operation of collection unsuccessfull", dataToSend, err);
         });
     }
     $scope.formObj = {};
@@ -309,7 +321,7 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
     }
     $scope.save = function () {
         global.sendRequest('register', {data: $scope.formObj}, 'post', function(data, status, headers, config) {
-            $scope.close();
+            //$scope.close();
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.successRegister});
 
         });

@@ -1,7 +1,12 @@
 <div >
    <div class="modal-header">
       <!-- <img class="imgResize"  src="./webdata/imgOwn/delete.png" alt="" ng-click="close()" > -->
-      <h4 class="modal-title">{{header}}</h4>
+      <h4 class="modal-title">{{header}}
+      <button type="button" ng-click = "close()" class="btn btn-warning pull-right" >Close</button>&emsp;&emsp;&emsp;
+      <button type="button" ng-click = "saveForm()" class="btn btn-success pull-right" >Save your Change on Server</button>
+      </h4>
+
+      
    </div>
    <!-- <button popover-template="'popover.html'" 
       popover-placement="right" 
@@ -181,7 +186,6 @@
       </div><hr>
    </div>
    <div class="footerClose">
-      <button type="button" ng-click = "saveForm()" class="btn btn-success" >Save your Change on Server</button>
-      <button type="button" ng-click = "close()" class="btn btn-warning" >Close</button>
+     
    </div>
 </div>
