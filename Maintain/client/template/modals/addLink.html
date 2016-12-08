@@ -17,19 +17,28 @@
             <label ">Select Place to insert : </label><br/>
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.place" class="handSign" name="optradio" value="leftSideBar">Left SideBar</label>
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.place" class="handSign" value="topBar" name="optradio">Top Bar</label>
-            <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.place" value="bodyBox" class="handSign" name="optradio">Body Box</label>           
+            <!-- <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.place" value="bodyBox" class="handSign" name="optradio">Body Box</label> -->        
          </div>
       </div>
       <!-- <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" name="optradio" value="quest">Question</label>
       <label class="radio-inline"><input type="radio" ng-model = "rdObj.val" value="ans" name="optradio">Answer</label> -->
       <hr/>
       <div class="row">
-         <div class="form-group col-xs-6" ng-show = "global.linkObj.place != 'bodyBox'">
+         <div class="form-group col-xs-4">
+            <label ">Select Link Type </label><br/>
+            <label class="radio-inline" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.dispContLink
+            }}"><input type="radio" ng-model = "global.linkObj.formType" class="handSign" name="formType" value="dispOnly">Display content only</label>
+            <label class="radio-inline" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.formLink}}"><input type="radio" ng-model = "global.linkObj.formType" class="handSign" value="formLink" name="formType" >Form Link</label>
+            <button type="button" ng-click = "editColShow = !editColShow" popover-is-open="editColShow" popover-template="'editCollection.html'" popover-placement="right" class="btn btn-warning" >Edit Template</button>
+                      
+         </div>
+         <div class="form-group col-xs-4" ng-show = "global.linkObj.formType == 'dispOnly'">
             <label>Do You want Nested Link : </label><br/>
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.nestedLink" class="handSign" name="nestedLink" value="yes">Yes</label>
             <label class="radio-inline"><input type="radio" ng-model = "global.linkObj.nestedLink" class="handSign" value="no" name="nestedLink">No</label>            
          </div>
-         <div class="form-group col-xs-6">
+         
+         <div ng-show = "global.linkObj.formType == 'dispOnly'" class="form-group col-xs-4">
             <button type="button" ng-show = "!global.linkObj.templateData || global.linkObj.nestedLink == 'yes'" class="btn btn-success" ng-click = "global.linkObj.nestedLink=='yes' ? nestedLinkArr.push({}) : selectTemp(global.linkObj)">{{global.linkObj.nestedLink=='no' ? "Select Template" : "Add Nested Link"}}</button>
             <div ng-show = "global.linkObj.templateData && global.linkObj.nestedLink=='no'">
                 <button type="button" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.tempSelected}}" ng-click = "selectTemp(global.linkObj)" class="btn btn-warning" >Edit Template</button>
@@ -38,7 +47,7 @@
          </div>
       </div>
       <hr/>
-       <div class="row" ng-show="global.linkObj.nestedLink=='yes'">
+       <div class="row" ng-show="global.linkObj.nestedLink=='yes' && global.linkObj.formType == 'dispOnly'">
           <table class="table table-hover .table-responsive .table-condensed .table-striped">
              
              <tbody>
@@ -59,4 +68,25 @@
      
       <button type="button" class="btn btn-default" ng-click="global.linkObj.templateData ? confirmClick() && close()  : close()" data-dismiss="modal" confirm-click = "{{::constant.msg.unsavedData}}">Close</button>
    </div>
+   <script type="text/ng-template" id="editCollection.html">
+      <div class="popover fade left in" style="width: 270px; display: block;">
+          <div class="arrow"></div>
+          <h3 class="popover-title">
+            <button type="button" ng-click = "editCollectionNow()" class="btn btn-primary">Select And Close</button>
+          </h3>
+          
+          <div class="popover-content">
+              <div class="row" ng-repeat = "(key, value) in formFactory.formFieldEditDelete">
+                  <div class="col-sm-4">
+                      <input type="checkbox" ng-model = "selectCollObj[key]" ng-click = "doSelection(key)">
+                  </div>
+                  <div  class="col-sm-8">
+                      {{key}}
+                  </div>
+                  
+                  <hr>
+              </div>
+          </div>
+      </div>
+   </script>
 </div>

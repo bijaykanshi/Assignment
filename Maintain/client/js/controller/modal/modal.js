@@ -136,6 +136,7 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
     //$scope.rdObj = {nestedLink: 'no'};
     global.linkObj.place = parameter.place || 'leftSideBar';
     global.linkObj.nestedLink = global.linkObj.nestedLink || 'no';
+    global.linkObj.formType = global.linkObj.formType || 'dispOnly'; 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };

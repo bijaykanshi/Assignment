@@ -49,7 +49,9 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         confirm_delete: 'Are you sure you want to delete this collection',
         notAdded: 'Your Collection has not been inserted into database because of the Following reason',
         notEdited: 'Edit operation has not been completed because of the Following reason',
-        alreadyAdded: 'You have already added this collection'
+        alreadyAdded: 'You have already added this collection',
+        formLink: 'Select this option to take data from your users..',
+        dispContLink: 'Select to displpay content only' 
 
     };
     constant.loginForm = [
