@@ -3,20 +3,37 @@ function commonAPI (ref) {
 	this.renderIndex = function(req, res) {
 		res.render('index');
 	}
-	var runParallelWithAsync = function (req, res, buildArr, cb) {
+	var runAsyncFun = function (req, res, buildArr, methodName, cb) {
 		var fnArr = [];
 		me[buildArr](req, res, fnArr);
-		ref.async.parallel(fnArr, function(err, results) {
+		ref.async[methodName](fnArr, function(err, results) {
 			if (err) 
 				res.status(500).send(err);
 			else
 				cb(results);
 		});
 	}
-	this.getNecData = function(req, res) {
-		runParallelWithAsync(req, res, 'buildNecData', function (results) {
-			res.send({webJSON: results[0], formJSON: results[1]});
+	this.login = function(req, res) {
+		var clientData = req.body.data;
+		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + 'myCentralDb', 100, res, function(err, centralDb) {
+			ref.mongoObj.mongoQuery([clientData], res, centralDb, 'users', 'findOne', function(data) {
+				debugger;
+				if (!data)
+					return res.status(500).send("users not found");
+				ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + data.db, 100, res, function(err, clientDb) {
+					req.clientDb = clientDb;
+					req.usersInfo = {ucat: data.ucat};
+					runAsyncFun(req, res, 'loginArr', 'parallel', function (results) {
+						res.send({webJSON: results[0][0], formJSON: results[1], usersJSON: results[2], usersInfo: {ucat: data.ucat, email: data.email, db: data.db}});
+					});
+				})
+			});
 		})
+	}
+	this.getNecData = function(req, res) {
+		runAsyncFun(req, res, 'buildNecData', 'parallel', function (results) {
+			res.send({webJSON: results[0], formJSON: results[1]});
+		});
 	}
 	/*this.getFormData = function(req, res) {
 		ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
@@ -53,7 +70,7 @@ function commonAPI (ref) {
 	}
 	this.saveFormJSON = function(req, res) {
 		debugger;
-		runParallelWithAsync(req, res, 'buildFormArrFn', function (results) {
+		runAsyncFun(req, res, 'buildFormArrFn', 'parallel', function (results) {
 			res.send({webJSON: results[0], formJSON: results[1]});
 		})
 	}

@@ -13,8 +13,29 @@ function MongoConf (ref) {
         }
     };
     var clientDbCatche = {lengthOf: 0};
+    this.mongoQuery = function (argArr, res, clientDb, collectionName, methodName, cb, callbackAsync) {
+	    var collbackFn = function(err, data) {
+	    	argArr.pop();
+	        var msg = err ? "Error found during " : "successfully completed  ";
+	        msg += methodName + " operation of collection " + collectionName + " | firstArg = " + JSON.stringify(argArr[0]) + " | secondArg " + (JSON.stringify(argArr[1]));
+	        console.log(msg);
+	        if (err) 
+	        	return (callbackAsync && callbackAsync(err)) || res.status(500).send(err);
+	        if (cb) {
+	        	if (methodName == 'find') {
+	        		data.toArray(function(err, jsonData) {
+						cb(jsonData);
+					})
+	        	} else
+	           		cb(data);
+	        }
+	    }
+	    argArr.push(collbackFn);
+	    var collectionRef = clientDb.collection(collectionName);
+	    collectionRef[methodName].apply(collectionRef, argArr);
+	}
 
-    this.twoArgQuery = function (firstArg, secondArg, res, clientDb, collectionName, methodName, cb, callbackAsync) {
+    /*this.twoArgQuery = function (firstArg, secondArg, res, clientDb, collectionName, methodName, cb, callbackAsync) {
     	clientDb.collection(collectionName)[methodName](firstArg, secondArg, function(err, data) {
 			if (err) {
 				if (callbackAsync)
@@ -39,7 +60,7 @@ function MongoConf (ref) {
 			}
 			cb(data);
 		})
-    }
+    }*/
     this.getCachedClientConnectionDb = function (url, retries, res, callback) {
     	var catcheKey = url.replace(/([^a-zA-Z0-9]*)/g ,  '');
     	if (retries <= 0) {

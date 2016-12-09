@@ -7,16 +7,37 @@ function commonAPIHelper (ref) {
 		fnArr.push(function(callback) {
 			var users = req.body.users || req.query.users;
 			if (users == 'admin') {
-				ref.mongoObj.twoArgQuery({}, {}, res, req.clientDb, 'formCollection', 'find', function(data) {
+				ref.mongoObj.mongoQuery([{}, {}], res, req.clientDb, 'formCollection', 'find', function(data) {
 					callback(null, data);
 				}, callback)
 			}
 		})
 	}
+	this.loginArr = function(req, res, fnArr) {
+		debugger;
+		var data = req.body.data;
+		fnArr.push(function(callback) {
+			ref.mongoObj.mongoQuery([{}, {}], res, req.clientDb, 'website', 'find', function(data) {
+				callback(null, data);
+			}, callback);
+		}, function(callback) {
+			if (req.usersInfo.ucat != 'admin')
+				return callback(null, []);
+			ref.mongoObj.mongoQuery([{}, {}], res, req.clientDb, 'formCollection', 'find', function(data) {
+				callback(null, data);
+			}, callback);
+		}, function(callback) {
+			if (req.usersInfo.ucat != 'admin')
+				return callback(null, []);
+			ref.mongoObj.mongoQuery([{}, {}], res, req.clientDb, 'users', 'find', function(data) {
+				callback(null, data);
+			}, callback);
+		})
+	}
 	var obj = {};
 	obj.insertMany = function(req, res, data, fnArr) {
 		fnArr.push(function(callback) {
-			ref.mongoObj.oneArgQuery(data, res, req.clientDb, 'formCollection', 'insertMany', function(data) {
+			ref.mongoObj.mongoQuery([data], res, req.clientDb, 'formCollection', 'insertMany', function(data) {
 				callback(null, data);
 			}, callback);
 		})
@@ -24,7 +45,7 @@ function commonAPIHelper (ref) {
 	obj.save = function(req, res, data, fnArr) {
 		data.forEach(function(val) {
 			fnArr.push(function(callback) {
-				ref.mongoObj.oneArgQuery(val, res, req.clientDb, 'formCollection', 'save', function(data) {
+				ref.mongoObj.mongoQuery([val], res, req.clientDb, 'formCollection', 'save', function(data) {
 					callback(null, data);
 				}, callback);
 			})
@@ -32,7 +53,7 @@ function commonAPIHelper (ref) {
 	}
 	obj.remove = function(req, res, data, fnArr) {
 		fnArr.push(function(callback) {
-			ref.mongoObj.oneArgQuery({formName: {$in: data}}, res, req.clientDb, 'formCollection', 'remove', function(data) {
+			ref.mongoObj.mongoQuery([{formName: {$in: data}}], res, req.clientDb, 'formCollection', 'remove', function(data) {
 				callback(null, data);
 			}, callback);
 		})

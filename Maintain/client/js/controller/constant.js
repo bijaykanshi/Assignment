@@ -65,7 +65,7 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
             "type": "password",
             "placeholder": "Password",
             "label": "Password",
-            "key": "password"
+            "key": "pass"
         },
         {
             "type": "select",

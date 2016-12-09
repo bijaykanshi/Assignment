@@ -1,11 +1,26 @@
-app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, parameter, extra, constant) {
+app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, parameter, extra, formFactory, constant) {
   
    $scope.loginData = {
-      email: 'bijay@gmail.com',
-      password: 'new',
-      ucat: 'site_user'
+      email: 'bijay.iit12@gmail.com',
+      pass: 'new',
+      ucat: 'admin'
    };
-   $scope.loginFun = function(dec) {
+   $scope.proceed = function() {
+        global.sendRequest('login', {data: $scope.loginData}, 'post', function(data, status, headers, config) {
+          global.webJSON = data.webJSON;
+          formFactory.formFieldEditDelete = {};
+          formFactory._idFormNameMap = {};
+          global.dbName = data.usersInfo.db;
+          global.users = data.usersInfo.ucat;
+          data.formJSON.forEach(function(val) {
+            formFactory.formFieldEditDelete[val.formName] = val.data;
+            formFactory._idFormNameMap[val.formName] = val._id;
+          });
+          $scope.close();
+          //global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
+        });
+   }
+  /* $scope.loginFun = function(dec) {
       var requestData = dec === 'login' ? $scope.loginData : global.myInfo;
       if (dec != 'login') {
           var dob = requestData.dob;
@@ -66,7 +81,7 @@ app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, 
             global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.error_server});
         });
      };
-   
+   */
    $scope.close = function () {
        
         $modalInstance.dismiss('cancel');

@@ -30,6 +30,11 @@
         "callbackFun":  "commonAPI_saveChange"
     },
     {
+        "url": "/login",
+        "method": "post",
+        "callbackFun":  "commonAPI_login"
+    },
+    {
         "url": "/test",
         "method": "post",
         "callbackFun":  "commonAPI_test"

@@ -1,10 +1,10 @@
 <div class="modal-header">
     <!-- <button type="button"  ng-click="close()" name="close" class="close" data-dismiss="modal">&times;</button> -->
-    
+   
 </div>      
 <div class="modal-body">
   <div class="row">
-    <div class="col-sm-12" style="background-color: white; ">
+    <div class="col-sm-12" >
             <h2>Login</h2>
             <div class="form-group" ng-form name="loginForm" > 
                 <table class="table">
@@ -14,8 +14,9 @@
                           <td>
                             <div ng-switch-when="ucat" ng-init = "global.myInfo[log.key] = 'site_user'">
                                 <select class="form-control" ng-model = "loginData[log.key]" required>
-                                    <option value="site_user">Site User</option>
-                                    <option value="management">Management</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="moderator">Moderator</option>
+                                    <option value="enduser">End Users</option>
                                 </select>
                             </div>
                             <div ng-switch-default ng-class="{'has-error': loginForm[log.key].$invalid, 'has-success': loginForm[log.key].$valid && loginForm[log.key].$dirty}">
@@ -28,11 +29,11 @@
               </table>
             </div>
             
-             <input class="btn btn-sub" type="submit" ng-disabled = "loginForm.$invalid"  name="login" ng-click = "loginFun('login')" value="Login">
+             <input  type="submit" ng-disabled = "loginForm.$invalid"  ng-click="proceed()"  class="btn btn-info">
        
     </div>
    </div>
-   <div class="row"> 
+  <!--  <div class="row"> 
     <div>
         
         <button class="btn btn-danger pull-right" ng-click = "showSignUp = !showSignUp"><span>{{showSignUp ? 'Hide Sign Up Form' : 'Show Sign Up Form'}}</span></button>
@@ -69,7 +70,7 @@
 
         </div>
     </div>
-     
+      -->
 </div>
 <div class="footerClose">
     <!-- <button type="button" ng-hide = "selectOrg" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button> -->

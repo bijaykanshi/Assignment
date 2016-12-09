@@ -12,7 +12,7 @@ app.controller('initialBody', function($scope, global, constant) {
 	}
 });
 app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, formFactory) {
-	global.isLoading = true;
+	/*global.isLoading = true;
 	global.sendRequest('getNecData', {}, 'get', function(data, status, headers, config) {
 		global.webJSON = data.webJSON;
 		formFactory.formFieldEditDelete = {};
@@ -22,7 +22,7 @@ app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, 
 			formFactory._idFormNameMap[val.formName] = val._id;
 		});
 		//global.profileData = data.profileData;
-	});
+	});*/
 	
 	
 });
