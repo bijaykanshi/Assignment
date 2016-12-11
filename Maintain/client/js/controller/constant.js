@@ -51,7 +51,9 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         notEdited: 'Edit operation has not been completed because of the Following reason',
         alreadyAdded: 'You have already added this collection',
         formLink: 'Select this option to take data from your users..',
-        dispContLink: 'Select to displpay content only' 
+        dispContLink: 'Select to displpay content only',
+        mustSelectColl: "You need to select at least one collection",
+        successTakeData: "Your data has been saved successfully"
 
     };
     constant.loginForm = [

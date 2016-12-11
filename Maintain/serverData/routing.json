@@ -15,11 +15,6 @@
         "callbackFun":  "commonAPI_saveFormJSON"
     },
     {
-        "url": "/register",
-        "method": "post",
-        "callbackFun":  "commonAPI_register"
-    },
-    {
         "url": "/submitQuery",
         "method": "post",
         "callbackFun":  "commonAPI_submitQuery"
@@ -33,6 +28,16 @@
         "url": "/login",
         "method": "post",
         "callbackFun":  "commonAPI_login"
+    },
+    {
+        "url": "/saveLink",
+        "method": "post",
+        "callbackFun":  "commonAPI_saveLink"
+    },
+    {
+        "url": "/insertData",
+        "method": "post",
+        "callbackFun":  "commonAPI_insertData"
     },
     {
         "url": "/test",

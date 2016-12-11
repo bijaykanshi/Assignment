@@ -12,17 +12,10 @@ app.controller('initialBody', function($scope, global, constant) {
 	}
 });
 app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, formFactory) {
-	/*global.isLoading = true;
-	global.sendRequest('getNecData', {}, 'get', function(data, status, headers, config) {
-		global.webJSON = data.webJSON;
-		formFactory.formFieldEditDelete = {};
-		formFactory._idFormNameMap = {}
-		data.formJSON.forEach(function(val) {
-			formFactory.formFieldEditDelete[val.formName] = val.data;
-			formFactory._idFormNameMap[val.formName] = val._id;
-		});
-		//global.profileData = data.profileData;
-	});*/
-	
-	
+	$scope.clickLink = function (item) {
+		global.clickedLink = item.nestedLink == 'yes' ? global.clickedLink : item;
+		if (item.formType == "formLink") {
+			global.openModal('formBuilder/takeData.html', 'takeDataCtrl', {header: constant.msg.buildForm}, 'extraLarge-Modal', undefined, true);
+		}
+	}
 });

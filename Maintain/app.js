@@ -20,13 +20,14 @@ function Ref() {
 	this.commonAPI = new this.commonAPIFn(this);
 	
 	
-	this.webTemp = require('./serverData/webTemp.json');
+	//this.webTemp = require('./serverData/webTemp.json');
 	this.form = require('./serverData/formJSON.json');
 	this.msg = require('./serverData/msg.json');
 }
 var ref = new Ref();
 require('./config')(ref);
 ref.route = require('./route/routing')(ref);
+//ref.mongoObj.insertInitialData();
 //ref.dbconnection = require('./route/dbconnection')(ref);
 ref.app.use('/', ref.route);
 ref.app.listen(ref.port);

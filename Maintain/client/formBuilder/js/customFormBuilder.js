@@ -140,7 +140,7 @@ app.factory('formFactory', function($http, $modal, $state, $location, $rootScope
     ]
     return formFactory;
 });
-app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, parameter, formFactory, constant) {
+app.controller('formBuilderCtrl',['$scope', '$modalInstance', 'global', 'parameter', 'formFactory', 'constant', function ($scope, $modalInstance, global, parameter, formFactory, constant) {
     formFactory.popoverObj = {};
     $scope.header = parameter.header || 'Alert Message';
     $scope.anotherCol = "";
@@ -154,6 +154,8 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
     $scope.deletedCollection = [];
     var previousKey;
     $scope.doSelection = function (key) {
+        if (previousKey == key)
+            return;
         if (previousKey)
             $scope.selectCollObj[previousKey] = false;
         previousKey = key;
@@ -312,19 +314,24 @@ app.controller('formBuilderCtrl', function ($scope, $modalInstance, global, para
             displayMsg(str, "Operation of collection unsuccessfull", dataToSend, err);
         });
     }
-    $scope.formObj = {};
+    
     $scope.editFieldFun = function (objRef, index) {
         formFactory.editField = objRef;
         formFactory.popoverObj[index] = true;
         formFactory.popoverObj[formFactory.popoverObj.currentIndex] = false;
         formFactory.popoverObj.currentIndex = index;
     }
+    
+}]);
+app.controller('takeDataCtrl', ['$scope', '$modalInstance', 'global', 'parameter', 'formFactory', 'constant', function ($scope, $modalInstance, global, parameter, formFactory, constant) { 
+    $scope.formArr = formFactory.formFieldEditDelete[global.clickedLink.formColl];
+    $scope.formObj = {};
     $scope.save = function () {
-        global.sendRequest('register', {data: $scope.formObj}, 'post', function(data, status, headers, config) {
+        global.sendRequest('insertData', {data: $scope.formObj, collName: global.clickedLink.formColl}, 'post', function(data, status, headers, config) {
             //$scope.close();
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.successRegister});
+            $scope.formObj = {};
+            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.successTakeData});
 
         });
     }
-});
-
+}]);

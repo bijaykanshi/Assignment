@@ -14,7 +14,6 @@ function commonAPIHelper (ref) {
 		})
 	}
 	this.loginArr = function(req, res, fnArr) {
-		debugger;
 		var data = req.body.data;
 		fnArr.push(function(callback) {
 			ref.mongoObj.mongoQuery([{}, {}], res, req.clientDb, 'website', 'find', function(data) {
@@ -59,7 +58,6 @@ function commonAPIHelper (ref) {
 		})
 	}
 	this.buildFormArrFn = function(req, res, fnArr) {
-		debugger;
 		var data = req.body.data;
 		for (var key in data) {
 			obj[key](req, res, data[key], fnArr)

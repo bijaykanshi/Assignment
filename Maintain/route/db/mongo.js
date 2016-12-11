@@ -34,33 +34,6 @@ function MongoConf (ref) {
 	    var collectionRef = clientDb.collection(collectionName);
 	    collectionRef[methodName].apply(collectionRef, argArr);
 	}
-
-    /*this.twoArgQuery = function (firstArg, secondArg, res, clientDb, collectionName, methodName, cb, callbackAsync) {
-    	clientDb.collection(collectionName)[methodName](firstArg, secondArg, function(err, data) {
-			if (err) {
-				if (callbackAsync)
-					callbackAsync(err);
-				else
-					res.status(500).send(err);
-				return;
-			}
-			data.toArray(function(err, jsonData) {
-				cb(jsonData);
-			})
-		})
-    }
-    this.oneArgQuery = function (firstArg, res, clientDb, collectionName, methodName, cb, callbackAsync) {
-    	clientDb.collection(collectionName)[methodName](firstArg, function(err, data) {
-			if (err) {
-				if (callbackAsync)
-					callbackAsync(err);
-				else
-					res.status(500).send(err);
-				return;
-			}
-			cb(data);
-		})
-    }*/
     this.getCachedClientConnectionDb = function (url, retries, res, callback) {
     	var catcheKey = url.replace(/([^a-zA-Z0-9]*)/g ,  '');
     	if (retries <= 0) {
@@ -111,6 +84,11 @@ function MongoConf (ref) {
 		}
 		clientDbCatche[deleteKeys].conn.close();
 		delete clientDbCatche[deleteKeys];
+	}
+	this.insertInitialData = function () {
+		me.getCachedClientConnectionDb(ref.envVar.dbHost + 'mydb', 100, {}, function(err, clientDb) {
+			me.mongoQuery([ref.webTemp], {}, clientDb, 'website', 'insert')
+		})
 	}
 }
 module.exports = MongoConf;

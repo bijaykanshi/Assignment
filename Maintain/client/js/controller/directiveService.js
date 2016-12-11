@@ -83,6 +83,7 @@ app.filter('to_trusted', ['$sce', function($sce){
         return $sce.trustAsHtml(text);
     };
 }]);
+
 Array.prototype.getCustomIndex = function(toSearch, key) {
     for (var i = 0; i < this.length; i += 1) {
         if (this[i][key] == toSearch)

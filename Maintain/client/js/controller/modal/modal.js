@@ -20,68 +20,6 @@ app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, 
           //global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
         });
    }
-  /* $scope.loginFun = function(dec) {
-      var requestData = dec === 'login' ? $scope.loginData : global.myInfo;
-      if (dec != 'login') {
-          var dob = requestData.dob;
-          if (dob)
-            requestData.birthdate = dob.getDate() + '-' + (dob.getMonth() + 1) + '-' + dob.getFullYear();
-      }
-      requestData.dec = dec;
-      global.sendRequest('/loginSignUp',
-        requestData,
-        'POST',
-        function (data, status, headers, config) {
-          if (data.status === 'error') {
-              global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.error_server, err: JSON.stringify(data.error)});
-              return;
-          }
-          var parameter = {};
-          
-          if (dec === 'login') {
-              if (!data.result.length) {
-                  parameter.msg = constant.msg.alert_user_not_registered;
-                  global.openModal('template/modals/popupMsg.html', 'popupMsg', parameter);
-                  return;
-              }
-              if (requestData.ucat === 'management'){
-                  global.adminUser = true;
-              } else {
-                  global.dataToDisplay = data.result[0];
-                  $scope.loginData.name = data.result[2][0].name;
-                  var comment = data.result[3];
-                  var buildArrOnId = {};
-                  comment.forEach(function(obj){
-                      if (!buildArrOnId[obj.news_id])
-                          buildArrOnId[obj.news_id] = [];
-                      buildArrOnId[obj.news_id].push(obj);
-                  });
-                  var map = {};
-                  data.result[1].forEach(function(obj) {
-                      map[obj.news_id] = obj.action;
-                  })
-                  global.dataToDisplay.forEach(function(obj) {
-                      if (map[obj.news_id])
-                        obj.action = map[obj.news_id];
-                      if (buildArrOnId[obj.news_id])
-                        obj.commentArr = buildArrOnId[obj.news_id];
-                  });
-              }
-              global.myInfo = $scope.loginData;
-              $scope.loginData = {};
-              $scope.close();
-              global.showInitial = true;
-          }  else {
-              parameter.msg = constant.msg.alert_siginUp_success;
-              //global.myInfo = {};
-              global.openModal('template/modals/popupMsg.html', 'popupMsg', parameter);
-          }
-        },
-        function (data, status, headers, config) {
-            global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.error_server});
-        });
-     };
-   */
    $scope.close = function () {
        
         $modalInstance.dismiss('cancel');
@@ -155,6 +93,23 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
+    var keyObj = {place: true, formColl: true, formType: true, linkName: true};
+    
+    var previousKey = global.linkObj.formColl;
+    $scope.selectCollObj = previousKey ? {previousKey: true} : {};
+    $scope.doSelection = function (key) {
+        if (previousKey == key)
+            return;
+        if (previousKey)
+            $scope.selectCollObj[previousKey] = false;
+        previousKey = key;
+    }
+    $scope.selectedCollection = function () {
+      if (previousKey) {
+        $scope.editColShow = false;
+      } else 
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustSelectColl});
+    }
     $scope.nestedLinkArr = (global.linkObj.nestedLink == 'yes' && global.linkObj.templateData) || [];
     $scope.selectTemp = function (item) {
       if (!item.linkName || !global.linkObj.linkName) {
@@ -174,21 +129,38 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
       }
       if (global.linkObj.nestedLink == 'yes' && $scope.nestedLinkArr.length)
           global.linkObj.templateData = $scope.nestedLinkArr;
-      if (!global.linkObj.templateData) {
-        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.mustSelectTemp});
+      var msg = constant.msg.mustSelectTemp;
+      var linkObjBack = angular.copy(global.linkObj);
+      if (global.linkObj.formType == 'formLink') {
+        msg = previousKey ? undefined : constant.msg.mustSelectColl;
+        if (previousKey) {
+            global.linkObj.formColl = previousKey;
+            $scope.editColShow = false;
+            for (var key in global.linkObj) {
+              if (!keyObj[key])
+                delete global.linkObj[key];
+            }
+        }
+      } else if (global.linkObj.nestedLink == 'yes' && $scope.nestedLinkArr.length) {
+          global.linkObj.templateData = $scope.nestedLinkArr;
+          msg = undefined;
+      }
+      if (msg) {
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: msg});
         return;
       }
-      var dataRef = global.webJSON[global.linkObj.place] || [];
-
-      if ($scope.position < dataRef.length) {
-        dataRef.splice($scope.position, 0, global.linkObj);
-      } else {
-        dataRef.push(global.linkObj);
-      }
-      global.sendRequest('saveJSON', {data: global.webJSON}, 'post', function(data, status, headers, config) {
+      var updateWith = {$push: {}};
+      if ($scope.position)
+        updateWith.$push = {$each: [global.linkObj], $position: $scope.position};
+      else 
+        updateWith.$push[global.linkObj.place] = global.linkObj;
+      global.sendRequest('saveLink', {updateWith: updateWith, click: 'addLink'}, 'post', function(data, status, headers, config) {
         $scope.close();
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
-
-      });
+      }, function (data, status, headers, config) {
+        global.isLoading = false;
+        global.linkObj = linkObjBack;
+        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: JSON.stringify(data)});
+    });
     };
 });
