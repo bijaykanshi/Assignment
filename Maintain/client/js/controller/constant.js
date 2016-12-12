@@ -53,7 +53,8 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         formLink: 'Select this option to take data from your users..',
         dispContLink: 'Select to displpay content only',
         mustSelectColl: "You need to select at least one collection",
-        successTakeData: "Your data has been saved successfully"
+        successTakeData: "Your data has been saved successfully",
+        linkDeletedSucc: "Link has been deleted successfully"
 
     };
     constant.loginForm = [

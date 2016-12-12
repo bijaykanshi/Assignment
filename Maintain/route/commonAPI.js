@@ -54,7 +54,6 @@ function commonAPI (ref) {
 		});
 	}
 	this.insertData = function (req, res) {
-		debugger;
 		var body = req.body;
 		ref.mongoObj.mongoQuery([body.data], res, req.clientDb, body.collName, 'insert', function(data) {
 			res.send("successfully inserted");
@@ -75,10 +74,18 @@ function commonAPI (ref) {
 		})
 	}
 	this.saveFormJSON = function(req, res) {
-		debugger;
 		runAsyncFun(req, res, 'buildFormArrFn', 'parallel', function (results) {
 			res.send({webJSON: results[0], formJSON: results[1]});
 		})
+	}
+	this.deleteLink = function(req, res) {
+		debugger;
+		var data = req.body.data;
+		ref.mongoObj.mongoQuery([data.unset], res, req.clientDb, 'website', 'update', function(data) {
+			ref.mongoObj.mongoQuery([data.unset], res, req.clientDb, 'website', 'update', function(data) {
+				res.send("successfully deleted");
+			});
+		});
 	}
 	this.test = function (req, res) {
 		console.log("reached there with data :--- " + JSON.stringify(req.body));

@@ -36,7 +36,7 @@
                <img class="dropIcon pull-right" src="webdata/imgOwn/arrows.png" ng-if = "item.nestedLink == 'yes'">
                <div ng-if = "global.showEditDelete">
                   <img src="webdata/imgOwn/edit.png" class="varySmallImg handSign" type="button" onmouseenter="$(this).tooltip('show')"  ng-click = "global.linkObj = item;global.openModal('template/modals/addLink.html', 'addLink', {header: constant.msg.editPanelTab, place: 'leftSideBar',index: $index}, 'extraLarge-Modal');" title="{{::constant.msg.editTemp}}">
-                  <img src="webdata/imgOwn/delete.png" class="varySmallImg handSign" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}" ng-click = "confirmClick() && global.webJSON.leftSideBar.splice($index, 1)" confirm-click = title="{{::constant.msg.deleteTemp}}">
+                  <img src="webdata/imgOwn/delete.png" class="varySmallImg handSign" onmouseenter="$(this).tooltip('show')" title="{{::constant.msg.deleteTemp}}" ng-click = "confirmClick() && deleteLink('webJSON', 'leftSideBar', $index)" confirm-click = title="{{::constant.msg.deleteTemp}}">
                </div>
                
             </a>
