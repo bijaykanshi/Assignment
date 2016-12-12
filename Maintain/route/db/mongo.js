@@ -15,9 +15,9 @@ function MongoConf (ref) {
     var clientDbCatche = {lengthOf: 0};
     this.mongoQuery = function (argArr, res, clientDb, collectionName, methodName, cb, callbackAsync) {
 	    var collbackFn = function(err, data) {
-	    	argArr.pop();
+	    	//argArr.pop();
 	        var msg = err ? "Error found during " : "successfully completed  ";
-	        msg += methodName + " operation of collection " + collectionName + " | firstArg = " + JSON.stringify(argArr[0]) + " | secondArg " + (JSON.stringify(argArr[1]));
+	        msg += methodName + " operation of collection " + collectionName + " | firstArg = " + JSON.stringify(argArr[0]) + " | secondArg " + (typeof argArr[1] != "function" ? JSON.stringify(argArr[1]) : "");
 	        console.log(msg);
 	        if (err) 
 	        	return (callbackAsync && callbackAsync(err)) || res.status(500).send(err);

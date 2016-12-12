@@ -38,7 +38,7 @@
         "url": "/insertData",
         "method": "post",
         "callbackFun":  "commonAPI_insertData"
-    }
+    },
     {
         "url": "/deleteLink",
         "method": "post",

@@ -82,7 +82,7 @@ function commonAPI (ref) {
 		debugger;
 		var data = req.body.data;
 		ref.mongoObj.mongoQuery([data.unset], res, req.clientDb, 'website', 'update', function(data) {
-			ref.mongoObj.mongoQuery([data.unset], res, req.clientDb, 'website', 'update', function(data) {
+			ref.mongoObj.mongoQuery([data.pull], res, req.clientDb, 'website', 'update', function(data) {
 				res.send("successfully deleted");
 			});
 		});

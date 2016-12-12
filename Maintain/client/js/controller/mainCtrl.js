@@ -22,7 +22,7 @@ app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, 
 		var dataToSend = {unset: {$unset : {}}};
 		dataToSend.unset.$unset[whichProp + "." + index] = 1;
 		dataToSend.pull = {$pull : {}};
-		dataToSend.pull.$pull = null;
+		dataToSend.pull.$pull[whichProp] = null;
 		global.sendRequest('deleteLink', {data: dataToSend}, 'post', function(data, status, headers, config) {
 	        global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.linkDeletedSucc});
 	        global[where][whichProp].splice($index, 1);
