@@ -60,18 +60,9 @@ function commonAPI (ref) {
 		})
 	}
 	this.submitQuery = function(req, res) {
-		var dbName = req.body.dbName || 'mydb';
-		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + dbName, 100, res, function(err, clientDb) {
-			clientDb.collection(req.body.collection).find(req.body.row, req.body.col, function(err, data) {
-				if (err) {
-					res.status(500).send(err);
-					return;
-				}
-				data.toArray(function(err, jsonData) {
-					res.json(jsonData);
-				})
-			})
-		})
+		ref.mongoObj.mongoQuery([req.body.row, req.body.col], res, req.clientDb, req.body.collection, 'find', function(data) {
+			res.json(data);
+		});
 	}
 	this.saveFormJSON = function(req, res) {
 		runAsyncFun(req, res, 'buildFormArrFn', 'parallel', function (results) {

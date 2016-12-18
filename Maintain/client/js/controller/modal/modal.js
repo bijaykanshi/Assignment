@@ -26,7 +26,7 @@ app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, 
     };
  
 });
-app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
+app.controller('popupMsg', ['$scope', '$modalInstance', 'parameter', function ($scope, $modalInstance, parameter) {
     $scope.msg = parameter.msg || 'Something went wrong';
     $scope.header = parameter.header || 'Alert Message';
     $scope.err = parameter.err;
@@ -37,7 +37,7 @@ app.controller('popupMsg', function ($scope, $modalInstance, parameter) {
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
-});
+}]);
 app.controller('addEditTemplate', function ($scope, $modalInstance, parameter, $window, constant) {
     $scope.header = parameter.header;
     $scope.rdObj = {nestedLink: 'tabTemp'};

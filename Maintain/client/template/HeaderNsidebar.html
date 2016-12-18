@@ -61,7 +61,7 @@
                 
             </a>
             <ul class="dropdown-menu" ng-if = "topLink.nestedLink == 'yes'">
-               <li class="message-preview handSign" ng-repeat = "inTopLink in topLink.templateData" ng-click = "global.clickedLink = inTopLink; $event.stopPropagation();">
+               <li class="message-preview handSign" ng-repeat = "inTopLink in topLink.templateData" ng-click = "clickLink(inTopLink); $event.stopPropagation();">
                   <a>
                      <span class="avatar"><i class="fa fa-user"></i></span>
                      <span class="message">{{inTopLink.linkName}}</span>

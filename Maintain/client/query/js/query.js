@@ -1,18 +1,24 @@
-app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
+app.controller('madeQueryAndDisp', ['$scope', '$modalInstance', 'parameter', 'formFactory', 'global', 'constant' ,function ($scope, $modalInstance, parameter, formFactory, global, constant) {
     //$scope.header = parameter.header || 'Alert Message';
     $scope.deleteObj = {};
     global.modifyObj = {};
+    $scope.collectionArr = Object.keys(formFactory.formFieldEditDelete);
+    formFactory.currentColl = $scope.queryStr = $scope.collectionArr[0];
     $scope.submitQuery = function () {
         if ($scope.showQ) {
             $scope.showQ = false;
             return;
         }
         global.sendRequest('submitQuery', {collection: $scope.queryStr, row: formFactory.rowSelector, col: $scope.projectionObj}, 'post', function(data, status, headers, config) {
-            if (data.length) 
-                global.headerArr = Object.keys(data[0]);
-            else {
+            if (!data.length) {
                 global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.noDataOnDb});
                 return;
+            }
+            var arr = Object.keys($scope.projectionObj);
+            if (arr.length) 
+                $scope.headerArr = arr;
+            else {
+               $scope.headerArr = formFactory.formFieldEditDelete[$scope.queryStr].map(function(a){return a.label}); 
             }
             $scope.dataToDisplay = data;
             /*$scope.dataToDisplay = [];
@@ -48,17 +54,17 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, 
             global.modifyObj = {};
         });
     }
-    $scope.collectionArr = ['users', 'abc', 'xyz'];
+    
     formFactory.isPopOverOpen = false;
     $scope.close = function () {
         delete formFactory.isPopOverOpen;
         delete formFactory.projection;
         delete global.modifyObj;
-        delete global.headerArr;
+        delete formFactory.currentColl;
         $modalInstance.dismiss('cancel');
     };
     $scope.setColl = function(opt) {
-    	$scope.queryStr = opt;
+    	formFactory.currentColl = $scope.queryStr = opt;
     }
     $scope.setInitialVal = function () {
         formFactory.isPopOverOpen = true;
@@ -83,7 +89,7 @@ app.controller('madeQueryAndDisp', function ($scope, $modalInstance, parameter, 
         console.log();
     }
     formFactory.rowSelector = {};
-});
+}]);
 app.controller('rowSelector', function ($scope, $modalInstance, parameter, formFactory, global, constant) {
     $scope.header = parameter.header || 'Alert Message';
     $scope.popOverObj = {};
@@ -119,10 +125,11 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
     formFactory.projection = false;
     $scope.step1Next = function () {
     	$scope.queryObj = {};
+        var coll = formFactory.currentColl;
     	$scope.step='step2';
-    	for (var i = 0; i < formFactory.formFieldEditDelete.length; i += 1) {
+    	for (var i = 0; i < formFactory.formFieldEditDelete[coll].length; i += 1) {
     		if ($scope.queryInd[i]) {
-    			var itemInfo = formFactory.formFieldEditDelete[i];
+    			var itemInfo = formFactory.formFieldEditDelete[coll][i];
     			for (var j = 0; j < $scope.queryInd[i].length; j += 1) {
     				if (!$scope.queryObj[itemInfo.key])
     					$scope.queryObj[itemInfo.key] = {};
@@ -161,26 +168,26 @@ app.controller('rowSelector', function ($scope, $modalInstance, parameter, formF
         $modalInstance.dismiss('cancel');
     };
 });
-app.controller('editRowData', function ($scope, $modalInstance, parameter, constant, global) {
+app.controller('editRowData', ['$scope', '$modalInstance', 'parameter', 'constant', 'global', 'formFactory', function ($scope, $modalInstance, parameter, constant, global, formFactory) {
     $scope.header = parameter.header || 'Alert Message';
     $scope.formObj = parameter.rowData;
+    $scope.formArr = formFactory.formFieldEditDelete[formFactory.currentColl];
     $scope.rowDataBackUp = angular.copy($scope.formObj);
     $scope.close = function () {
         for (var key in $scope.rowDataBackUp)
             parameter.rowData[key] = $scope.rowDataBackUp[key];
         $modalInstance.dismiss('cancel');
+        //deleteProp();
     };
     $scope.save = function () {
         var objRef = global.modifyObj[parameter.rowData._id] = {$set: {}};
-        global.headerArr.forEach(function(key) {
+        for (var key in $scope.rowDataBackUp) 
             if (key != '_id')
                 objRef['$set'][key] = parameter.rowData[key];
-        });
-        /*for (var key in parameter.rowData) {
-            if (key != '_id') {
-                objRef['$set'][key] = parameter.rowData[key];
-            }
-        }*/
         $modalInstance.dismiss('cancel');
+        //deleteProp();
     };
-});
+    var deleteProp = function() {
+        delete formFactory.currentColl;
+    }
+}]);

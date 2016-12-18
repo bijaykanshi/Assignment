@@ -12,7 +12,6 @@ function MongoConf (ref) {
             poolSize : 5
         }
     };
-    var clientDbCatche = {lengthOf: 0};
     this.mongoQuery = function (argArr, res, clientDb, collectionName, methodName, cb, callbackAsync) {
 	    var collbackFn = function(err, data) {
 	    	//argArr.pop();
@@ -40,50 +39,26 @@ function MongoConf (ref) {
     		me.connectClientDB(url, res, catcheKey, callback);
     		return;
     	}
-    	if (clientDbCatche[catcheKey]) {
-    		if (!clientDbCatche[catcheKey].wait) {
-    			console.log("Client db found on catch | catcheKey => " + catcheKey);
-    			clientDbCatche[catcheKey].ts = new Date().getTime();
-	    		callback(null, clientDbCatche[catcheKey].conn);
-    		} else  {
-	    		setTimeout(function() {
-			        console.log('cached Waiting for connection to be established ==>' + catcheKey + 'retries ' + retries);
-			        me.getCachedClientConnectionDb(url, retries - 1, res, callback);
-			    }, 50);
-	    	}
+    	var conn = ref.lncObj.get(catcheKey);
+    	if (conn) {
+    		console.log("Client db found on catch | catcheKey => " + catcheKey);
+	    	callback(null, conn);
 	    } else {
 	    	me.connectClientDB(url, res, catcheKey, callback);
 	    }
 
     }
     this.connectClientDB = function connectClientDB(url, res, catcheKey, callback) {
-	    clientDbCatche[catcheKey] = {"wait": true};
-	    MongoClient.connect(url, options , function(err ,  opened_db) {
+    	console.log("url ==> " + url);
+	    MongoClient.connect(url, options , function(err ,  openedDb) {
 	        if (err) {
-	            console.log(colors.red('[DB] Error : opening '+catcheKey + ' Err: '+ err));
-	            delete clientDbCatche[catcheKey];
+	            console.log(colors.red('[DB] Error : opening ' + catcheKey + ' Err: ' + err));
 	            res.status(500).send(err);
 	            return;
 	        }
-	        clientDbCatche[catcheKey] = {'ts': new Date().getTime(), 'conn': opened_db, 'wait': false};
-	        clientDbCatche.lengthOf += 1;
-	        callback(false, opened_db);
-	        if (clientDbCatche.lengthOf > 100) 
-	        	me.deleteObjKey(catcheKey);
-	        
+	        ref.lncObj.set(catcheKey, openedDb);
+	        callback(false, openedDb);
 	    });
-	}
-	this.deleteObjKey = function (catcheKey) {
-		var minTime = clientDbCatche[catcheKey].ts;
-		var deleteKeys = catcheKey;
-		for (key in clientDbCatche) {
-			if (clientDbCatche[key].ts < minTime) {
-				deleteKeys = key;
-				minTime = clientDbCatche[key].ts;
-			}
-		}
-		clientDbCatche[deleteKeys].conn.close();
-		delete clientDbCatche[deleteKeys];
 	}
 	this.insertInitialData = function () {
 		me.getCachedClientConnectionDb(ref.envVar.dbHost + 'mydb', 100, {}, function(err, clientDb) {

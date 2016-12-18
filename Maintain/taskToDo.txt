@@ -7,3 +7,4 @@ task to do
  Nested field
  query validator
 6. use async in saveChange api
+7.	delete link by deleting a element from particular index of array.

@@ -44,7 +44,7 @@
          <br>
          <h5><strong>Step 1 </strong> - Put condition on column</h5>
          <hr>
-         <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete">
+         <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete[formFactory.currentColl]">
               <div class="col-sm-6">
                 {{key.key + " ( " + key.label + " )"}}
               </div>
@@ -82,7 +82,7 @@
           <div class="row">
             <div class="col-sm-12">
                <h4>Your Query is</h4><br>
-               db.collection().find( {{queryObj | json}}, {})
+               db.collection({{formFactory.currentColl}}).find( {{queryObj | json}}, {})
 
             </div>
            

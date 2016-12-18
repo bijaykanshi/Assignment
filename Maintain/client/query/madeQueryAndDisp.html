@@ -35,13 +35,13 @@
             <table class="table table-hover table-responsive">
               <thead>
                 <tr>
-                  <th ng-repeat = "head in headerArr" ng-if = "head != '_id'">{{head}}</th>
+                  <th ng-repeat = "head in headerArr" >{{head}}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat = "rowData in dataToDisplay" ng-show = "!deleteObj[rowData._id]">
                   <td ng-repeat = "(colKey, value) in rowData" ng-if = "colKey != '_id'">{{value}}</td>
-                  <td><button class="btn btn-warning" ng-click = "global.openModal('formBuilder/registration.html', 'editRowData', {header: constant.msg.editRowData, rowData: rowData}, 'extraLarge-Modal');">Edit</button></td>
+                  <td><button class="btn btn-warning" ng-click = "global.openModal('formBuilder/takeData.html', 'editRowData', {header: constant.msg.editRowData, rowData: rowData}, 'extraLarge-Modal');">Edit</button></td>
                   <td><button class="btn btn-danger" ng-click = "confirmClick() && removeItem(rowData._id);" confirm-click = "Are You sure you want to delete this Item">Delete</button></td>
                 </tr>
               </tbody>
@@ -72,7 +72,7 @@
          <div class="popover fade left in" style="width: 270px; display: block;">
            <div class="arrow"></div><h3 class="popover-title">select which column you want</h3>
              <div class="popover-content">
-                    <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete">
+                    <div class="row" ng-repeat = "key in formFactory.formFieldEditDelete[formFactory.currentColl]">
                         
                             <div class="col-sm-3">
                                 <i ng-class="{'fa fa-circle-thin fa-2x': !projectionObj[key.key], 'fa fa-check-circle-o fa-2x': projectionObj[key.key]}" aria-hidden="true" ng-click = "projectionObj[key.key] = projectionObj[key.key] ? 0 : 1"></i>

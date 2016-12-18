@@ -13,6 +13,8 @@ app.controller('initialBody', function($scope, global, constant) {
 });
 app.controller('HeaderNsidebar', function($scope, $rootScope, global, constant, formFactory) {
 	$scope.clickLink = function (item) {
+		if (global.showEditDelete)
+			return;
 		global.clickedLink = item.nestedLink == 'yes' ? global.clickedLink : item;
 		if (item.formType == "formLink") {
 			global.openModal('formBuilder/takeData.html', 'takeDataCtrl', {header: constant.msg.buildForm}, 'extraLarge-Modal', undefined, true);

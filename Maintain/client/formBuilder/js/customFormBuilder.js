@@ -1,7 +1,6 @@
 app.factory('formFactory', function($http, $modal, $state, $location, $rootScope){
      
-    var formFactory = {};
-   
+    var formFactory = {selectedType: "text"};
     formFactory.inputAttr = {
         defaultAttr: {
             label: 'label',
@@ -334,4 +333,7 @@ app.controller('takeDataCtrl', ['$scope', '$modalInstance', 'global', 'parameter
 
         });
     }
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
 }]);
