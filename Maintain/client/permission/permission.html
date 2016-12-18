@@ -1,0 +1,17 @@
+<div>
+    <div class="modal-header">
+        <button type="button" ng-click="close()" name="close" class="close" data-dismiss="modal">&times;</button>
+        <h2 class="modal-title">{{header}}</h2>
+    </div>
+    <div class="modal-body" >
+         <div class="row">
+         	<div class="col-sm-3">
+                <i ng-class="{'fa fa-circle-thin fa-2x': !projectionObj[key.key], 'fa fa-check-circle-o fa-2x': projectionObj[key.key]}" aria-hidden="true" ng-click = "projectionObj[key.key] = projectionObj[key.key] ? 0 : 1"></i>
+            </div>
+         </div>
+    </div>
+    <div class="footerClose">
+          <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Close</button>
+    </div>
+   
+</div>
