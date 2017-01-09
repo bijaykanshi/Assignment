@@ -55,7 +55,8 @@ app.factory('constant', function($http, $modal, $state, $location, $rootScope){
         mustSelectColl: "You need to select at least one collection",
         successTakeData: "Your data has been saved successfully",
         linkDeletedSucc: "Link has been deleted successfully",
-        providePermission: "Permission Provider"
+        providePermission: "Permission Provider",
+        dataGatherPur: "checked the box if you want to collect information from your users"
 
     };
     constant.loginForm = [
