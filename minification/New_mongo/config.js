@@ -1,1 +1,0 @@
-module.exports=function(a){var b=a.app;b.use(a.bodyParser.urlencoded({extended:!0})),b.use(a.bodyParser.json({limit:"10mb"})),b.use(a.methodOverride("X-HTTP-Method")),b.use(a.methodOverride("X-HTTP-Method-Override")),b.use(a.methodOverride("X-Method-Override")),b.use(function(a,b,c){var d=b.send,e=!1;b.send=function(a){e||(d.bind(b)(a),e=!0)},c()})};
