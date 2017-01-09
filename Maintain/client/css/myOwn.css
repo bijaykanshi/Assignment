@@ -35,7 +35,43 @@
     height: 47px;
     cursor: pointer;
 }
-
+.searchBox {
+    width: 100%;
+    height: auto;
+    border: 2px solid #d7d7d7;
+    box-shadow: 6px 6px 10px #ccc;
+    margin-top: 4%;
+    padding: 10px 0;
+    font-size: 13px;
+    background: #fff;
+    position: absolute;
+    top: 17px;
+    z-index: 2;
+   
+}
+.searchBox ul {
+  list-style: none;
+  padding-left: 0px;
+   overflow-y: auto;
+    max-height: 300px;
+    width: 100%;
+}
+.searchBox ul li
+{
+  margin-bottom: 2px;
+  padding: 3px 0;
+  padding-left: 15px;
+  color: #666;
+}
+.searchBox ul li:hover {
+  background: #c5dfec;
+  cursor: pointer;
+}
+.skillsSearchBox {
+    margin-top: 84%;
+    width: 75%;
+    z-index: 10;
+}
 /*Start Wizard*/
 
 

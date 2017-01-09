@@ -23,6 +23,7 @@ function commonAPI (ref) {
 		var clientData = req.body.data;
 		ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + 'myCentralDb', 100, res, function(err, centralDb) {
 			ref.mongoObj.mongoQuery([clientData], res, centralDb, 'users', 'findOne', function(data) {
+				debugger;
 				if (!data)
 					return res.status(500).send("users not found");
 				ref.mongoObj.getCachedClientConnectionDb(ref.envVar.dbHost + data.db, 100, res, function(err, clientDb) {

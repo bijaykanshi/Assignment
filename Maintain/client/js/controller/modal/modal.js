@@ -12,6 +12,7 @@ app.controller('loginSignUp', function ($scope, $modalInstance, $state, global, 
           formFactory._idFormNameMap = {};
           global.dbName = data.usersInfo.db;
           global.users = data.usersInfo.ucat;
+          global.allUsersList = data.usersJSON;
           data.formJSON.forEach(function(val) {
             formFactory.formFieldEditDelete[val.formName] = val.data;
             formFactory._idFormNameMap[val.formName] = val._id;
@@ -84,7 +85,7 @@ app.controller('editContent', function ($scope, $modalInstance, parameter, globa
         $modalInstance.dismiss('cancel');
     };
 });
-app.controller('addLink', function ($scope, $modalInstance, parameter, global, constant) {
+app.controller('addLink', function ($scope, $modalInstance, parameter, global, constant, formFactory) {
     $scope.header = parameter.header;
     //$scope.rdObj = {nestedLink: 'no'};
     global.linkObj.place = parameter.place || 'leftSideBar';
@@ -93,7 +94,7 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
-    var keyObj = {place: true, formColl: true, formType: true, linkName: true};
+    var keyObj = {place: true, formColl: true, formType: true, linkName: true, gatherPur: true};
     
     var previousKey = global.linkObj.formColl;
     $scope.selectCollObj = previousKey ? {previousKey: true} : {};
@@ -123,10 +124,6 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
       item.templateData = undefined;
     }
     $scope.saveTemp = function () {
-      if (parameter.index) {
-          $scope.close();
-          return;
-      }
       if (global.linkObj.nestedLink == 'yes' && $scope.nestedLinkArr.length)
           global.linkObj.templateData = $scope.nestedLinkArr;
       var msg = constant.msg.mustSelectTemp;
@@ -135,6 +132,7 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
         msg = previousKey ? undefined : constant.msg.mustSelectColl;
         if (previousKey) {
             global.linkObj.formColl = previousKey;
+            global.linkObj.gatherPur = $scope.isDataGather;
             $scope.editColShow = false;
             for (var key in global.linkObj) {
               if (!keyObj[key])
@@ -151,10 +149,16 @@ app.controller('addLink', function ($scope, $modalInstance, parameter, global, c
       }
       var updateWith = {$push: {}};
       if ($scope.position)
-        updateWith.$push = {$each: [global.linkObj], $position: $scope.position};
+        updateWith.$push[global.linkObj.place] = {$each: [global.linkObj], $position: $scope.position};
       else 
         updateWith.$push[global.linkObj.place] = global.linkObj;
       global.sendRequest('saveLink', {updateWith: updateWith, click: 'addLink'}, 'post', function(data, status, headers, config) {
+        var arrRef = global.webJSON[global.linkObj.place];
+        if ($scope.position) {
+            arrRef.splice($scope.position, 0, global.linkObj);
+        } else {
+            arrRef.push(global.linkObj);
+        }
         $scope.close();
         global.openModal('template/modals/popupMsg.html', 'popupMsg', {msg: constant.msg.allAdded});
       }, function (data, status, headers, config) {
